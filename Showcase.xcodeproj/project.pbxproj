@@ -14,6 +14,15 @@
 		66C36084225898000018A579 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66C36082225898000018A579 /* LaunchScreen.storyboard */; };
 		66C3608F225898000018A579 /* ShowcaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C3608E225898000018A579 /* ShowcaseTests.swift */; };
 		66C3609A225898000018A579 /* ShowcaseUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C36099225898000018A579 /* ShowcaseUITests.swift */; };
+		66C360A92258A5270018A579 /* NativeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C360A82258A5270018A579 /* NativeProvider.swift */; };
+		66C360AE2258A9D50018A579 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C360AB2258A9D40018A579 /* User.swift */; };
+		66C360AF2258A9D50018A579 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C360AC2258A9D40018A579 /* Comment.swift */; };
+		66C360B02258A9D50018A579 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C360AD2258A9D50018A579 /* Post.swift */; };
+		66C360B32258AA090018A579 /* PostRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C360B22258AA090018A579 /* PostRealm.swift */; };
+		66C360B52258B4F30018A579 /* HTTPStatusCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C360B42258B4F30018A579 /* HTTPStatusCode.swift */; };
+		66C360B72258B53A0018A579 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C360B62258B53A0018A579 /* NetworkError.swift */; };
+		66C360B92258B7E50018A579 /* ClientError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C360B82258B7E50018A579 /* ClientError.swift */; };
+		66C360BC2258B8890018A579 /* ErrorExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C360BB2258B8890018A579 /* ErrorExt.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +56,15 @@
 		66C36095225898000018A579 /* ShowcaseUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShowcaseUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		66C36099225898000018A579 /* ShowcaseUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowcaseUITests.swift; sourceTree = "<group>"; };
 		66C3609B225898000018A579 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		66C360A82258A5270018A579 /* NativeProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeProvider.swift; sourceTree = "<group>"; };
+		66C360AB2258A9D40018A579 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		66C360AC2258A9D40018A579 /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
+		66C360AD2258A9D50018A579 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		66C360B22258AA090018A579 /* PostRealm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostRealm.swift; sourceTree = "<group>"; };
+		66C360B42258B4F30018A579 /* HTTPStatusCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPStatusCode.swift; sourceTree = "<group>"; };
+		66C360B62258B53A0018A579 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+		66C360B82258B7E50018A579 /* ClientError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientError.swift; sourceTree = "<group>"; };
+		66C360BB2258B8890018A579 /* ErrorExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorExt.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +115,10 @@
 		66C36078225897FE0018A579 /* Showcase */ = {
 			isa = PBXGroup;
 			children = (
+				66C360B12258A9F40018A579 /* Persistence */,
+				66C360AA2258A9BC0018A579 /* Model */,
+				66C360BA2258B86C0018A579 /* ErrorLogging */,
+				66C360A72258A5010018A579 /* Network */,
 				66C36079225897FE0018A579 /* AppDelegate.swift */,
 				66C3607B225897FE0018A579 /* ViewController.swift */,
 				66C3607D225897FE0018A579 /* Main.storyboard */,
@@ -123,6 +145,43 @@
 				66C3609B225898000018A579 /* Info.plist */,
 			);
 			path = ShowcaseUITests;
+			sourceTree = "<group>";
+		};
+		66C360A72258A5010018A579 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				66C360A82258A5270018A579 /* NativeProvider.swift */,
+				66C360B42258B4F30018A579 /* HTTPStatusCode.swift */,
+				66C360B62258B53A0018A579 /* NetworkError.swift */,
+				66C360B82258B7E50018A579 /* ClientError.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		66C360AA2258A9BC0018A579 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				66C360AC2258A9D40018A579 /* Comment.swift */,
+				66C360AD2258A9D50018A579 /* Post.swift */,
+				66C360AB2258A9D40018A579 /* User.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		66C360B12258A9F40018A579 /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				66C360B22258AA090018A579 /* PostRealm.swift */,
+			);
+			path = Persistence;
+			sourceTree = "<group>";
+		};
+		66C360BA2258B86C0018A579 /* ErrorLogging */ = {
+			isa = PBXGroup;
+			children = (
+				66C360BB2258B8890018A579 /* ErrorExt.swift */,
+			);
+			path = ErrorLogging;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -256,8 +315,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				66C360BC2258B8890018A579 /* ErrorExt.swift in Sources */,
+				66C360B32258AA090018A579 /* PostRealm.swift in Sources */,
+				66C360AF2258A9D50018A579 /* Comment.swift in Sources */,
+				66C360B52258B4F30018A579 /* HTTPStatusCode.swift in Sources */,
+				66C360AE2258A9D50018A579 /* User.swift in Sources */,
 				66C3607C225897FE0018A579 /* ViewController.swift in Sources */,
+				66C360B92258B7E50018A579 /* ClientError.swift in Sources */,
+				66C360B02258A9D50018A579 /* Post.swift in Sources */,
+				66C360B72258B53A0018A579 /* NetworkError.swift in Sources */,
 				66C3607A225897FE0018A579 /* AppDelegate.swift in Sources */,
+				66C360A92258A5270018A579 /* NativeProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -434,6 +502,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = Showcase/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -451,6 +520,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = Showcase/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
