@@ -24,6 +24,13 @@ struct Post: Codable {
 //        self.title = postRealm.title
 //        self.body = postRealm.body
 //    }
+    
+    init(model: PostCore) {
+        id = Int(model.id)
+        body = model.body ?? ""
+        title = model.title ?? ""
+        userId = Int(model.userId)
+    }
 }
 
 

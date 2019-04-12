@@ -22,11 +22,7 @@ enum DebuggableLevel : String {
 extension Error {
     func log(file: String = #file, line: Int = #line, function: String = #function) {
         let fileName = file.components(separatedBy: "/").last!
-        var keys = [ "FileName": fileName,
-                    "Function": function,
-                    "Line": line
-            ] as [String : Any]
-        
+        var keys = ["FileName | Function | Line" : "\(fileName) | \(function) | \(line)"] as [String : Any]
         switch self {
         case let networkError as NetworkError:
             keys["Type"] = networkError.httpCode
@@ -34,6 +30,7 @@ extension Error {
         case let clientError as ClientError:
             keys["Type"] = clientError.title
             keys["Code"] = clientError.code
+            keys["Detail"] = clientError.detail
         case let nsError as NSError:
             nsError.userInfo.forEach { (key, value) in
                 keys[key] = value
@@ -52,5 +49,11 @@ extension Error {
                 print(key + " : \(value)")
             }
         }
+    }
+}
+
+func logD(_ message: String) {
+    logQueue.async {
+        print("\(DebuggableLevel.debug.rawValue) : \(message)")
     }
 }
