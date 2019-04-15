@@ -9,18 +9,23 @@
 import Foundation
 import UIKit
 
+protocol ITunesSearchViewModelDelegate {
+    func refreshTableData()
+}
+
 class ITunesSearchViewModel {
     
     let categories = MusicCategory.allCases
     let provider = NativeProvider.shared
     var task: URLSessionDataTask?
+    
     var searchResults = [MusicAlbum]() {
         didSet {
-            refreshView?()
+           delegate?.refreshTableData()
         }
     }
-    var refreshView: VoidFunction?
-    
+    var delegate: ITunesSearchViewModelDelegate?
+
     func handleCollection(indexPath: IndexPath) {
         let category = categories[indexPath.row]
         let route = iTunesRouter.genre(index: category.rawValue)
@@ -47,16 +52,18 @@ class ITunesSearchViewModel {
     private func sendRequest() {
         task?.cancel()
         let route = iTunesRouter.search(query: query!)
-        provider.codableRequest(type: route, handleSuccess: handleWrapper, handleError: handleError)
+        task = provider.codableRequest(type: route, handleSuccess: handleWrapper, handleError: handleError)
         query = nil
     }
     
     func handleWrapper(wrapper: MusicAlbumWrapper) {
         searchResults = wrapper.results
+        task = nil
     }
     
     func handleData(albums: ServerResponse) {
 //        print(albums.musicAlbums)
+        task = nil
     }
     
     func handleError(error: Error) {

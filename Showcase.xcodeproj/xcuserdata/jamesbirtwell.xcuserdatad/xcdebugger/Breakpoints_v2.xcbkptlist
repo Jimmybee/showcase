@@ -58,7 +58,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Showcase/UIComponents/ReuseableNibs/ReusableViewFromNib.swift"
-            timestampString = "576750076.30549"
+            timestampString = "577013502.720677"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "30"
@@ -74,7 +74,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Showcase/UIComponents/ReuseableNibs/ReusableViewFromNib.swift"
-            timestampString = "576750076.3055741"
+            timestampString = "577013502.720848"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "26"
@@ -90,7 +90,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Showcase/UIComponents/ReuseableNibs/RNSearchBar/RNSearchBar.swift"
-            timestampString = "576750076.305643"
+            timestampString = "577013502.720991"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "83"
@@ -106,12 +106,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Showcase/ViewControllers+Models/ITunesSeach/ITunesSearchViewController.swift"
-            timestampString = "576750076.305706"
+            timestampString = "577013502.721135"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "293"
-            endingLineNumber = "293"
-            landmarkName = "collectionView(_:numberOfItemsInSection:)"
+            startingLineNumber = "307"
+            endingLineNumber = "307"
+            landmarkName = "searchIs(active:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -122,12 +122,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Showcase/ViewControllers+Models/ITunesSeach/ITunesSearchViewController.swift"
-            timestampString = "576750076.3058"
+            timestampString = "577013502.72127"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "246"
-            endingLineNumber = "246"
-            landmarkName = "setupCollectionView()"
+            startingLineNumber = "260"
+            endingLineNumber = "260"
+            landmarkName = "setupStyle()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -138,12 +138,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Showcase/ViewControllers+Models/ITunesSeach/ITunesSearchViewController.swift"
-            timestampString = "576750076.3058881"
+            timestampString = "577013502.7214"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "297"
-            endingLineNumber = "297"
-            landmarkName = "collectionView(_:cellForItemAt:)"
+            startingLineNumber = "311"
+            endingLineNumber = "311"
+            landmarkName = "searchIs(active:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

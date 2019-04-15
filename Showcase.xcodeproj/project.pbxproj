@@ -30,6 +30,14 @@
 		66C1DF4D225F974400049855 /* MusicAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C1DF4C225F974400049855 /* MusicAlbum.swift */; };
 		66C1DF4F225F977E00049855 /* ITunesSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C1DF4E225F977E00049855 /* ITunesSearchViewModel.swift */; };
 		66C1DF522260826700049855 /* ITunesSearchQuerty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C1DF512260826700049855 /* ITunesSearchQuerty.swift */; };
+		66C1DF54226301C300049855 /* OverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C1DF53226301C300049855 /* OverlayView.swift */; };
+		66C1DF58226466E400049855 /* ITunesAlbumListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C1DF57226466E400049855 /* ITunesAlbumListViewController.swift */; };
+		66C1DF5A226466F200049855 /* ITunesAlbumListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C1DF59226466F200049855 /* ITunesAlbumListViewModel.swift */; };
+		66C1DF5D226467D900049855 /* BaseViewContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C1DF5C226467D900049855 /* BaseViewContoller.swift */; };
+		66C1DF5F2264680200049855 /* CollectionView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C1DF5E2264680200049855 /* CollectionView+Ext.swift */; };
+		66C1DF622264682B00049855 /* View+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C1DF612264682B00049855 /* View+Ext.swift */; };
+		66C1DF6422646A5900049855 /* Network.strings in Resources */ = {isa = PBXBuildFile; fileRef = 66C1DF6322646A5900049855 /* Network.strings */; };
+		66C1DF6722646AE000049855 /* StringLookup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C1DF6622646AE000049855 /* StringLookup.swift */; };
 		66C3607A225897FE0018A579 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C36079225897FE0018A579 /* AppDelegate.swift */; };
 		66C3607C225897FE0018A579 /* PostsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C3607B225897FE0018A579 /* PostsListViewController.swift */; };
 		66C3607F225897FE0018A579 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66C3607D225897FE0018A579 /* Main.storyboard */; };
@@ -89,6 +97,14 @@
 		66C1DF4C225F974400049855 /* MusicAlbum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicAlbum.swift; sourceTree = "<group>"; };
 		66C1DF4E225F977E00049855 /* ITunesSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ITunesSearchViewModel.swift; sourceTree = "<group>"; };
 		66C1DF512260826700049855 /* ITunesSearchQuerty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ITunesSearchQuerty.swift; sourceTree = "<group>"; };
+		66C1DF53226301C300049855 /* OverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayView.swift; sourceTree = "<group>"; };
+		66C1DF57226466E400049855 /* ITunesAlbumListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ITunesAlbumListViewController.swift; sourceTree = "<group>"; };
+		66C1DF59226466F200049855 /* ITunesAlbumListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ITunesAlbumListViewModel.swift; sourceTree = "<group>"; };
+		66C1DF5C226467D900049855 /* BaseViewContoller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewContoller.swift; sourceTree = "<group>"; };
+		66C1DF5E2264680200049855 /* CollectionView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CollectionView+Ext.swift"; sourceTree = "<group>"; };
+		66C1DF612264682B00049855 /* View+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Ext.swift"; sourceTree = "<group>"; };
+		66C1DF6322646A5900049855 /* Network.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Network.strings; sourceTree = "<group>"; };
+		66C1DF6622646AE000049855 /* StringLookup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringLookup.swift; sourceTree = "<group>"; };
 		66C36076225897FE0018A579 /* Showcase.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Showcase.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		66C36079225897FE0018A579 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		66C3607B225897FE0018A579 /* PostsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsListViewController.swift; sourceTree = "<group>"; };
@@ -159,8 +175,6 @@
 			isa = PBXGroup;
 			children = (
 				66C360B42258B4F30018A579 /* HTTPStatusCode.swift */,
-				66C360B62258B53A0018A579 /* NetworkError.swift */,
-				66C360B82258B7E50018A579 /* ClientError.swift */,
 			);
 			path = Ancillary;
 			sourceTree = "<group>";
@@ -168,11 +182,14 @@
 		660F7E4C225B2D2400D00072 /* UIComponents */ = {
 			isa = PBXGroup;
 			children = (
+				66C1DF5B226467C400049855 /* BaseViewController */,
+				66C1DF602264681800049855 /* Extensions */,
 				660F7E52225B2FEF00D00072 /* Styling */,
 				66C1DF3B225DDCAF00049855 /* Labels */,
 				66113642225C8206007E77A6 /* ReuseableNibs */,
 				660F7E4E225B2D8A00D00072 /* CardView.swift */,
 				66C1DF3E225DE4D700049855 /* ImageAssets.swift */,
+				66C1DF53226301C300049855 /* OverlayView.swift */,
 			);
 			path = UIComponents;
 			sourceTree = "<group>";
@@ -180,6 +197,7 @@
 		660F7E4D225B2D3700D00072 /* ViewControllers+Models */ = {
 			isa = PBXGroup;
 			children = (
+				66C1DF56226466D100049855 /* ITunesAlbumList */,
 				6611363D225C3F94007E77A6 /* ITunesSeach */,
 				661CD910225A66C800DA641B /* PostsList */,
 			);
@@ -199,7 +217,6 @@
 			children = (
 				66C3607D225897FE0018A579 /* Main.storyboard */,
 				66C36082225898000018A579 /* LaunchScreen.storyboard */,
-				66113635225C2D89007E77A6 /* ITunes.strings */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -306,6 +323,49 @@
 			path = RequestModels;
 			sourceTree = "<group>";
 		};
+		66C1DF5522630FB000049855 /* Carthage */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Carthage;
+			sourceTree = "<group>";
+		};
+		66C1DF56226466D100049855 /* ITunesAlbumList */ = {
+			isa = PBXGroup;
+			children = (
+				66C1DF57226466E400049855 /* ITunesAlbumListViewController.swift */,
+				66C1DF59226466F200049855 /* ITunesAlbumListViewModel.swift */,
+			);
+			path = ITunesAlbumList;
+			sourceTree = "<group>";
+		};
+		66C1DF5B226467C400049855 /* BaseViewController */ = {
+			isa = PBXGroup;
+			children = (
+				66C1DF5C226467D900049855 /* BaseViewContoller.swift */,
+			);
+			path = BaseViewController;
+			sourceTree = "<group>";
+		};
+		66C1DF602264681800049855 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				66C1DF5E2264680200049855 /* CollectionView+Ext.swift */,
+				66C1DF612264682B00049855 /* View+Ext.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		66C1DF6522646A9C00049855 /* Strings */ = {
+			isa = PBXGroup;
+			children = (
+				66C1DF6622646AE000049855 /* StringLookup.swift */,
+				66113635225C2D89007E77A6 /* ITunes.strings */,
+				66C1DF6322646A5900049855 /* Network.strings */,
+			);
+			path = Strings;
+			sourceTree = "<group>";
+		};
 		66C3606D225897FE0018A579 = {
 			isa = PBXGroup;
 			children = (
@@ -329,6 +389,7 @@
 		66C36078225897FE0018A579 /* Showcase */ = {
 			isa = PBXGroup;
 			children = (
+				66C1DF6522646A9C00049855 /* Strings */,
 				66C36079225897FE0018A579 /* AppDelegate.swift */,
 				66C360B12258A9F40018A579 /* Persistence */,
 				66C360AA2258A9BC0018A579 /* Model */,
@@ -337,6 +398,7 @@
 				660F7E4D225B2D3700D00072 /* ViewControllers+Models */,
 				660F7E4C225B2D2400D00072 /* UIComponents */,
 				66113634225C2CF6007E77A6 /* Base */,
+				66C1DF5522630FB000049855 /* Carthage */,
 				66C36080225898000018A579 /* Assets.xcassets */,
 				66C36085225898000018A579 /* Info.plist */,
 			);
@@ -393,6 +455,8 @@
 		66C360BA2258B86C0018A579 /* ErrorLogging */ = {
 			isa = PBXGroup;
 			children = (
+				66C360B62258B53A0018A579 /* NetworkError.swift */,
+				66C360B82258B7E50018A579 /* ClientError.swift */,
 				66C360BB2258B8890018A579 /* ErrorExt.swift */,
 			);
 			path = ErrorLogging;
@@ -504,6 +568,7 @@
 			files = (
 				66C36084225898000018A579 /* LaunchScreen.storyboard in Resources */,
 				66113637225C2D89007E77A6 /* ITunes.strings in Resources */,
+				66C1DF6422646A5900049855 /* Network.strings in Resources */,
 				66113641225C81F9007E77A6 /* RNSearchBar.xib in Resources */,
 				66C36081225898000018A579 /* Assets.xcassets in Resources */,
 				66C1DF49225F289600049855 /* ITunesHeader.xib in Resources */,
@@ -532,6 +597,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				66C1DF622264682B00049855 /* View+Ext.swift in Sources */,
 				661CD9082259E3D500DA641B /* Showcase.xcdatamodeld in Sources */,
 				66C1DF4D225F974400049855 /* MusicAlbum.swift in Sources */,
 				66C360BC2258B8890018A579 /* ErrorExt.swift in Sources */,
@@ -541,9 +607,13 @@
 				66C1DF4B225F972C00049855 /* MusicCategory.swift in Sources */,
 				66C1DF3F225DE4D700049855 /* ImageAssets.swift in Sources */,
 				660F7E51225B2FC100D00072 /* ReusableViewFromNib.swift in Sources */,
+				66C1DF54226301C300049855 /* OverlayView.swift in Sources */,
+				66C1DF5A226466F200049855 /* ITunesAlbumListViewModel.swift in Sources */,
 				66C360B32258AA090018A579 /* PostRealm.swift in Sources */,
+				66C1DF58226466E400049855 /* ITunesAlbumListViewController.swift in Sources */,
 				660F7E47225B1B2F00D00072 /* iTunesRouter.swift in Sources */,
 				660F7E45225B1B2500D00072 /* JsonPlaceholderRouter.swift in Sources */,
+				66C1DF5D226467D900049855 /* BaseViewContoller.swift in Sources */,
 				66C1DF4F225F977E00049855 /* ITunesSearchViewModel.swift in Sources */,
 				66C360AF2258A9D50018A579 /* Comment.swift in Sources */,
 				66C1DF46225F282700049855 /* ITunesHeader.swift in Sources */,
@@ -555,6 +625,7 @@
 				66C360B92258B7E50018A579 /* ClientError.swift in Sources */,
 				66113645225C822E007E77A6 /* RNSearchBar.swift in Sources */,
 				66C360B02258A9D50018A579 /* Post.swift in Sources */,
+				66C1DF6722646AE000049855 /* StringLookup.swift in Sources */,
 				660F7E54225B300700D00072 /* FontStyle.swift in Sources */,
 				661CD90B2259EA5D00DA641B /* PostCore+Ext.swift in Sources */,
 				66C360B72258B53A0018A579 /* NetworkError.swift in Sources */,
@@ -562,6 +633,7 @@
 				661CD90D225A667C00DA641B /* CoreDataManager.swift in Sources */,
 				66C1DF3D225DDCE200049855 /* LabelStyles.swift in Sources */,
 				66C1DF522260826700049855 /* ITunesSearchQuerty.swift in Sources */,
+				66C1DF5F2264680200049855 /* CollectionView+Ext.swift in Sources */,
 				66C360A92258A5270018A579 /* NativeProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

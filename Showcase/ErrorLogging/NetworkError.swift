@@ -30,6 +30,15 @@ struct NetworkError: Error {
             return true
         }
     }
+    
+    var userAlertMessage: String? {
+        switch self.httpCode {
+        case .internetAppearsOffline, .requestTimeout:
+            return NetworkStrings.poor_connectivity.localized
+        default:
+            return NetworkStrings.unknown.localized
+        }
+    }
 }
 
 

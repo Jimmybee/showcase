@@ -42,20 +42,25 @@ class ITunesSearchViewController: UIViewController {
         return view
     }()
     private let resultsTableView = UITableView()
+    var activityView = UIActivityIndicatorView()
+    
+    fileprivate(set) lazy var progressView: UIView = {
+        let progressView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height))
+        progressView.accessibilityIdentifier = "progressView"
+        progressView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        self.activityView.center = CGPoint(x: UIScreen.main.bounds.size.width/2, y: UIScreen.main.bounds.size.height/2)
+        progressView.addSubview(self.activityView)
+        
+        return progressView
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
         setupStyle()
         setupCollectionView()
-        viewModel.refreshView = refreshView
+        viewModel.delegate = self
         registerNotificationObservers()
-    }
-    
-    private func refreshView() {
-        DispatchQueue.main.async {
-            self.resultsTableView.reloadData()
-        }
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -92,6 +97,15 @@ class ITunesSearchViewController: UIViewController {
         super.viewDidLayoutSubviews()
         callOnceAfterLayout.forEach{ $0() }
         callOnceAfterLayout.removeAll()
+    }
+    
+}
+
+extension ITunesSearchViewController: ITunesSearchViewModelDelegate {
+    func refreshTableData() {
+        DispatchQueue.main.async {
+            self.resultsTableView.reloadData()
+        }
     }
 }
 
@@ -331,11 +345,11 @@ extension ITunesSearchViewController {
         }
     }
     
-    @objc func keyboardDidHide(_ notification: NSNotification) {
+    @objc func keyboardWillHide(_ notification: NSNotification) {
         resultsTableView.contentInset = .zero
     }
     
-    func registerNotificationObservers() {
+    private func registerNotificationObservers() {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(keyboardWillShow),
@@ -344,35 +358,26 @@ extension ITunesSearchViewController {
         )
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(keyboardDidHide),
-            name: UIResponder.keyboardDidHideNotification,
+            selector: #selector(keyboardWillHide),
+            name: UIResponder.keyboardWillHideNotification,
             object: nil
         )
     }
 }
-extension UIView {
-    var topSafeArea : CGFloat {
-        var height: CGFloat = 0
-        if #available(iOS 11, *) { // iPhone X basically
-            height += UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0
-        }
-        return height
+
+extension ITunesSearchViewController {
+    func showProgressView() {
+        activityView.startAnimating()
+        let appdelegate = UIApplication.shared.delegate as! AppDelegate
+        appdelegate.window?.addSubview(progressView)
     }
     
-    var bottomSafeArea : CGFloat {
-        var height: CGFloat = 0
-        if #available(iOS 11, *) { // iPhone X basically
-            height += UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0
-        }
-        return height
+    func hideProgressView() {
+        guard progressView.superview != nil else { return }
+        activityView.stopAnimating()
+        progressView.removeFromSuperview()
     }
 }
 
-public extension UICollectionViewCell {
-    
-    class func identifier() -> String {
-        return String(describing: self)
-    }
-    
-}
+
 typealias VoidFunction = () -> ()
