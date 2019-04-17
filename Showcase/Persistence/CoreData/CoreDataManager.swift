@@ -11,7 +11,7 @@ import CoreData
 
 //    self.container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
 
-class CoreDataManager {
+class CoreDataManager: PersistentDataManager {
     
     static var shared = CoreDataManager()
     var context: NSManagedObjectContext { return  persistentContainer.viewContext }
@@ -44,6 +44,11 @@ class CoreDataManager {
         return container
     }()
     
+    func save<T: StandardSave>(models: [T]){
+        models.forEach{ $0.createInContext() }
+        saveContext()
+    }
+    
     // MARK: - Core Data Saving support
     func saveContext () {
         if context.hasChanges {
@@ -56,7 +61,7 @@ class CoreDataManager {
         }
     }
     
-    func getData<T: CanPersist>() -> [T]? {
+    func load<T: CanPersist>(predicate: NSPredicate?) -> [T] {
         do {
             guard let objects = try context.fetch(T.CoreModel.fetchRequest()) as? [T.CoreModel] else {
                throw ClientError.unknownError("TypeCast failed")
@@ -67,7 +72,7 @@ class CoreDataManager {
         } catch {
             error.log()
         }
-        return nil
+        return []
     }
     
     func delete<T: CanPersist>(model: T.Type) {

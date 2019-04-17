@@ -18,18 +18,6 @@ protocol CanPersist {
     init?(_ coreModel: CoreModel)
 }
 
-protocol StandardSave {
-    associatedtype RealmModel: RealmObject
-
-}
-
-extension StandardSave {
-    func realmModel() -> RealmModel.RealmModel {
-        return RealmModel.construct(model: self as! RealmModel.MemoryModel)
-    }
-}
-
-
 protocol RealmObject where Self: Object {
     associatedtype MemoryModel: CanPersist
     associatedtype RealmModel: Object
@@ -41,3 +29,38 @@ protocol RealmObject where Self: Object {
 
 
 
+protocol StandardSave {
+    associatedtype RealmModel: RealmObject
+    associatedtype CoreModel: CoreDataModel
+}
+
+extension StandardSave {
+    func realmModel() -> RealmModel.RealmModel {
+        return RealmModel.construct(model: self as! RealmModel.MemoryModel)
+    }
+    
+    func createInContext() {
+        let model = self as! CoreModel.MemoryModel
+        let context = CoreDataManager.shared.context
+        CoreModel.create(in: context, post: model)
+    }
+}
+
+
+
+
+
+
+protocol CoreDataModel where Self: NSManagedObject  {
+    associatedtype MemoryModel: CanPersist
+    associatedtype CoreModel: NSManagedObject
+    
+    static func create(in: NSManagedObjectContext, post: MemoryModel)
+}
+
+protocol CoreDataCreate {
+    associatedtype MemoryModel: CanPersist
+    associatedtype CoreModel: NSManagedObject
+    
+    
+}

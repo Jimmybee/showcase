@@ -11,7 +11,7 @@ import UIKit
 class PostsListViewController: UIViewController {
     
     let tableView = UITableView()
-    let viewModel = PostListViewModel(networkProvider: NativeProvider(), storageManager: CoreDataManager.shared)
+    let viewModel = PostListViewModel(networkProvider: NativeProvider(), storageManager: RealmDataManager.shared)
     
     override func viewDidLoad() {
         super.viewDidLoad()

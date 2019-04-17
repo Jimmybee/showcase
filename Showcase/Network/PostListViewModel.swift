@@ -14,9 +14,9 @@ class PostListViewModel {
     var refreshView: VoidFunction?
 
     private var networkProvider: NativeProvider
-    private var storageManager: CoreDataManager
+    private var storageManager: PersistentDataManager
     
-    init(networkProvider: NativeProvider, storageManager: CoreDataManager) {
+    init(networkProvider: NativeProvider, storageManager: PersistentDataManager) {
         self.networkProvider = networkProvider
         self.storageManager = storageManager
        
@@ -28,9 +28,7 @@ class PostListViewModel {
     }
     
     func handle(posts: [Post]) {
-        let context = storageManager.persistentContainer.viewContext
-        posts.forEach { PostCore.create(in: context, post: $0) }
-        storageManager.saveContext()
+        storageManager.save(models: posts)
         loadPosts()
     }
     
@@ -39,10 +37,7 @@ class PostListViewModel {
     }
     
     func loadPosts() {
-        guard let posts: [Post] = storageManager.getData() else {
-            ClientError.unknownError("core data").log()
-            return
-        }
+        let posts: [Post] = storageManager.load(predicate: nil)
         logD("Loaded \(posts.count) posts")
         self.posts = posts //.map({ Post(model: $0) })
         refreshView?()

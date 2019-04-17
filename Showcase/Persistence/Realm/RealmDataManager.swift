@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-class RealmDataManager {
+class RealmDataManager: PersistentDataManager {
     var configuration : DataStoreConfiguration!
     
     init(realmConfiguration: Realm.Configuration? = nil) {
@@ -42,14 +42,29 @@ class RealmDataManager {
         return true
     }
     
-    
     func save<T: StandardSave>(models: [T]) {
         let realmModels = models.map({ $0.realmModel()  })
-
+        do {
+            realm.beginWrite()
+            realm.add(realmModels, update: true)
+            try realm.commitWrite()
+        } catch {
+            error.log()
+        }
     }
+    
+    func load<T: CanPersist>(predicate: NSPredicate?) -> [T] {
+        let objects = realm.objects(T.RealmModel.self)
+        let filterd = predicate != nil ? objects.filter(predicate!) : objects
+        return filterd.compactMap({ T($0) })
+    }
+    
 }
 
-
+protocol PersistentDataManager {
+    func save<T: StandardSave>(models: [T])
+    func load<T: CanPersist>(predicate: NSPredicate?) -> [T]
+}
 
 
 

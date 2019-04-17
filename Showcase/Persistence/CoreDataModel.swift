@@ -9,10 +9,3 @@
 import Foundation
 import CoreData
 
-protocol CoreDataModel where Self: NSManagedObject  {
-    associatedtype MemoryModel: CanPersist
-    associatedtype CoreModel: NSManagedObject
-    
-    static func create(in: NSManagedObjectContext, post: Post)
-    
-}

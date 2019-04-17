@@ -10,7 +10,7 @@
 
 import Foundation
 
-struct Post: Codable, CanPersist {
+struct Post: Codable, CanPersist, StandardSave {
     typealias CoreModel = PostCore
     typealias RealmModel = PostRealm
     

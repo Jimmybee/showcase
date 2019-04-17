@@ -13,10 +13,10 @@ final class PostRealm: Object, RealmObject {
     typealias MemoryModel = Post
     typealias RealmModel = PostRealm
     
-    dynamic var userId:Int = 0
-    dynamic var id:Int = 0
-    dynamic var title: String?
-    dynamic var body: String?
+    @objc dynamic var userId:Int = 0
+    @objc dynamic var id:Int = 0
+    @objc dynamic var title: String?
+    @objc dynamic var body: String?
     
     static func construct(model: Post) -> PostRealm {
         return PostRealm(model)
@@ -30,20 +30,9 @@ final class PostRealm: Object, RealmObject {
         self.body = post.body
     }
     
-//    static func get() -> Results<PostRealm> {
-//        let realm = try! Realm()
-//        return realm.objects(PostRealm.self)
-//    }
-//
-//    static func saveAll(posts: [Post], completion: () -> ()) {
-//        let realm = try! Realm()
-//        let current = PostRealm.get()
-//        let realmPosts = posts.map({PostRealm($0)})
-//        try! realm.write {
-//           realm.delete(current)
-//           realm.add(realmPosts)
-//        }
-//    }
+    override static func primaryKey() -> String? {
+        return "id"
+    }
 }
 
 
