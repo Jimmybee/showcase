@@ -10,28 +10,28 @@
 
 import Foundation
 
-struct Post: Codable {
+struct Post: Codable, CanPersist {
+    typealias CoreModel = PostCore
+    typealias RealmModel = PostRealm
     
     var userId: Int
     var id: Int
     var title: String
     var body: String
             
-//    convenience init(_ postRealm: PostRealm) {
-//        self.init()
-//        self.userId = postRealm.userId
-//        self.id = postRealm.id
-//        self.title = postRealm.title
-//        self.body = postRealm.body
-//    }
+    init?(_ postRealm: PostRealm) {
+        self.userId = postRealm.userId
+        self.id = postRealm.id
+        self.title = postRealm.title ?? ""
+        self.body = postRealm.body ?? ""
+    }
     
-    init(model: PostCore) {
+    init?(_ model: PostCore) {
         id = Int(model.id)
         body = model.body ?? ""
         title = model.title ?? ""
         userId = Int(model.userId)
     }
+    
 }
-
-
 

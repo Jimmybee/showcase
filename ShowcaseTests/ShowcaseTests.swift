@@ -11,19 +11,18 @@ import XCTest
 
 class ShowcaseTests: XCTestCase {
 
+    let cdm = CoreDataManager.shared
+
     override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-        let cdm = CoreDataManager.shared
-        
+        cdm.saveContext()
+        cdm.delete(model: Post.self)
     }
 
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+
     }
 
-    func testExample() {
-        let cdm = CoreDataManager.shared
-
+    func testCoreData() {
         do {
             let dictionary = try postJson.convertToDictionary()
             let data = try JSONSerialization.data(withJSONObject: dictionary, options: .prettyPrinted)
@@ -32,11 +31,10 @@ class ShowcaseTests: XCTestCase {
             PostCore.create(in: context, post: post)
             cdm.saveContext()
 
-            guard let fetchedPosts: [PostCore] = cdm.getData() else { XCTFail(); return }
+            guard let fetchedPosts: [Post] = cdm.getData() else { XCTFail(); return }
             XCTAssert(fetchedPosts.count == 1)
             
-            let postCore = fetchedPosts.first!
-            let loadedPost = Post(model: postCore)
+            let loadedPost = fetchedPosts.first!
             XCTAssert(loadedPost.id == 90)
             XCTAssert(loadedPost.title == "Test Post")
             XCTAssert(loadedPost.userId == 10)
@@ -51,9 +49,7 @@ class ShowcaseTests: XCTestCase {
     }
 
     func testPerformanceExample() {
-        // This is an example of a performance test case.
         self.measure {
-            // Put the code you want to measure the time of here.
         }
     }
 
@@ -66,19 +62,3 @@ class ShowcaseTests: XCTestCase {
 }
 
 
-extension String {
-    func convertToDictionary() throws ->  [String:AnyObject] {
-        guard let data = self.data(using: .utf8) else {
-            throw ClientError.decodeFail("")
-        }
-        do {
-            let object = try JSONSerialization.jsonObject(with: data, options: [])
-            guard let dict = object as? [String:AnyObject] else {
-                 throw ClientError.decodeFail("")
-            }
-            return dict
-        } catch let error as NSError {
-            throw error
-        }
-    }
-}

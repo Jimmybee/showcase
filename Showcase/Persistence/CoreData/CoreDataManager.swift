@@ -9,6 +9,8 @@
 import Foundation
 import CoreData
 
+//    self.container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+
 class CoreDataManager {
     
     static var shared = CoreDataManager()
@@ -23,6 +25,7 @@ class CoreDataManager {
         
         let container = NSPersistentContainer(name: "Showcase")
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+            container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
             if let error = error as NSError? {
                 // Replace this implementation with code to handle the error appropriately.
                 // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
@@ -53,29 +56,36 @@ class CoreDataManager {
         }
     }
     
-    func getData<T: NSManagedObject>() -> [T]? {
+    func getData<T: CanPersist>() -> [T]? {
         do {
-            let objects = try context.fetch(T.fetchRequest()) as? [T]
-            guard let a = objects else {
-                throw ClientError.unknownError("sad")
+            guard let objects = try context.fetch(T.CoreModel.fetchRequest()) as? [T.CoreModel] else {
+               throw ClientError.unknownError("TypeCast failed")
             }
-            logD("CoreData data loaded")
-            return a
+            let memoryModels = objects.compactMap{ T($0) }
+            logD("\(T.self) loaded by \(self)")
+            return memoryModels
         } catch {
             error.log()
         }
         return nil
     }
     
-    func mon() {
-        
+    func delete<T: CanPersist>(model: T.Type) {
+        let fetchRequest = T.CoreModel.fetchRequest()
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        do {
+            try context.execute(deleteRequest)
+            logD("\(T.self) deleted by \(self)")
+        } catch {
+            error.log()
+        }
     }
 }
 
 // MARK: - CoreDataObserverDelegate
 extension CoreDataManager: CoreDataObserverDelegate {
     func contextDidSave() {
-        print("saved")
+//        print("saved")
     }
 }
 

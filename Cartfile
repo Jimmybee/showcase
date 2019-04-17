@@ -1,16 +1,16 @@
 # Realm Database
-github "realm/realm-cocoa" "master"
+github "realm/realm-cocoa"
 
 # RxSwift
-github "ReactiveX/RxSwift" "master"
+github "ReactiveX/RxSwift" 
 github "RxSwiftCommunity/RxSwiftExt"
-github "RxSwiftCommunity/RxRealm" "master"
+github "RxSwiftCommunity/RxRealm" 
 github "RxSwiftCommunity/RxGesture" 
 github "RxSwiftCommunity/RxDataSources" 
 github "RxSwiftCommunity/RxOptional" 
 
 # Networking
-github "Alamofire/Alamofire" ~> 4.5.1
+github "Alamofire/Alamofire"
 github "Moya/Moya"
 
 # UI

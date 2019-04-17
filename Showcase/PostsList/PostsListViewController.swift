@@ -44,6 +44,7 @@ extension PostsListViewController {
 
 extension PostsListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        logD("Loading table with \(viewModel.posts.count) rows")
         return viewModel.posts.count
     }
     

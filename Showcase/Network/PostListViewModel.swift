@@ -20,9 +20,8 @@ class PostListViewModel {
         self.networkProvider = networkProvider
         self.storageManager = storageManager
        
+        refreshRemoteData()
     }
-    
-  
     
     func refreshRemoteData() {
         networkProvider.codableRequest(type: JsonPlaceholder.posts, handleSuccess: handle, handleError: handleError)
@@ -32,6 +31,7 @@ class PostListViewModel {
         let context = storageManager.persistentContainer.viewContext
         posts.forEach { PostCore.create(in: context, post: $0) }
         storageManager.saveContext()
+        loadPosts()
     }
     
     func handleError(_ error: Error) {
@@ -39,11 +39,12 @@ class PostListViewModel {
     }
     
     func loadPosts() {
-        guard let posts: [PostCore] = storageManager.getData() else {
+        guard let posts: [Post] = storageManager.getData() else {
             ClientError.unknownError("core data").log()
             return
         }
-        self.posts = posts.map({ Post(model: $0) })
+        logD("Loaded \(posts.count) posts")
+        self.posts = posts //.map({ Post(model: $0) })
         refreshView?()
     }
     
