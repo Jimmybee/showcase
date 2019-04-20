@@ -42,7 +42,7 @@ class RealmDataManager: PersistentDataManager {
         return true
     }
     
-    func save<T: StandardSave>(models: [T]) {
+    func save<T: RealmSave>(models: [T]) {
         let realmModels = models.map({ $0.realmModel()  })
         do {
             realm.beginWrite()
@@ -53,7 +53,7 @@ class RealmDataManager: PersistentDataManager {
         }
     }
     
-    func load<T: CanPersist>(predicate: NSPredicate?) -> [T] {
+    func load<T: PersistRealm>(predicate: NSPredicate?) -> [T] {
         let objects = realm.objects(T.RealmModel.self)
         let filterd = predicate != nil ? objects.filter(predicate!) : objects
         return filterd.compactMap({ T($0) })

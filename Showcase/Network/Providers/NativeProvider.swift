@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class NativeProvider: NSObject {
     
@@ -49,6 +50,26 @@ class NativeProvider: NSObject {
                 handleError(e)
             }
             }.resume()
+    }
+    
+    func imageRequest(type: NativeRouter, handleSuccess: @escaping((UIImage) -> ()), handleError: @escaping ((Error) -> ())) -> URLSessionDataTask {
+        let task = URLSession.shared.dataTask(with: type.requestUrl) { (data, response, error) in
+            if let data = data,
+                let image = UIImage(data: data) {
+                handleSuccess(image)
+            } else {
+                let e = ClientError.unknownError("Image request failed")
+                e.log()
+                handleError(e)
+            }
+            if let error = error {
+                let e = NetworkError(response: response, error: error)
+                e.log()
+                handleError(e)
+            }
+        }
+        task.resume()
+        return task
     }
     
     func log(data: Data) {

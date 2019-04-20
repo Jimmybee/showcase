@@ -36,4 +36,13 @@ enum ClientError: Error {
             return detail
         }
     }
+    
+    var userAlertMessage: String? {
+        switch self {
+        case .decodeFail:
+            return "Internal Client Error"
+        default:
+            return detail
+        }
+    }
 }

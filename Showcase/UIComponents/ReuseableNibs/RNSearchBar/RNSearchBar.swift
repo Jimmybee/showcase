@@ -11,7 +11,6 @@ import UIKit
 
 protocol RNSearchBarDelegate: class {
     func searchIs(active: Bool)
-    func handle(error: Error)
     func handle(searchTerm: String)
 }
 
@@ -69,9 +68,6 @@ class RNSearchBar: ReusableViewFromXib {
     @objc func textDidChange() {
         guard let term = searchTermTextField.text,
         term.count > 2 else {
-            let error = ClientError.unknownError("Term too short")
-            error.log()
-            delegate?.handle(error: error)
             return
         }
         delegate?.handle(searchTerm: term)
@@ -87,5 +83,8 @@ extension RNSearchBar: UITextFieldDelegate {
         active = false
     }
     
-    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        searchTermTextField.resignFirstResponder()
+        return true
+    }
 }

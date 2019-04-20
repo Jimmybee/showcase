@@ -9,21 +9,6 @@
 import Foundation
 import UIKit
 
-extension UIButton {
-    convenience init(asset: UIImage.Asset) {
-        self.init()
-        let image = UIImage(asset: asset)
-        setImage(image, for: .normal)
-    }
-}
-
-extension UIImageView {
-    convenience init(asset: UIImage.Asset) {
-        self.init()
-        image = UIImage(asset: asset)
-    }
-}
-
 class ITunesSearchViewController: UIViewController {
     
     private let viewModel = ITunesSearchViewModel()
@@ -102,10 +87,27 @@ class ITunesSearchViewController: UIViewController {
 }
 
 extension ITunesSearchViewController: ITunesSearchViewModelDelegate {
-    func refreshTableData() {
-        DispatchQueue.main.async {
-            self.resultsTableView.reloadData()
+    func handle(pushTo: UIViewController) {
+        present(pushTo, animated: true, completion: nil)
+    }
+    
+    func handle(error: Error) {
+        DispatchQueue.main.async { [weak self] in
+            self?.displayAlert(title: "", message: error.userAlertMessage, style: .alert)
         }
+    }
+    
+    func refreshTableData() {
+        DispatchQueue.main.async { [weak self] in
+            self?.resultsTableView.reloadData()
+        }
+    }
+    
+    func displayAlert(title: String?, message: String?, style: UIAlertController.Style) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: style)
+        let action = UIAlertAction(title: "Ok", style: .default, handler: nil)
+        alertController.addAction(action)
+        self.present(alertController, animated: true, completion: nil)
     }
 }
 
@@ -277,10 +279,6 @@ extension ITunesSearchViewController {
 }
 
 extension ITunesSearchViewController: RNSearchBarDelegate {
-    func handle(error: Error) {
-        
-    }
-    
     func handle(searchTerm: String) {
         viewModel.handleSearch(term: searchTerm)
     }

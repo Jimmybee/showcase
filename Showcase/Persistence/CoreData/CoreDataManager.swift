@@ -44,7 +44,7 @@ class CoreDataManager: PersistentDataManager {
         return container
     }()
     
-    func save<T: StandardSave>(models: [T]){
+    func save<T: CoreSave>(models: [T]){
         models.forEach{ $0.createInContext() }
         saveContext()
     }
@@ -61,7 +61,7 @@ class CoreDataManager: PersistentDataManager {
         }
     }
     
-    func load<T: CanPersist>(predicate: NSPredicate?) -> [T] {
+    func load<T: PersistCoreData>(predicate: NSPredicate?) -> [T] {
         do {
             guard let objects = try context.fetch(T.CoreModel.fetchRequest()) as? [T.CoreModel] else {
                throw ClientError.unknownError("TypeCast failed")
@@ -75,7 +75,7 @@ class CoreDataManager: PersistentDataManager {
         return []
     }
     
-    func delete<T: CanPersist>(model: T.Type) {
+    func delete<T: PersistCoreData>(model: T.Type) {
         let fetchRequest = T.CoreModel.fetchRequest()
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
         do {

@@ -11,6 +11,8 @@ import UIKit
 
 protocol ITunesSearchViewModelDelegate {
     func refreshTableData()
+    func handle(error: Error)
+    func handle(pushTo: UIViewController)
 }
 
 class ITunesSearchViewModel {
@@ -61,13 +63,17 @@ class ITunesSearchViewModel {
         task = nil
     }
     
-    func handleData(albums: ServerResponse) {
-//        print(albums.musicAlbums)
+    func handleData(response: ServerResponse) {
+        DispatchQueue.main.async { [weak self] in
+            let vm = ITunesAlbumListViewModel(albums: response.musicAlbums)
+            let vc = ITunesAlbumListViewController(viewModel: vm)
+            self?.delegate?.handle(pushTo: vc)
+        }
         task = nil
     }
     
     func handleError(error: Error) {
-        
+        delegate?.handle(error: error)
     }
     
 }

@@ -50,10 +50,22 @@ extension Error {
             }
         }
     }
+    
+    var userAlertMessage: String? {
+        switch self {
+        case let networkError as NetworkError:
+            return networkError.userAlertMessage
+        case let clientError as ClientError:
+            return clientError.userAlertMessage
+        default:
+            return "Unknown Error"
+        }
+    }
 }
 
 func logD(_ message: String) {
+    let thread : String = Thread.current.isMainThread ? "M" : "BG"
     logQueue.async {
-        print("\(DebuggableLevel.debug.rawValue) : \(message)")
+        print("\(DebuggableLevel.debug.rawValue) (\(thread)): \(message)")
     }
 }

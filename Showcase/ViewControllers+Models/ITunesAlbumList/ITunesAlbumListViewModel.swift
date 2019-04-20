@@ -7,9 +7,18 @@
 //
 
 import Foundation
+import RxSwift
 
 class ITunesAlbumListViewModel {
     
-    var albums: [MusicAlbum] = []
+    private var albums: [MusicAlbum]
 
+    init(albums: [MusicAlbum]) {
+        self.albums = albums
+        print(albums)
+    }
+    
+    var tableData: Observable<[MusicAlbum]> {
+        return Observable.of(albums)
+    }
 }

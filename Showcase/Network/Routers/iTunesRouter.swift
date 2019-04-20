@@ -12,6 +12,7 @@ import Foundation
 enum iTunesRouter {
     case search(query: ITunesSearchQuery)
     case genre(index: Int)
+    case image(url: String)
 }
 
 extension iTunesRouter: NativeRouter {
@@ -30,6 +31,8 @@ extension iTunesRouter: NativeRouter {
         return "https://itunes.apple.com/search?"
     case .genre(let index):
         return "https://itunes.apple.com/us/rss/topalbums/genre=\(index)/json"
+    case .image(url: let url):
+        return url
         }
         
     }
@@ -69,20 +72,3 @@ enum ITunesMedia: String, Codable {
     case movie, podcast, music, musicVideo, audiobook, shortFilm, tvShow, software, ebook, all
 }
 
-
-extension Encodable {
-    var dictionary: [String: AnyObject]? {
-        guard let data = try? JSONEncoder().encode(self) else { return nil }
-        return (try? JSONSerialization.jsonObject(with: data, options: .allowFragments)).flatMap { $0 as? [String: AnyObject] }
-    }
-}
-
-extension Dictionary {
-    var queryString: String? {
-        return self.map { (key, value) -> String in
-            return "\(key)=\(value)"
-        }
-        .joined(separator: "&")
-//        .replacingOccurrences(of: " ", with: "+")
-    }
-}
