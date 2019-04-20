@@ -20,7 +20,6 @@
 		661CD9082259E3D500DA641B /* Showcase.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 661CD9062259E3D500DA641B /* Showcase.xcdatamodeld */; };
 		661CD90B2259EA5D00DA641B /* PostCore+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661CD90A2259EA5D00DA641B /* PostCore+Ext.swift */; };
 		661CD90D225A667C00DA641B /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661CD90C225A667C00DA641B /* CoreDataManager.swift */; };
-		661CD90F225A66BE00DA641B /* PostListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661CD90E225A66BE00DA641B /* PostListViewModel.swift */; };
 		661D6DA42267286B0086E464 /* CoreDataObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661D6DA32267286B0086E464 /* CoreDataObserver.swift */; };
 		661D6DA6226728BB0086E464 /* RealmObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661D6DA5226728BB0086E464 /* RealmObject.swift */; };
 		661D6DA82267625B0086E464 /* AlbumCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661D6DA72267625B0086E464 /* AlbumCollectionViewCell.swift */; };
@@ -30,6 +29,13 @@
 		661D6DB0226857100086E464 /* UIImageView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661D6DAF226857100086E464 /* UIImageView+Ext.swift */; };
 		6632E225226B0E6500F74A8E /* UIViewController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6632E224226B0E6500F74A8E /* UIViewController+Rx.swift */; };
 		6632E227226B0FB700F74A8E /* UIAlertContoller+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6632E226226B0FB700F74A8E /* UIAlertContoller+Rx.swift */; };
+		6632E229226B21EA00F74A8E /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6632E228226B21E900F74A8E /* Kingfisher.framework */; };
+		6632E22B226B249E00F74A8E /* MoyaProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6632E22A226B249E00F74A8E /* MoyaProvider.swift */; };
+		6632E22F226B4CB200F74A8E /* PostDetailViewContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6632E22E226B4CB200F74A8E /* PostDetailViewContoller.swift */; };
+		6632E231226B4D2D00F74A8E /* PostListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6632E230226B4D2D00F74A8E /* PostListViewModel.swift */; };
+		6632E233226B52E400F74A8E /* RxPostsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6632E232226B52E400F74A8E /* RxPostsListViewController.swift */; };
+		6632E236226B53B600F74A8E /* RxPostListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6632E235226B53B600F74A8E /* RxPostListViewModel.swift */; };
+		6632E238226B6EA800F74A8E /* RealmConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6632E237226B6EA800F74A8E /* RealmConfiguration.swift */; };
 		66C1DF3D225DDCE200049855 /* LabelStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C1DF3C225DDCE200049855 /* LabelStyles.swift */; };
 		66C1DF3F225DE4D700049855 /* ImageAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C1DF3E225DE4D700049855 /* ImageAssets.swift */; };
 		66C1DF44225F25D700049855 /* CategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C1DF43225F25D700049855 /* CategoryCollectionViewCell.swift */; };
@@ -120,7 +126,6 @@
 		661CD9072259E3D500DA641B /* PostCore.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PostCore.xcdatamodel; sourceTree = "<group>"; };
 		661CD90A2259EA5D00DA641B /* PostCore+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostCore+Ext.swift"; sourceTree = "<group>"; };
 		661CD90C225A667C00DA641B /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
-		661CD90E225A66BE00DA641B /* PostListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PostListViewModel.swift; path = ../Network/PostListViewModel.swift; sourceTree = "<group>"; };
 		661D6DA32267286B0086E464 /* CoreDataObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataObserver.swift; sourceTree = "<group>"; };
 		661D6DA5226728BB0086E464 /* RealmObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmObject.swift; sourceTree = "<group>"; };
 		661D6DA72267625B0086E464 /* AlbumCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -130,6 +135,13 @@
 		661D6DAF226857100086E464 /* UIImageView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Ext.swift"; sourceTree = "<group>"; };
 		6632E224226B0E6500F74A8E /* UIViewController+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Rx.swift"; sourceTree = "<group>"; };
 		6632E226226B0FB700F74A8E /* UIAlertContoller+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertContoller+Rx.swift"; sourceTree = "<group>"; };
+		6632E228226B21E900F74A8E /* Kingfisher.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kingfisher.framework; path = Carthage/Build/iOS/Kingfisher.framework; sourceTree = "<group>"; };
+		6632E22A226B249E00F74A8E /* MoyaProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaProvider.swift; sourceTree = "<group>"; };
+		6632E22E226B4CB200F74A8E /* PostDetailViewContoller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailViewContoller.swift; sourceTree = "<group>"; };
+		6632E230226B4D2D00F74A8E /* PostListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostListViewModel.swift; sourceTree = "<group>"; };
+		6632E232226B52E400F74A8E /* RxPostsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxPostsListViewController.swift; sourceTree = "<group>"; };
+		6632E235226B53B600F74A8E /* RxPostListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxPostListViewModel.swift; sourceTree = "<group>"; };
+		6632E237226B6EA800F74A8E /* RealmConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmConfiguration.swift; sourceTree = "<group>"; };
 		66C1DF3C225DDCE200049855 /* LabelStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelStyles.swift; sourceTree = "<group>"; };
 		66C1DF3E225DE4D700049855 /* ImageAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAssets.swift; sourceTree = "<group>"; };
 		66C1DF43225F25D700049855 /* CategoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -209,6 +221,7 @@
 				66ECE212226652D900D3A670 /* RxOptional.framework in Frameworks */,
 				66ECE213226652D900D3A670 /* RxAtomic.framework in Frameworks */,
 				66ECE214226652D900D3A670 /* SnapKit.framework in Frameworks */,
+				6632E229226B21EA00F74A8E /* Kingfisher.framework in Frameworks */,
 				66ECE215226652D900D3A670 /* Moya.framework in Frameworks */,
 				66ECE216226652D900D3A670 /* RxCocoa.framework in Frameworks */,
 				66ECE217226652D900D3A670 /* Alamofire.framework in Frameworks */,
@@ -249,6 +262,7 @@
 			isa = PBXGroup;
 			children = (
 				66C360A82258A5270018A579 /* NativeProvider.swift */,
+				6632E22A226B249E00F74A8E /* MoyaProvider.swift */,
 			);
 			path = Providers;
 			sourceTree = "<group>";
@@ -279,9 +293,8 @@
 		660F7E4D225B2D3700D00072 /* ViewControllers+Models */ = {
 			isa = PBXGroup;
 			children = (
-				66C1DF56226466D100049855 /* ITunesAlbumList */,
-				6611363D225C3F94007E77A6 /* ITunesSeach */,
-				661CD910225A66C800DA641B /* PostsList */,
+				6632E22C226B4C8A00F74A8E /* ITunes */,
+				6632E22D226B4C9300F74A8E /* JSONPlaceholder */,
 			);
 			path = "ViewControllers+Models";
 			sourceTree = "<group>";
@@ -382,10 +395,9 @@
 			isa = PBXGroup;
 			children = (
 				66C3607B225897FE0018A579 /* PostsListViewController.swift */,
-				661CD90E225A66BE00DA641B /* PostListViewModel.swift */,
+				6632E230226B4D2D00F74A8E /* PostListViewModel.swift */,
 			);
-			name = PostsList;
-			path = ../PostsList;
+			path = PostsList;
 			sourceTree = "<group>";
 		};
 		6632E223226B0E4700F74A8E /* Reactive+Ext */ = {
@@ -395,6 +407,34 @@
 				6632E226226B0FB700F74A8E /* UIAlertContoller+Rx.swift */,
 			);
 			path = "Reactive+Ext";
+			sourceTree = "<group>";
+		};
+		6632E22C226B4C8A00F74A8E /* ITunes */ = {
+			isa = PBXGroup;
+			children = (
+				66C1DF56226466D100049855 /* ITunesAlbumList */,
+				6611363D225C3F94007E77A6 /* ITunesSeach */,
+			);
+			path = ITunes;
+			sourceTree = "<group>";
+		};
+		6632E22D226B4C9300F74A8E /* JSONPlaceholder */ = {
+			isa = PBXGroup;
+			children = (
+				6632E234226B52EB00F74A8E /* RxPostsList */,
+				661CD910225A66C800DA641B /* PostsList */,
+				6632E22E226B4CB200F74A8E /* PostDetailViewContoller.swift */,
+			);
+			path = JSONPlaceholder;
+			sourceTree = "<group>";
+		};
+		6632E234226B52EB00F74A8E /* RxPostsList */ = {
+			isa = PBXGroup;
+			children = (
+				6632E232226B52E400F74A8E /* RxPostsListViewController.swift */,
+				6632E235226B53B600F74A8E /* RxPostListViewModel.swift */,
+			);
+			path = RxPostsList;
 			sourceTree = "<group>";
 		};
 		66C1DF3B225DDCAF00049855 /* Labels */ = {
@@ -576,6 +616,7 @@
 		66ECE1B422664D2B00D3A670 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6632E228226B21E900F74A8E /* Kingfisher.framework */,
 				66ECE203226652D900D3A670 /* Alamofire.framework */,
 				66ECE1FD226652D800D3A670 /* Differentiator.framework */,
 				66ECE201226652D900D3A670 /* Moya.framework */,
@@ -605,6 +646,7 @@
 				66ECE22122665E4300D3A670 /* RealmDataManager.swift */,
 				66C360B22258AA090018A579 /* PostRealm.swift */,
 				661D6DA5226728BB0086E464 /* RealmObject.swift */,
+				6632E237226B6EA800F74A8E /* RealmConfiguration.swift */,
 			);
 			path = Realm;
 			sourceTree = "<group>";
@@ -767,6 +809,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/RxSwiftExt.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/RxTest.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/SnapKit.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Kingfisher.framework",
 			);
 			name = CArthage;
 			outputFileListPaths = (
@@ -790,6 +833,7 @@
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/RxSwiftExt.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/RxTest.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/SnapKit.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Kingfisher.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -807,7 +851,6 @@
 				66C1DF4D225F974400049855 /* MusicAlbum.swift in Sources */,
 				66C360BC2258B8890018A579 /* ErrorExt.swift in Sources */,
 				6611363C225C2F1D007E77A6 /* MusicArtist.swift in Sources */,
-				661CD90F225A66BE00DA641B /* PostListViewModel.swift in Sources */,
 				66C1DF44225F25D700049855 /* CategoryCollectionViewCell.swift in Sources */,
 				66C1DF4B225F972C00049855 /* MusicCategory.swift in Sources */,
 				66C1DF3F225DE4D700049855 /* ImageAssets.swift in Sources */,
@@ -826,19 +869,25 @@
 				66ECE21F22665D1500D3A670 /* CoreDataModel.swift in Sources */,
 				66C1DF4F225F977E00049855 /* ITunesSearchViewModel.swift in Sources */,
 				66C360AF2258A9D50018A579 /* Comment.swift in Sources */,
+				6632E22F226B4CB200F74A8E /* PostDetailViewContoller.swift in Sources */,
 				66C1DF46225F282700049855 /* ITunesHeader.swift in Sources */,
 				661D6DAE226856FA0086E464 /* UIButton+Ext.swift in Sources */,
 				66C360B52258B4F30018A579 /* HTTPStatusCode.swift in Sources */,
 				66C360AE2258A9D50018A579 /* User.swift in Sources */,
 				66C3607C225897FE0018A579 /* PostsListViewController.swift in Sources */,
 				6611363F225C3FAE007E77A6 /* ITunesSearchViewController.swift in Sources */,
+				6632E22B226B249E00F74A8E /* MoyaProvider.swift in Sources */,
 				660F7E4F225B2D8A00D00072 /* CardView.swift in Sources */,
+				6632E233226B52E400F74A8E /* RxPostsListViewController.swift in Sources */,
 				66ECE22222665E4300D3A670 /* RealmDataManager.swift in Sources */,
 				66C360B92258B7E50018A579 /* ClientError.swift in Sources */,
 				66113645225C822E007E77A6 /* RNSearchBar.swift in Sources */,
+				6632E236226B53B600F74A8E /* RxPostListViewModel.swift in Sources */,
+				6632E238226B6EA800F74A8E /* RealmConfiguration.swift in Sources */,
 				66C360B02258A9D50018A579 /* Post.swift in Sources */,
 				66C1DF6722646AE000049855 /* StringLookup.swift in Sources */,
 				660F7E54225B300700D00072 /* FontStyle.swift in Sources */,
+				6632E231226B4D2D00F74A8E /* PostListViewModel.swift in Sources */,
 				66ECE21D22665CC100D3A670 /* MemoryModel.swift in Sources */,
 				661CD90B2259EA5D00DA641B /* PostCore+Ext.swift in Sources */,
 				66C360B72258B53A0018A579 /* NetworkError.swift in Sources */,

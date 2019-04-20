@@ -31,6 +31,7 @@ class PostsListViewController: UIViewController {
 extension PostsListViewController {
     private func setupView() {
         view.addSubview(tableView)
+        navigationItem.title = "Post List"
         tableView.delegate = self
         tableView.dataSource = self
         tableView.translatesAutoresizingMaskIntoConstraints = false

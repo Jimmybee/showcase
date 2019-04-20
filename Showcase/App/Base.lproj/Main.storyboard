@@ -41,6 +41,22 @@
             </objects>
             <point key="canvasLocation" x="1045" y="298"/>
         </scene>
+        <!--Rx Posts List View Controller-->
+        <scene sceneID="USD-3Y-KS6">
+            <objects>
+                <viewController id="s8G-uE-Dw0" customClass="RxPostsListViewController" customModule="Showcase" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="qTr-7H-e0r">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="wrS-SL-WDN"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="fq9-uP-TBy"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vLm-cg-zzS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-971" y="256"/>
+        </scene>
         <!--Item-->
         <scene sceneID="6Ni-ps-7oC">
             <objects>
@@ -65,18 +81,40 @@
             <objects>
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="m4b-VQ-ZBR" sceneMemberID="viewController">
                     <toolbarItems/>
+                    <navigationItem key="navigationItem" id="vGI-Vq-0ak"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="LjQ-lB-REx">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
                         <segue destination="Daa-HX-TlP" kind="relationship" relationship="viewControllers" id="Fox-KD-jOb"/>
                         <segue destination="C7E-zH-9DU" kind="relationship" relationship="viewControllers" id="lXQ-73-CJB"/>
+                        <segue destination="WRU-Jz-2pm" kind="relationship" relationship="viewControllers" id="j5z-sN-weh"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ctx-pr-Ur1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="134.78260869565219" y="-544.41964285714278"/>
+        </scene>
+        <!--Item-->
+        <scene sceneID="jhM-5j-b2d">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="WRU-Jz-2pm" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="Opy-uq-np8"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="0dS-77-nIP">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="s8G-uE-Dw0" kind="relationship" relationship="rootViewController" id="uIg-O0-p0W"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="M6t-iv-OVM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-971" y="-544"/>
         </scene>
     </scenes>
 </document>

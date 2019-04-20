@@ -7,17 +7,54 @@
 //
 
 import Foundation
+import Moya
 
 // https://affiliate.itunes.apple.com/resources/documentation/itunes-store-web-service-search-api/
 enum iTunesRouter {
     case search(query: ITunesSearchQuery)
     case genre(index: Int)
-    case image(url: String)
+}
+
+typealias DualRouter = NativeRouter & TargetType
+extension iTunesRouter: TargetType {
+    
+    var headers: [String : String]? {
+        return nil
+    }
+    
+    var baseURL: URL { return URL(string: "https://itunes.apple.com/")! }
+    
+    var method: Moya.Method {
+        return .get
+    }
+
+    var path: String {
+        switch self {
+        case .search:
+            return "search"
+        case .genre(let index):
+            return "us/rss/topalbums/genre=\(index)/json"
+        }
+    }
+    
+    var task: Task {
+        switch self {
+        case .search(query: let query):
+            guard let dict = query.dictionary else { return .requestPlain }
+            return .requestParameters(parameters: dict, encoding: URLEncoding.queryString)
+        case .genre:
+            return .requestPlain
+        }
+    }
+    
+    var sampleData: Data {
+        return "{{\"Implemented\": \"Nope\"}}".data(using: .utf8)!
+    }
 }
 
 extension iTunesRouter: NativeRouter {
-    var requestUrl: URL {
-        var urlString = baseURL
+    var nativeRequestUrl: URL {
+        var urlString = baseURLstr
         if let urlParameters = urlParameters {
             urlString.append( urlParameters )
         }
@@ -25,20 +62,15 @@ extension iTunesRouter: NativeRouter {
         return url
     }
     
-    var baseURL: String {
+    
+    var baseURLstr: String {
         switch self {
-    case .search:
-        return "https://itunes.apple.com/search?"
-    case .genre(let index):
-        return "https://itunes.apple.com/us/rss/topalbums/genre=\(index)/json"
-    case .image(url: let url):
-        return url
+        case .search:
+            return "https://itunes.apple.com/search?"
+        case .genre(let index):
+            return "https://itunes.apple.com/us/rss/topalbums/genre=\(index)/json"
         }
         
-    }
-    
-    var path: String {
-        return ""
     }
     
     var urlParameters: String? {
@@ -49,6 +81,7 @@ extension iTunesRouter: NativeRouter {
             return nil
         }
     }
+    
 }
 
 

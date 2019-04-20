@@ -7,19 +7,20 @@
 //
 
 import UIKit
+import Kingfisher
 
 class AlbumCollectionViewCell: UICollectionViewCell {
     
     var album: MusicAlbum! {
         didSet {
-            let route = iTunesRouter.image(url: album.artworkUrl100)
-            NativeProvider.shared.imageRequest(type: route, handleSuccess: { (image) in
-                DispatchQueue.main.async { [weak self] in
-                    self?.albumArt.image = image
-                }
-            }) { (error) in
-                error.log()
-            }
+            let url = URL(string: album.artworkUrl100)
+            albumArt.kf.setImage(
+                with: url,
+                placeholder: UIImage(named: "placeholderImage"),
+                options: [
+                    .transition(.fade(1)),
+                    .cacheOriginalImage
+                ])
         }
     }
     

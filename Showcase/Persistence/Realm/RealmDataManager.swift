@@ -8,8 +8,17 @@
 
 import Foundation
 import RealmSwift
+import RxSwift
+import RxRealm
 
-class RealmDataManager: PersistentDataManager {
+class RealmDataManager: PersistentDataManager, RxDataManager {
+    func observe<T>(predicate: NSPredicate?) -> Observable<[T]> where T : PersistCoreData, T : PersistRealm {
+        let results = realm.objects(T.RealmModel.self)
+        let filterd = predicate != nil ? results.filter(predicate!) : results
+        return Observable.collection(from: filterd, synchronousStart: false)
+            .map{ $0.compactMap({ T($0) }) } 
+    }
+    
     var configuration : DataStoreConfiguration!
     
     init(realmConfiguration: Realm.Configuration? = nil) {
@@ -54,8 +63,8 @@ class RealmDataManager: PersistentDataManager {
     }
     
     func load<T: PersistRealm>(predicate: NSPredicate?) -> [T] {
-        let objects = realm.objects(T.RealmModel.self)
-        let filterd = predicate != nil ? objects.filter(predicate!) : objects
+        let results = realm.objects(T.RealmModel.self)
+        let filterd = predicate != nil ? results.filter(predicate!) : results
         return filterd.compactMap({ T($0) })
     }
     
@@ -66,65 +75,8 @@ protocol PersistentDataManager {
     func load<T: CanPersist>(predicate: NSPredicate?) -> [T]
 }
 
+protocol RxDataManager {
+    func observe<T: CanPersist>(predicate: NSPredicate?) -> Observable<[T]>
+    func save<T: StandardSave>(models: [T])
 
-
-
-
-
-
-
-
-
-
-
-
-
-final class DataStoreConfiguration {
-    
-    private let schemaVersion : UInt64 = 1
-    
-    private (set) var realmConfiguration: Realm.Configuration!
-    
-    var hasCheckedConfiguration = false
-    
-    init(realmConfiguration: Realm.Configuration? = nil) {
-        self.realmConfiguration = {
-            if let r = realmConfiguration {
-                return r
-            }
-            return Realm.Configuration(schemaVersion: schemaVersion, migrationBlock: migrationBlock, deleteRealmIfMigrationNeeded: false)
-        }()
-        Realm.Configuration.defaultConfiguration = self.realmConfiguration
-    }
-    
-    func checkConfiguration() {
-        
-        do {
-            _ = try Realm(configuration: realmConfiguration)
-            logD("Realm initialized. Configuration schemaVersion \(realmConfiguration.schemaVersion). Actual schemaVersion: \(realmConfiguration.schemaVersion)")
-        } catch let error {
-//            logD("Controlled Realm error. Configuration schemaVersion \(realmConfiguration.schemaVersion). Trying to delete current file and logout if necessary", error: error)
-            let realmURL = Realm.Configuration.defaultConfiguration.fileURL!
-            let realmURLs = [
-                realmURL,
-                realmURL.appendingPathExtension("lock"),
-                realmURL.appendingPathExtension("note"),
-                realmURL.appendingPathExtension("management")
-            ]
-            for URL in realmURLs {
-                do {
-                    try FileManager.default.removeItem(at: URL)
-                } catch let error {
-//                    logD("We failed to delete current Realm files after a Realm error.", error: error)
-                }
-            }
-        }
-        
-        hasCheckedConfiguration = true
-    }
-    
-    private func migrationBlock(migration: RealmSwift.Migration, oldSchemaVersion: UInt64) {
-
-    }
-    
 }

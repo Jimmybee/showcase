@@ -11,16 +11,18 @@ import UIKit
 import SnapKit
 import RxSwift
 import RxCocoa
+import RxOptional
 
 class ITunesAlbumListViewController: UIViewController  {
     
     let bag = DisposeBag()
+    let error = PublishSubject<Error>()
     
     private let albumList: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.itemSize = CGSize(width: 50, height: 50)
-        flowLayout.minimumInteritemSpacing = 1
-        flowLayout.minimumLineSpacing = 1
+        flowLayout.minimumInteritemSpacing = 0
+        flowLayout.minimumLineSpacing = 0
         logD("albumList")
         let view = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         return view
@@ -44,11 +46,16 @@ class ITunesAlbumListViewController: UIViewController  {
         constrianAlbumList()
         setupAlbumList()
         logD("viewDidLoad")
-        
+        observeViewDidAppearOnce()
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+
+    private func observeViewDidAppearOnce() {
+        rx.viewWillAppear
+            .take(1)
+            .subscribe(onNext: { [weak self] (_) in
+                self?.setAlbumListLayout()
+            })
+            .disposed(by: bag)
     }
     
 }
@@ -63,17 +70,22 @@ extension ITunesAlbumListViewController {
         albumList.snp.makeConstraints{ $0.edges.equalToSuperview() }
     }
     
-    func handle(error: Error) {
-        guard let message = error.userAlertMessage else { return }
-        let x = UIAlertController.present(in: self, title: "", message: message, style: .alert, actions: AlertButtons.actionsFor(buttons: AlertButtons.deleteAlert))
-            .filter(<#T##predicate: (UIAlertController.AlertAction) throws -> Bool##(UIAlertController.AlertAction) throws -> Bool#>)
-        
+    func observeErrors() {
+        error.asObservable()
+            .map{ $0.userAlertMessage }
+            .filterNil()
+            .flatMap { (message) -> Observable<UIAlertController.AlertAction> in
+                return  UIAlertController
+                    .present(in: self, title: "", message: message, style: .alert, actions: Alerts.ok.actions)
+            }
+            .subscribe()
+            .disposed(by: bag)
     }
 }
 
 //Setup
 extension ITunesAlbumListViewController {
-    func setupAlbumList() {
+    private func setupAlbumList() {
         albumList.backgroundColor = .orange
         albumList.register(AlbumCollectionViewCell.self, forCellWithReuseIdentifier: AlbumCollectionViewCell.identifier())
         viewModel.tableData
@@ -82,5 +94,12 @@ extension ITunesAlbumListViewController {
             }
             .disposed(by: bag)
     }
+    
+    private func setAlbumListLayout() {
+        let layout = (albumList.collectionViewLayout as! UICollectionViewFlowLayout)
+        let halfWidth = view.bounds.width / 2
+        layout.itemSize = CGSize(width: halfWidth, height: halfWidth)
+    }
+    
 }
 

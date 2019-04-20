@@ -5,6 +5,8 @@
 //  Created by James Birtwell on 20/04/2019.
 //  Copyright © 2019 James Birtwell. All rights reserved.
 //
+// https://stackoverflow.com/questions/49538546/how-to-obtain-a-uialertcontroller-observable-reactivecocoa-or-rxswift
+// With Enum improvements
 
 import Foundation
 import RxSwift
@@ -17,7 +19,6 @@ extension UIDevice {
 }
 
 extension UIAlertController {
-    
     struct AlertAction {
         var title: String?
         var rawValue: Int
@@ -63,12 +64,8 @@ extension UIAlertController {
     }
 }
 
-protocol AlertActionsEnum: RawRepresentable where RawValue == Int {
-    static var actions: [UIAlertController.AlertAction] { get }
-}
-
-enum AlertButtons: Int {
-    case edit, delete, cancel, remove
+enum AlertButton: Int {
+    case edit, delete, cancel, remove, ok
     
     var action: UIAlertController.AlertAction {
         switch self {
@@ -80,24 +77,26 @@ enum AlertButtons: Int {
             return .action(title: "Cancel", rawValue: rawValue, style: .cancel)
         case .remove:
             return .action(title: "Remove", rawValue: rawValue, style: .destructive)
+        case .ok:
+            return .action(title: "Ok", rawValue: rawValue, style: .default)
         }
     }
 }
 
-extension AlertButtons {
-    static func actionsFor(buttons: [AlertButtons]) -> [UIAlertController.AlertAction] {
+enum Alerts {
+    case delete
+    case ok
+    
+    private var buttons: [AlertButton] {
+        switch self {
+        case .delete:
+            return [.delete, .cancel]
+        case .ok:
+            return [.ok]
+        }
+    }
+    
+    var actions: [UIAlertController.AlertAction] {
         return buttons.map({ $0.action })
-    }
-    
-    static var deleteAlert: [AlertButtons] {
-        return [.delete, .cancel]
-    }
-    
-    static var removeAlert: [AlertButtons] {
-        return [.remove, .cancel]
-    }
-    
-    static var moreOptionsAlert: [AlertButtons] {
-        return [.edit, .delete, .cancel]
     }
 }

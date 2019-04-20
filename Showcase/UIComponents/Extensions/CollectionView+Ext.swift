@@ -16,3 +16,11 @@ public extension UICollectionViewCell {
     }
     
 }
+
+
+public extension UITableViewCell {
+    class func identifier() -> String {
+        return String(describing: self)
+    }
+    
+}

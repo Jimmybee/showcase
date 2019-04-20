@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Moya
 
 enum JsonPlaceholder {
     case posts
@@ -14,12 +15,7 @@ enum JsonPlaceholder {
     case comments
 }
 
-extension JsonPlaceholder: NativeRouter {
-    var requestUrl: URL {
-        var url = baseURL
-        url.appendPathComponent(path)
-        return url
-    }
+extension JsonPlaceholder: TargetType {
     
     var baseURL: URL { return URL(string: "https://jsonplaceholder.typicode.com")! }
     
@@ -33,32 +29,49 @@ extension JsonPlaceholder: NativeRouter {
             return "/comments"
         }
     }
+    
+    var headers: [String : String]? {
+        return [:]
+    }
+    
+    var method: Moya.Method {
+        return .get
+    }
+    
+    var parameters: [String: Any]? {
+        return nil
+    }
+    
+    var sampleData: Data {
+        return "{{\"Implemented\": \"Nope\"}}".data(using: .utf8)!
+        
+        //            switch self {
+        //            case .posts:
+        //                let data = NSDataAsset(name: "PostTests", bundle: .main)?.data
+        //                return data ?? Data()
+        //            default:
+        //                return "{{\"Implemented\": \"Nope\"}}".data(using: .utf8)!
+        //            }
+    }
+    
+    var task: Task {
+        return .requestPlain
+    }
+    
+    var parameterEncoding: ParameterEncoding {
+        return URLEncoding.default
+    }
 }
 
-extension JsonPlaceholder { //TargetType
-    //    var method: Moya.Method {
-    //        return .get
-    //    }
-    //
-    //    var parameters: [String: Any]? {
-    //        return nil
-    //    }
-    //
-    //    var sampleData: Data {
-    //        switch self {
-    //        case .posts:
-    //            let data = NSDataAsset(name: "PostTests", bundle: .main)?.data
-    //            return data ?? Data()
-    //        default:
-    //            return "{{\"Implemented\": \"Nope\"}}".data(using: .utf8)!
-    //        }
-    //    }
-    //
-    //    var task: Task {
-    //        return .request
-    //    }
-    //
-    //    var parameterEncoding: ParameterEncoding {
-    //        return URLEncoding.default
-    //    }
+protocol NativeRouter {
+    var nativeRequestUrl: URL { get }
+}
+
+
+extension JsonPlaceholder: NativeRouter {
+    var nativeRequestUrl: URL {
+        var url = baseURL
+        url.appendPathComponent(path)
+        return url
+    }
 }

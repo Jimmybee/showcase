@@ -12,10 +12,10 @@ import RxSwift
 class ITunesAlbumListViewModel {
     
     private var albums: [MusicAlbum]
-
+    
+    
     init(albums: [MusicAlbum]) {
         self.albums = albums
-        print(albums)
     }
     
     var tableData: Observable<[MusicAlbum]> {
