@@ -69,7 +69,6 @@
 		66C360B72258B53A0018A579 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C360B62258B53A0018A579 /* NetworkError.swift */; };
 		66C360B92258B7E50018A579 /* ClientError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C360B82258B7E50018A579 /* ClientError.swift */; };
 		66C360BC2258B8890018A579 /* ErrorExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C360BB2258B8890018A579 /* ErrorExt.swift */; };
-		66ECE188226619B900D3A670 /* CDCreatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ECE187226619B900D3A670 /* CDCreatable.swift */; };
 		66ECE18A22664C7900D3A670 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ECE18922664C7900D3A670 /* String+Ext.swift */; };
 		66ECE208226652D900D3A670 /* RxMoya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66ECE1F4226652D800D3A670 /* RxMoya.framework */; };
 		66ECE209226652D900D3A670 /* RxRealm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66ECE1F5226652D800D3A670 /* RxRealm.framework */; };
@@ -180,7 +179,6 @@
 		66C360B62258B53A0018A579 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		66C360B82258B7E50018A579 /* ClientError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientError.swift; sourceTree = "<group>"; };
 		66C360BB2258B8890018A579 /* ErrorExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorExt.swift; sourceTree = "<group>"; };
-		66ECE187226619B900D3A670 /* CDCreatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDCreatable.swift; sourceTree = "<group>"; };
 		66ECE18922664C7900D3A670 /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
 		66ECE1F4226652D800D3A670 /* RxMoya.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxMoya.framework; path = Carthage/Build/iOS/RxMoya.framework; sourceTree = "<group>"; };
 		66ECE1F5226652D800D3A670 /* RxRealm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxRealm.framework; path = Carthage/Build/iOS/RxRealm.framework; sourceTree = "<group>"; };
@@ -385,7 +383,6 @@
 				661CD90A2259EA5D00DA641B /* PostCore+Ext.swift */,
 				661CD90C225A667C00DA641B /* CoreDataManager.swift */,
 				66ECE21E22665D1500D3A670 /* CoreDataModel.swift */,
-				66ECE187226619B900D3A670 /* CDCreatable.swift */,
 				661D6DA32267286B0086E464 /* CoreDataObserver.swift */,
 			);
 			path = CoreData;
@@ -856,7 +853,6 @@
 				66C1DF3F225DE4D700049855 /* ImageAssets.swift in Sources */,
 				660F7E51225B2FC100D00072 /* ReusableViewFromNib.swift in Sources */,
 				66C1DF54226301C300049855 /* OverlayView.swift in Sources */,
-				66ECE188226619B900D3A670 /* CDCreatable.swift in Sources */,
 				66C1DF5A226466F200049855 /* ITunesAlbumListViewModel.swift in Sources */,
 				6632E227226B0FB700F74A8E /* UIAlertContoller+Rx.swift in Sources */,
 				66C360B32258AA090018A579 /* PostRealm.swift in Sources */,

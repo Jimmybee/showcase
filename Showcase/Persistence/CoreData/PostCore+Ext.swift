@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-extension PostCore: CDCreatable, CoreDataModel {
+extension PostCore: CoreDataModel {
     typealias MemoryModel = Post
     typealias CoreModel = PostCore
     

@@ -21,7 +21,6 @@ class MoyaShowcaseProvider: RxProvider {
         return performMainRequest(token: multi)
             .map(T.self)
         //            .map(T.self, atKeyPath: nil, using: decoder, failsOnEmptyData: failsOnEmptyData)
-        //            .logMappingErrors(from: FieldMarginModel(), token: multi)
     }
     
     private func performMainRequest(token: MultiTarget) -> Single<Response> {
