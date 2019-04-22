@@ -26,5 +26,5 @@ class MoyaShowcaseProvider: RxProvider {
     private func performMainRequest(token: MultiTarget) -> Single<Response> {
         return provider.rx.request(token).filterSuccessfulStatusCodes()
     }
-    
 }
+

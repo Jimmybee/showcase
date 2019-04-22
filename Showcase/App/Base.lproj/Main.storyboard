@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Item-->
+        <!--ITunes Search-->
         <scene sceneID="ezP-vM-oqr">
             <objects>
                 <viewController id="C7E-zH-9DU" customClass="ITunesSearchViewController" customModule="Showcase" customModuleProvider="target" sceneMemberID="viewController">
@@ -19,49 +19,99 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="oWN-D7-rw9"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" id="pxf-O2-duj"/>
+                    <tabBarItem key="tabBarItem" title="ITunes Search" id="pxf-O2-duj"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yhg-ex-Bwa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="126" y="257"/>
         </scene>
-        <!--Posts List View Controller-->
+        <!--Posts Model Selection View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="PostsListViewController" customModule="Showcase" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="PostsModelSelectionViewController" customModule="Showcase" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="SrW-mq-bLe">
+                                <rect key="frame" x="20" y="128" width="374" height="245.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Persistence" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aev-6b-Tdu">
+                                        <rect key="frame" x="142.5" y="0.0" width="89.5" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="OUw-jC-G9k">
+                                        <rect key="frame" x="111.5" y="40.5" width="151" height="29"/>
+                                        <segments>
+                                            <segment title="Realm"/>
+                                            <segment title="Core Data"/>
+                                        </segments>
+                                    </segmentedControl>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="View Controller + Model" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sab-c0-HrZ">
+                                        <rect key="frame" x="95" y="88.5" width="184" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="jpE-AZ-Lwn">
+                                        <rect key="frame" x="108.5" y="129" width="157" height="29"/>
+                                        <segments>
+                                            <segment title="Rx "/>
+                                            <segment title="Imperative"/>
+                                        </segments>
+                                    </segmentedControl>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Network" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iOv-qc-fwL">
+                                        <rect key="frame" x="155" y="177" width="64.5" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="jXZ-eT-OUn">
+                                        <rect key="frame" x="96.5" y="217.5" width="181" height="29"/>
+                                        <segments>
+                                            <segment title="URL Session"/>
+                                            <segment title="Moya"/>
+                                        </segments>
+                                    </segmentedControl>
+                                </subviews>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XvB-ay-vRU">
+                                <rect key="frame" x="153" y="594" width="108" height="30"/>
+                                <state key="normal" title="Open Posts List"/>
+                                <connections>
+                                    <action selector="handleOpenPostsList:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ADF-sC-dnd"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="SrW-mq-bLe" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="40" id="0bb-er-fVL"/>
+                            <constraint firstItem="XvB-ay-vRU" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="6ZW-zh-jkf"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="XvB-ay-vRU" secondAttribute="bottom" constant="189" id="GM3-Jo-1Z4"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="SrW-mq-bLe" secondAttribute="trailing" id="ha9-12-eVI"/>
+                            <constraint firstItem="SrW-mq-bLe" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="hft-Up-deJ"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="Yay-z7-3gM"/>
+                    <connections>
+                        <outlet property="networkSegmentedControl" destination="jXZ-eT-OUn" id="KX6-Vq-nOd"/>
+                        <outlet property="persistenceSegmentedControl" destination="OUw-jC-G9k" id="cml-TM-7xu"/>
+                        <outlet property="postsListBttn" destination="XvB-ay-vRU" id="X7L-Kc-UFv"/>
+                        <outlet property="viewRefreshSegmentedControl" destination="jpE-AZ-Lwn" id="Xoo-81-kut"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1045" y="298"/>
         </scene>
-        <!--Rx Posts List View Controller-->
-        <scene sceneID="USD-3Y-KS6">
-            <objects>
-                <viewController id="s8G-uE-Dw0" customClass="RxPostsListViewController" customModule="Showcase" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="qTr-7H-e0r">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="wrS-SL-WDN"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="fq9-uP-TBy"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="vLm-cg-zzS" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-971" y="256"/>
-        </scene>
-        <!--Item-->
+        <!--Select Post Model-->
         <scene sceneID="6Ni-ps-7oC">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Daa-HX-TlP" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="AzT-v4-5hS"/>
+                    <tabBarItem key="tabBarItem" title="Select Post Model" id="AzT-v4-5hS"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="WXr-tR-6B4">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -90,31 +140,11 @@
                     <connections>
                         <segue destination="Daa-HX-TlP" kind="relationship" relationship="viewControllers" id="Fox-KD-jOb"/>
                         <segue destination="C7E-zH-9DU" kind="relationship" relationship="viewControllers" id="lXQ-73-CJB"/>
-                        <segue destination="WRU-Jz-2pm" kind="relationship" relationship="viewControllers" id="j5z-sN-weh"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ctx-pr-Ur1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="134.78260869565219" y="-544.41964285714278"/>
-        </scene>
-        <!--Item-->
-        <scene sceneID="jhM-5j-b2d">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="WRU-Jz-2pm" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="Opy-uq-np8"/>
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="0dS-77-nIP">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="s8G-uE-Dw0" kind="relationship" relationship="rootViewController" id="uIg-O0-p0W"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="M6t-iv-OVM" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-971" y="-544"/>
         </scene>
     </scenes>
 </document>

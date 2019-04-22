@@ -8,10 +8,11 @@
 
 "artist" = "Artist";
 "itunes_music" = "ITunes Music";
+"album_list" = "Album List";
 "blues" = "Blues";
 "electronic" = "Electronic";
 "singer" = "Singer";
 "jazz" = "Jazz";
 "hipHop" = "Hip-Hop/Rap";
 "rock" = "Rock";
-    
+

@@ -14,9 +14,19 @@ import RxSwift
 
 class RxPostsListViewController: UIViewController {
     
-    let bag = DisposeBag()
-    let tableView = UITableView()
-    let viewModel = RxPostListViewModel(networkProvider: MoyaShowcaseProvider.shared, storageManager: RealmDataManager.shared)
+    private let bag = DisposeBag()
+    private let tableView = UITableView()
+    private let viewModel: RxPostListViewModel
+    
+    init(viewModel: RxPostListViewModel) {
+        self.viewModel =  viewModel
+        super.init(nibName: nil, bundle: nil)
+        view.backgroundColor = .white
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,9 +34,9 @@ class RxPostsListViewController: UIViewController {
         observeTableTap()
     }
     
-    func setupView() {
+    private func setupView() {
         view.addSubview(tableView)
-        navigationItem.title = "Rx Post List"
+        navigationItem.title = PlaceholderStrings.rx_posts_list.localized
         tableView.snp.makeConstraints { $0.edges.equalToSuperview() }
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: UITableViewCell.identifier())
         viewModel.tablePosts
@@ -34,7 +44,7 @@ class RxPostsListViewController: UIViewController {
             .disposed(by: bag)
     }
     
-    func observeTableTap() {
+    private func observeTableTap() {
         tableView.rx.modelSelected(PostListSectionItem.self)
             .bind(to: viewModel.tableTap)
             .disposed(by: bag)

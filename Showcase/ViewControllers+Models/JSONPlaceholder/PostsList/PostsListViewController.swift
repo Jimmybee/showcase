@@ -11,7 +11,17 @@ import UIKit
 class PostsListViewController: UIViewController {
     
     let tableView = UITableView()
-    let viewModel = PostListViewModel(networkProvider: NativeProvider(), storageManager: RealmDataManager.shared)
+    let viewModel: PostListViewModel
+    
+    init(viewModel: PostListViewModel) {
+        self.viewModel =  viewModel
+        super.init(nibName: nil, bundle: nil)
+        view.backgroundColor = .white
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,7 +30,7 @@ class PostsListViewController: UIViewController {
     }
     
    
-    func refreshView() {
+    private func refreshView() {
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
@@ -31,7 +41,7 @@ class PostsListViewController: UIViewController {
 extension PostsListViewController {
     private func setupView() {
         view.addSubview(tableView)
-        navigationItem.title = "Post List"
+        navigationItem.title = PlaceholderStrings.posts_list.localized
         tableView.delegate = self
         tableView.dataSource = self
         tableView.translatesAutoresizingMaskIntoConstraints = false

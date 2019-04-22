@@ -12,7 +12,6 @@
 		660F7E4F225B2D8A00D00072 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660F7E4E225B2D8A00D00072 /* CardView.swift */; };
 		660F7E51225B2FC100D00072 /* ReusableViewFromNib.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660F7E50225B2FC100D00072 /* ReusableViewFromNib.swift */; };
 		660F7E54225B300700D00072 /* FontStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660F7E53225B300700D00072 /* FontStyle.swift */; };
-		66113637225C2D89007E77A6 /* ITunes.strings in Resources */ = {isa = PBXBuildFile; fileRef = 66113635225C2D89007E77A6 /* ITunes.strings */; };
 		6611363C225C2F1D007E77A6 /* MusicArtist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6611363B225C2F1C007E77A6 /* MusicArtist.swift */; };
 		6611363F225C3FAE007E77A6 /* ITunesSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6611363E225C3FAE007E77A6 /* ITunesSearchViewController.swift */; };
 		66113641225C81F9007E77A6 /* RNSearchBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66113640225C81F9007E77A6 /* RNSearchBar.xib */; };
@@ -36,6 +35,12 @@
 		6632E233226B52E400F74A8E /* RxPostsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6632E232226B52E400F74A8E /* RxPostsListViewController.swift */; };
 		6632E236226B53B600F74A8E /* RxPostListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6632E235226B53B600F74A8E /* RxPostListViewModel.swift */; };
 		6632E238226B6EA800F74A8E /* RealmConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6632E237226B6EA800F74A8E /* RealmConfiguration.swift */; };
+		6632E23A226CF67C00F74A8E /* Placeholder.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6632E239226CF67C00F74A8E /* Placeholder.strings */; };
+		6632E23D226CF71800F74A8E /* ITunesStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6632E23C226CF71800F74A8E /* ITunesStrings.swift */; };
+		6632E23F226CF74600F74A8E /* PlaceholderStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6632E23E226CF74600F74A8E /* PlaceholderStrings.swift */; };
+		6632E242226CF80A00F74A8E /* ITunes.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6632E240226CF80900F74A8E /* ITunes.strings */; };
+		6632E244226DBF1400F74A8E /* PostsModelSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6632E243226DBF1400F74A8E /* PostsModelSelectionViewController.swift */; };
+		6632E246226DCF9600F74A8E /* PostsModelSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6632E245226DCF9600F74A8E /* PostsModelSelectionViewModel.swift */; };
 		66C1DF3D225DDCE200049855 /* LabelStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C1DF3C225DDCE200049855 /* LabelStyles.swift */; };
 		66C1DF3F225DE4D700049855 /* ImageAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C1DF3E225DE4D700049855 /* ImageAssets.swift */; };
 		66C1DF44225F25D700049855 /* CategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C1DF43225F25D700049855 /* CategoryCollectionViewCell.swift */; };
@@ -69,6 +74,9 @@
 		66C360B72258B53A0018A579 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C360B62258B53A0018A579 /* NetworkError.swift */; };
 		66C360B92258B7E50018A579 /* ClientError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C360B82258B7E50018A579 /* ClientError.swift */; };
 		66C360BC2258B8890018A579 /* ErrorExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C360BB2258B8890018A579 /* ErrorExt.swift */; };
+		66D21155226E59C8004EDB70 /* NetworkStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D21154226E59C8004EDB70 /* NetworkStrings.swift */; };
+		66D21158226E5A9D004EDB70 /* Data+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D21157226E5A9D004EDB70 /* Data+Ext.swift */; };
+		66D2115A226E5D97004EDB70 /* UISegmentedControl+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D21159226E5D97004EDB70 /* UISegmentedControl+Ext.swift */; };
 		66ECE18A22664C7900D3A670 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ECE18922664C7900D3A670 /* String+Ext.swift */; };
 		66ECE208226652D900D3A670 /* RxMoya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66ECE1F4226652D800D3A670 /* RxMoya.framework */; };
 		66ECE209226652D900D3A670 /* RxRealm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66ECE1F5226652D800D3A670 /* RxRealm.framework */; };
@@ -116,7 +124,6 @@
 		660F7E4E225B2D8A00D00072 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		660F7E50225B2FC100D00072 /* ReusableViewFromNib.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReusableViewFromNib.swift; sourceTree = "<group>"; };
 		660F7E53225B300700D00072 /* FontStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontStyle.swift; sourceTree = "<group>"; };
-		66113636225C2D89007E77A6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/ITunes.strings; sourceTree = "<group>"; };
 		6611363B225C2F1C007E77A6 /* MusicArtist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicArtist.swift; sourceTree = "<group>"; };
 		6611363E225C3FAE007E77A6 /* ITunesSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ITunesSearchViewController.swift; sourceTree = "<group>"; };
 		66113640225C81F9007E77A6 /* RNSearchBar.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RNSearchBar.xib; sourceTree = "<group>"; };
@@ -141,6 +148,12 @@
 		6632E232226B52E400F74A8E /* RxPostsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxPostsListViewController.swift; sourceTree = "<group>"; };
 		6632E235226B53B600F74A8E /* RxPostListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxPostListViewModel.swift; sourceTree = "<group>"; };
 		6632E237226B6EA800F74A8E /* RealmConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmConfiguration.swift; sourceTree = "<group>"; };
+		6632E239226CF67C00F74A8E /* Placeholder.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Placeholder.strings; path = ../Placeholder.strings; sourceTree = "<group>"; };
+		6632E23C226CF71800F74A8E /* ITunesStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ITunesStrings.swift; sourceTree = "<group>"; };
+		6632E23E226CF74600F74A8E /* PlaceholderStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderStrings.swift; sourceTree = "<group>"; };
+		6632E241226CF80900F74A8E /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Showcase/Localization/Base.lproj/ITunes.strings; sourceTree = SOURCE_ROOT; };
+		6632E243226DBF1400F74A8E /* PostsModelSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsModelSelectionViewController.swift; sourceTree = "<group>"; };
+		6632E245226DCF9600F74A8E /* PostsModelSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsModelSelectionViewModel.swift; sourceTree = "<group>"; };
 		66C1DF3C225DDCE200049855 /* LabelStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelStyles.swift; sourceTree = "<group>"; };
 		66C1DF3E225DE4D700049855 /* ImageAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAssets.swift; sourceTree = "<group>"; };
 		66C1DF43225F25D700049855 /* CategoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -155,7 +168,7 @@
 		66C1DF5C226467D900049855 /* BaseViewContoller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewContoller.swift; sourceTree = "<group>"; };
 		66C1DF5E2264680200049855 /* CollectionView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CollectionView+Ext.swift"; sourceTree = "<group>"; };
 		66C1DF612264682B00049855 /* View+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Ext.swift"; sourceTree = "<group>"; };
-		66C1DF6322646A5900049855 /* Network.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Network.strings; sourceTree = "<group>"; };
+		66C1DF6322646A5900049855 /* Network.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Network.strings; path = ../Network.strings; sourceTree = "<group>"; };
 		66C1DF6622646AE000049855 /* StringLookup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringLookup.swift; sourceTree = "<group>"; };
 		66C36076225897FE0018A579 /* Showcase.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Showcase.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		66C36079225897FE0018A579 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -179,6 +192,9 @@
 		66C360B62258B53A0018A579 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		66C360B82258B7E50018A579 /* ClientError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientError.swift; sourceTree = "<group>"; };
 		66C360BB2258B8890018A579 /* ErrorExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorExt.swift; sourceTree = "<group>"; };
+		66D21154226E59C8004EDB70 /* NetworkStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkStrings.swift; sourceTree = "<group>"; };
+		66D21157226E5A9D004EDB70 /* Data+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Ext.swift"; sourceTree = "<group>"; };
+		66D21159226E5D97004EDB70 /* UISegmentedControl+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISegmentedControl+Ext.swift"; sourceTree = "<group>"; };
 		66ECE18922664C7900D3A670 /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
 		66ECE1F4226652D800D3A670 /* RxMoya.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxMoya.framework; path = Carthage/Build/iOS/RxMoya.framework; sourceTree = "<group>"; };
 		66ECE1F5226652D800D3A670 /* RxRealm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxRealm.framework; path = Carthage/Build/iOS/RxRealm.framework; sourceTree = "<group>"; };
@@ -305,7 +321,7 @@
 			path = Styling;
 			sourceTree = "<group>";
 		};
-		66113634225C2CF6007E77A6 /* Base */ = {
+		66113634225C2CF6007E77A6 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				6632E223226B0E4700F74A8E /* Reactive+Ext */,
@@ -314,8 +330,10 @@
 				661D6DAB226763290086E464 /* Encodable+Ext.swift */,
 				661D6DAD226856FA0086E464 /* UIButton+Ext.swift */,
 				661D6DAF226857100086E464 /* UIImageView+Ext.swift */,
+				66D21157226E5A9D004EDB70 /* Data+Ext.swift */,
+				66D21159226E5D97004EDB70 /* UISegmentedControl+Ext.swift */,
 			);
-			path = Base;
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		66113639225C2ECB007E77A6 /* JsonPlaceholder */ = {
@@ -418,6 +436,7 @@
 		6632E22D226B4C9300F74A8E /* JSONPlaceholder */ = {
 			isa = PBXGroup;
 			children = (
+				6632E247226DCF9A00F74A8E /* PostsModelSelection */,
 				6632E234226B52EB00F74A8E /* RxPostsList */,
 				661CD910225A66C800DA641B /* PostsList */,
 				6632E22E226B4CB200F74A8E /* PostDetailViewContoller.swift */,
@@ -432,6 +451,25 @@
 				6632E235226B53B600F74A8E /* RxPostListViewModel.swift */,
 			);
 			path = RxPostsList;
+			sourceTree = "<group>";
+		};
+		6632E23B226CF70400F74A8E /* Strings */ = {
+			isa = PBXGroup;
+			children = (
+				6632E240226CF80900F74A8E /* ITunes.strings */,
+				66C1DF6322646A5900049855 /* Network.strings */,
+				6632E239226CF67C00F74A8E /* Placeholder.strings */,
+			);
+			path = Strings;
+			sourceTree = "<group>";
+		};
+		6632E247226DCF9A00F74A8E /* PostsModelSelection */ = {
+			isa = PBXGroup;
+			children = (
+				6632E243226DBF1400F74A8E /* PostsModelSelectionViewController.swift */,
+				6632E245226DCF9600F74A8E /* PostsModelSelectionViewModel.swift */,
+			);
+			path = PostsModelSelection;
 			sourceTree = "<group>";
 		};
 		66C1DF3B225DDCAF00049855 /* Labels */ = {
@@ -497,8 +535,8 @@
 			isa = PBXGroup;
 			children = (
 				66C1DF6622646AE000049855 /* StringLookup.swift */,
-				66113635225C2D89007E77A6 /* ITunes.strings */,
-				66C1DF6322646A5900049855 /* Network.strings */,
+				6632E23B226CF70400F74A8E /* Strings */,
+				66D21156226E59E1004EDB70 /* StringTables */,
 			);
 			path = Localization;
 			sourceTree = "<group>";
@@ -535,7 +573,7 @@
 				66C360B12258A9F40018A579 /* Persistence */,
 				660F7E4C225B2D2400D00072 /* UIComponents */,
 				660F7E4D225B2D3700D00072 /* ViewControllers+Models */,
-				66113634225C2CF6007E77A6 /* Base */,
+				66113634225C2CF6007E77A6 /* Extensions */,
 				66C36080225898000018A579 /* Assets.xcassets */,
 				66C36085225898000018A579 /* Info.plist */,
 			);
@@ -598,6 +636,16 @@
 				66C360BB2258B8890018A579 /* ErrorExt.swift */,
 			);
 			path = ErrorLogging;
+			sourceTree = "<group>";
+		};
+		66D21156226E59E1004EDB70 /* StringTables */ = {
+			isa = PBXGroup;
+			children = (
+				6632E23C226CF71800F74A8E /* ITunesStrings.swift */,
+				6632E23E226CF74600F74A8E /* PlaceholderStrings.swift */,
+				66D21154226E59C8004EDB70 /* NetworkStrings.swift */,
+			);
+			path = StringTables;
 			sourceTree = "<group>";
 		};
 		66ECE18B22664CB500D3A670 /* App */ = {
@@ -754,11 +802,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				66C36084225898000018A579 /* LaunchScreen.storyboard in Resources */,
-				66113637225C2D89007E77A6 /* ITunes.strings in Resources */,
 				66C1DF6422646A5900049855 /* Network.strings in Resources */,
 				66113641225C81F9007E77A6 /* RNSearchBar.xib in Resources */,
 				66C36081225898000018A579 /* Assets.xcassets in Resources */,
 				66C1DF49225F289600049855 /* ITunesHeader.xib in Resources */,
+				6632E23A226CF67C00F74A8E /* Placeholder.strings in Resources */,
+				6632E242226CF80A00F74A8E /* ITunes.strings in Resources */,
 				66C3607F225897FE0018A579 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -843,10 +892,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6632E23F226CF74600F74A8E /* PlaceholderStrings.swift in Sources */,
 				66C1DF622264682B00049855 /* View+Ext.swift in Sources */,
 				661CD9082259E3D500DA641B /* Showcase.xcdatamodeld in Sources */,
 				66C1DF4D225F974400049855 /* MusicAlbum.swift in Sources */,
 				66C360BC2258B8890018A579 /* ErrorExt.swift in Sources */,
+				6632E23D226CF71800F74A8E /* ITunesStrings.swift in Sources */,
 				6611363C225C2F1D007E77A6 /* MusicArtist.swift in Sources */,
 				66C1DF44225F25D700049855 /* CategoryCollectionViewCell.swift in Sources */,
 				66C1DF4B225F972C00049855 /* MusicCategory.swift in Sources */,
@@ -856,6 +907,7 @@
 				66C1DF5A226466F200049855 /* ITunesAlbumListViewModel.swift in Sources */,
 				6632E227226B0FB700F74A8E /* UIAlertContoller+Rx.swift in Sources */,
 				66C360B32258AA090018A579 /* PostRealm.swift in Sources */,
+				66D21155226E59C8004EDB70 /* NetworkStrings.swift in Sources */,
 				66C1DF58226466E400049855 /* ITunesAlbumListViewController.swift in Sources */,
 				660F7E47225B1B2F00D00072 /* iTunesRouter.swift in Sources */,
 				661D6DB0226857100086E464 /* UIImageView+Ext.swift in Sources */,
@@ -876,7 +928,9 @@
 				660F7E4F225B2D8A00D00072 /* CardView.swift in Sources */,
 				6632E233226B52E400F74A8E /* RxPostsListViewController.swift in Sources */,
 				66ECE22222665E4300D3A670 /* RealmDataManager.swift in Sources */,
+				66D2115A226E5D97004EDB70 /* UISegmentedControl+Ext.swift in Sources */,
 				66C360B92258B7E50018A579 /* ClientError.swift in Sources */,
+				6632E244226DBF1400F74A8E /* PostsModelSelectionViewController.swift in Sources */,
 				66113645225C822E007E77A6 /* RNSearchBar.swift in Sources */,
 				6632E236226B53B600F74A8E /* RxPostListViewModel.swift in Sources */,
 				6632E238226B6EA800F74A8E /* RealmConfiguration.swift in Sources */,
@@ -884,11 +938,13 @@
 				66C1DF6722646AE000049855 /* StringLookup.swift in Sources */,
 				660F7E54225B300700D00072 /* FontStyle.swift in Sources */,
 				6632E231226B4D2D00F74A8E /* PostListViewModel.swift in Sources */,
+				66D21158226E5A9D004EDB70 /* Data+Ext.swift in Sources */,
 				66ECE21D22665CC100D3A670 /* MemoryModel.swift in Sources */,
 				661CD90B2259EA5D00DA641B /* PostCore+Ext.swift in Sources */,
 				66C360B72258B53A0018A579 /* NetworkError.swift in Sources */,
 				661D6DAA2267631F0086E464 /* Dictionary+Ext.swift in Sources */,
 				66C3607A225897FE0018A579 /* AppDelegate.swift in Sources */,
+				6632E246226DCF9600F74A8E /* PostsModelSelectionViewModel.swift in Sources */,
 				661D6DAC226763290086E464 /* Encodable+Ext.swift in Sources */,
 				661CD90D225A667C00DA641B /* CoreDataManager.swift in Sources */,
 				6632E225226B0E6500F74A8E /* UIViewController+Rx.swift in Sources */,
@@ -934,10 +990,10 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		66113635225C2D89007E77A6 /* ITunes.strings */ = {
+		6632E240226CF80900F74A8E /* ITunes.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				66113636225C2D89007E77A6 /* Base */,
+				6632E241226CF80900F74A8E /* Base */,
 			);
 			name = ITunes.strings;
 			sourceTree = "<group>";

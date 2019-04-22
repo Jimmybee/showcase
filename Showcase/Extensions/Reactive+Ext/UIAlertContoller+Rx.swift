@@ -65,18 +65,10 @@ extension UIAlertController {
 }
 
 enum AlertButton: Int {
-    case edit, delete, cancel, remove, ok
+    case ok
     
     var action: UIAlertController.AlertAction {
         switch self {
-        case .edit:
-            return .action(title: "Edit", rawValue: rawValue, style: .default)
-        case .delete:
-            return .action(title: "Delete", rawValue: rawValue, style: .destructive)
-        case .cancel:
-            return .action(title: "Cancel", rawValue: rawValue, style: .cancel)
-        case .remove:
-            return .action(title: "Remove", rawValue: rawValue, style: .destructive)
         case .ok:
             return .action(title: "Ok", rawValue: rawValue, style: .default)
         }
@@ -84,13 +76,10 @@ enum AlertButton: Int {
 }
 
 enum Alerts {
-    case delete
     case ok
     
     private var buttons: [AlertButton] {
         switch self {
-        case .delete:
-            return [.delete, .cancel]
         case .ok:
             return [.ok]
         }

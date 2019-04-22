@@ -1,9 +1,9 @@
 //
 //  ReusableViewFromNib.swift
-//  FieldMargin
+//  Showcase
 //
-//  Created by Jimmy Birtwell on 06/03/2018.
-//  Copyright © 2018 fieldmargin. All rights reserved.
+//  Created by Jimmy Birtwell on 08/04/2019.
+//  Copyright © 2019 showcase. All rights reserved.
 //
 
 import UIKit

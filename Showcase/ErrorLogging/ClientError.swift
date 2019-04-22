@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum ClientError: Error {
+enum ClientError: Error, ShowcaseError {
     case decodeFail(String)
     case unknownError(String)
     
@@ -44,5 +44,11 @@ enum ClientError: Error {
         default:
             return detail
         }
+    }
+    
+    func appendKeys(to keys: inout [String : Any]) {
+        keys["Type"] = title
+        keys["Code"] = code
+        keys["Detail"] = detail
     }
 }

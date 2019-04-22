@@ -43,10 +43,25 @@ class ITunesAlbumListViewController: UIViewController  {
     override func viewDidLoad() {
         super.viewDidLoad()
         addViews()
+        setupNavigation()
         constrianAlbumList()
         setupAlbumList()
         logD("viewDidLoad")
         observeViewDidAppearOnce()
+        albumList.backgroundColor = .blue
+    }
+    
+    private func setupNavigation(){
+        navigationItem.title = ITunesStrings.album_list.localized
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        
+        let doneBttn = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: nil)
+        doneBttn.tintColor = .white
+        doneBttn.rx.tap
+            .subscribe(onNext: { (_) in
+            self.navigationController?.dismiss(animated: true, completion: nil)
+        }).disposed(by: bag)
+        navigationItem.leftBarButtonItem = doneBttn
     }
 
     private func observeViewDidAppearOnce() {
@@ -67,7 +82,8 @@ extension ITunesAlbumListViewController {
     }
     
     func constrianAlbumList() {
-        albumList.snp.makeConstraints{ $0.edges.equalToSuperview() }
+        let guide = view.safeAreaInsets
+        albumList.snp.makeConstraints{ $0.edges.equalTo(guide) }
     }
     
     func observeErrors() {
@@ -86,7 +102,6 @@ extension ITunesAlbumListViewController {
 //Setup
 extension ITunesAlbumListViewController {
     private func setupAlbumList() {
-        albumList.backgroundColor = .orange
         albumList.register(AlbumCollectionViewCell.self, forCellWithReuseIdentifier: AlbumCollectionViewCell.identifier())
         viewModel.tableData
             .bind(to: albumList.rx.items(cellIdentifier: AlbumCollectionViewCell.identifier(), cellType: AlbumCollectionViewCell.self)) { row, album, cell in

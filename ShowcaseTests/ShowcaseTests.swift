@@ -31,7 +31,7 @@ class ShowcaseTests: XCTestCase {
             PostCore.create(in: context, post: post)
             cdm.saveContext()
 
-            guard let fetchedPosts: [Post] = cdm.getData() else { XCTFail(); return }
+            let fetchedPosts: [Post] = cdm.load(predicate: nil) 
             XCTAssert(fetchedPosts.count == 1)
             
             let loadedPost = fetchedPosts.first!

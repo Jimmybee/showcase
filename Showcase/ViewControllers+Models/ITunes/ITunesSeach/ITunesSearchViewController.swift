@@ -27,7 +27,7 @@ class ITunesSearchViewController: UIViewController {
         return view
     }()
     private let resultsTableView = UITableView()
-    var activityView = UIActivityIndicatorView()
+    private var activityView = UIActivityIndicatorView()
     
     fileprivate(set) lazy var progressView: UIView = {
         let progressView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height))
@@ -77,7 +77,7 @@ class ITunesSearchViewController: UIViewController {
         constrainResultsTableView()
     }
     
-    var callOnceAfterLayout = [VoidFunction]()
+    private var callOnceAfterLayout = [VoidFunction]()
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         callOnceAfterLayout.forEach{ $0() }
@@ -103,9 +103,10 @@ extension ITunesSearchViewController: ITunesSearchViewModelDelegate {
         }
     }
     
-    func displayAlert(title: String?, message: String?, style: UIAlertController.Style) {
+    private func displayAlert(title: String?, message: String?, style: UIAlertController.Style) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: style)
-        let action = UIAlertAction(title: "Ok", style: .default, handler: nil)
+        let action = UIAlertAction(title: NetworkStrings.ok
+            .localized, style: .default, handler: nil)
         alertController.addAction(action)
         self.present(alertController, animated: true, completion: nil)
     }

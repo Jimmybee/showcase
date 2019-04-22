@@ -1,0 +1,23 @@
+/* 
+  Placeholder.strings
+  Showcase
+
+  Created by James Birtwell on 21/04/2019.
+  Copyright © 2019 James Birtwell. All rights reserved.
+*/
+
+"posts_list" = "Posts List";
+"rx_posts_list" = "Rx Posts List";
+"persistence" = "Persistence";
+"realm" = "Realm";
+"core_data" = "Core Data";
+"network" = "Network";
+"url_session" = "URL Session";
+"moya" = "Moya";
+"view_bindings" = "View Binding";
+"rx" = "Rx";
+"imperative" = "Imperative";
+"open_posts_list" = "Open Posts List";
+
+
+

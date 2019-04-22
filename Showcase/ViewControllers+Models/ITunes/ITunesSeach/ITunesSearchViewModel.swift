@@ -67,7 +67,8 @@ class ITunesSearchViewModel {
         DispatchQueue.main.async { [weak self] in
             let vm = ITunesAlbumListViewModel(albums: response.musicAlbums)
             let vc = ITunesAlbumListViewController(viewModel: vm)
-            self?.delegate?.handle(pushTo: vc)
+            let nav = UINavigationController(rootViewController: vc)
+            self?.delegate?.handle(pushTo: nav)
         }
         task = nil
     }

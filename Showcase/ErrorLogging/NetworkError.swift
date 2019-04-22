@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct NetworkError: Error {
+struct NetworkError: Error, ShowcaseError {
     let response: URLResponse?
     let error: Error
     
@@ -39,27 +39,9 @@ struct NetworkError: Error {
             return NetworkStrings.unknown.localized
         }
     }
-}
-
-
-extension Data {
-    func prettyJson() -> String {
-        guard !self.isEmpty else { return "Data is empty" }
-        guard let json = try? JSONSerialization.jsonObject(with: self, options: []) else {
-            return "Unable to map JSON with string: \n\(String(decoding: self, as: UTF8.self))"
-        }
-        func JSONStringify(value: Any) -> String {
-            let options = JSONSerialization.WritingOptions.prettyPrinted
-            if JSONSerialization.isValidJSONObject(value) {
-                if let data = try? JSONSerialization.data(withJSONObject: value, options: options) {
-                    if let string = String(data: data, encoding: String.Encoding.utf8) {
-                        return string
-                    }
-                }
-            }
-            return "Failed to parse"
-        }
-        return JSONStringify(value: json)
+    
+    func appendKeys(to keys: inout [String : Any]) {
+        keys["Type"] = httpCode
+        keys["Code"] = httpCode.rawValue
     }
-
 }

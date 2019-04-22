@@ -18,31 +18,7 @@ protocol Localizable {
 enum StringTable: String {
     case ITunes
     case Network
-}
-
-enum ITunesStrings: String, Localizable {
-    case artist
-    case itunes_music
-    case blues
-    case electronic
-    case singer
-    case jazz
-    case hipHop
-    case rock
-    
-    
-    var table: StringTable {
-        return .ITunes
-    }
-}
-
-enum NetworkStrings: String, Localizable {
-    case poor_connectivity
-    case unknown
-    
-    var table: StringTable {
-        return .Network
-    }
+    case Placeholder
 }
 
 extension Localizable where Self: RawRepresentable, Self.RawValue == String {
@@ -50,7 +26,6 @@ extension Localizable where Self: RawRepresentable, Self.RawValue == String {
         return rawValue.localized(tableName: table.rawValue)
     }
 }
-
 
 extension String {
     func localized(bundle: Bundle = .main, tableName: String = "Localizable") -> String {

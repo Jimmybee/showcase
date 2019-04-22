@@ -24,13 +24,8 @@ extension Error {
         let fileName = file.components(separatedBy: "/").last!
         var keys = ["FileName | Function | Line" : "\(fileName) | \(function) | \(line)"] as [String : Any]
         switch self {
-        case let networkError as NetworkError:
-            keys["Type"] = networkError.httpCode
-            keys["Code"] = networkError.httpCode.rawValue
-        case let clientError as ClientError:
-            keys["Type"] = clientError.title
-            keys["Code"] = clientError.code
-            keys["Detail"] = clientError.detail
+        case let showcaseError as ShowcaseError:
+            showcaseError.appendKeys(to: &keys)           
         case let nsError as NSError:
             nsError.userInfo.forEach { (key, value) in
                 keys[key] = value
@@ -53,14 +48,17 @@ extension Error {
     
     var userAlertMessage: String? {
         switch self {
-        case let networkError as NetworkError:
-            return networkError.userAlertMessage
-        case let clientError as ClientError:
-            return clientError.userAlertMessage
+        case let showcaseError as ShowcaseError:
+            return showcaseError.userAlertMessage
         default:
             return "Unknown Error"
         }
     }
+}
+
+protocol ShowcaseError {
+    var userAlertMessage: String? { get }
+    func appendKeys(to: inout [String: Any])
 }
 
 func logD(_ message: String) {

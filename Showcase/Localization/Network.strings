@@ -8,3 +8,4 @@
 
 "poor_connectivity" = "Your connection is unavailable. Please check you network and try again.";
 "unknown" = "Something has gone wrong";
+"ok" = "OK";
