@@ -13,47 +13,64 @@ import RxSwift
 class PostsModelSelectionViewController: UIViewController {
 
     let bag = DisposeBag()
-    @IBOutlet weak private var persistenceSegmentedControl: UISegmentedControl!
-    @IBOutlet weak private var viewRefreshSegmentedControl: UISegmentedControl!
-    @IBOutlet weak private var networkSegmentedControl: UISegmentedControl!
-    @IBOutlet weak private var postsListBttn: UIButton!
     
+    @IBOutlet weak private var a: UISegmentedControl!
+    @IBOutlet weak private var b: UISegmentedControl!
+    @IBOutlet weak private var postsListBttn: UIButton!
+    @IBOutlet weak private var verticalStack: UIStackView!
+    private var persistenceSegmentedControl: SegmentedControl<Persistence>!
+    private var viewRefreshSegmentedControl: SegmentedControl<ViewBinding>!
+    private var networkSegmentedControl: SegmentedControl<Network>!
+
     private let viewModel = PostSelectionViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSegments()
+        observeDisabledSegments()
     }
     
     private func setupSegments() {
-        persistenceSegmentedControl.setup(with: viewModel.persistenceOptions)
-        viewRefreshSegmentedControl.setup(with: viewModel.viewBindingOptions)
-        networkSegmentedControl.setup(with: viewModel.networkOptions)
-        
-        persistenceSegmentedControl.rx.selectedSegmentIndex
-            .map{ Persistence(rawValue: $0) }.filterNil()
+        persistenceSegmentedControl = SegmentedControl(segments: viewModel.persistenceOptions)
+        viewRefreshSegmentedControl = SegmentedControl(segments: viewModel.viewBindingOptions)
+        networkSegmentedControl = SegmentedControl(segments: viewModel.networkOptions)
+        verticalStack.insertArrangedSubview(viewRefreshSegmentedControl, at: 1)
+        verticalStack.insertArrangedSubview(persistenceSegmentedControl, at: 3)
+        verticalStack.insertArrangedSubview(networkSegmentedControl, at: 5)
+
+        persistenceSegmentedControl.selectionVar.asObservable()
+            .filterNil()
             .bind(to: viewModel.selectedPersistence)
             .disposed(by: bag)
         
-        viewRefreshSegmentedControl.rx.selectedSegmentIndex
-            .map{ ViewBinding(rawValue: $0) }.filterNil()
+        viewRefreshSegmentedControl.selectionVar.asObservable()
+            .filterNil()
             .bind(to: viewModel.selectedViewBinding)
             .disposed(by: bag)
         
-        networkSegmentedControl.rx.selectedSegmentIndex
-            .map{ Network(rawValue: $0) }.filterNil()
+        networkSegmentedControl.selectionVar.asObservable()
+            .filterNil()
             .bind(to: viewModel.selectedNetwork)
             .disposed(by: bag)
         
     }
     
+    func observeDisabledSegments() {
+        viewModel.disableCoreData().subscribe(onNext: { (segment, enabled) in
+            self.persistenceSegmentedControl.set(segment: segment, as: enabled)
+        }).disposed(by: bag)
+        
+        viewModel.disableMoya().subscribe(onNext: { (segment, enabled) in
+            self.networkSegmentedControl.set(segment: segment, as: enabled)
+        }).disposed(by: bag)
+    }
+    
     @IBAction private func handleOpenPostsList(_ sender: UIButton) {
-        let provider: RxProvider = networkSegmentedControl.selectedSegmentIndex == 0 ? NativeProvider.shared : MoyaShowcaseProvider.shared
-        let storageManager: PersistentDataManager = viewRefreshSegmentedControl.selectedSegmentIndex == 0 ? CoreDataManager.shared : RealmDataManager.shared
-        let rxStorageManager: RxDataManager = RealmDataManager.shared
-        let bvm = PostListViewModel(networkProvider: NativeProvider.shared, storageManager: storageManager)
-        let rxvm = RxPostListViewModel(networkProvider: provider, storageManager: rxStorageManager)
-        let vc = viewRefreshSegmentedControl.selectedSegmentIndex == 0 ?  PostsListViewController(viewModel: bvm) : RxPostsListViewController(viewModel: rxvm)
+        guard let vc = viewModel.handleOpenPostsTap() else {
+            let error = ClientError.unknownError("Failed to create view")
+            error.log()
+            return
+        }
         navigationController?.pushViewController(vc, animated: true)
     }
     

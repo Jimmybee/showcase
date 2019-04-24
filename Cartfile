@@ -1,4 +1,6 @@
 
+# carthage update --platform ios --cache-builds
+
 # Realm Database
 github "realm/realm-cocoa"
 

@@ -8,6 +8,7 @@
 
 import Foundation
 import RxSwift
+import UIKit
 
 class PostSelectionViewModel {
    
@@ -18,6 +19,23 @@ class PostSelectionViewModel {
     let selectedPersistence = Variable<Persistence>(.realm)
     let selectedViewBinding = Variable<ViewBinding>(.imperative)
     let selectedNetwork = Variable<Network>(.urlSession)
+    
+    func disableCoreData() -> Observable<(Persistence, Bool)> {
+        return selectedViewBinding.asObservable().map{ (Persistence.coreData, $0 == .imperative) }
+    }
+    
+    func disableMoya() -> Observable<(Network, Bool)> {
+        return selectedViewBinding.asObservable().map{ (Network.moya, $0 == .rx) }
+    }
+    
+    func handleOpenPostsTap() -> UIViewController? {
+        guard let vc = selectedViewBinding.value.viewController(network: selectedNetwork.value, persistence: selectedPersistence.value) else {
+            print(self.selectedPersistence.value)
+            print(self.selectedNetwork.value)
+            return nil
+        }
+        return vc
+    }
     
 }
 
@@ -30,6 +48,24 @@ enum Persistence: Int, SegmentEnum, CaseIterable {
             return PlaceholderStrings.realm.localized
         case .coreData:
             return PlaceholderStrings.core_data.localized
+        }
+    }
+    
+    var imperativeDataManager: PersistentDataManager {
+        switch self {
+        case .realm:
+            return RealmDataManager.shared
+        case .coreData:
+            return CoreDataManager.shared
+        }
+    }
+    
+    var rxManager: RxDataManager? {
+        switch self {
+        case .realm:
+            return RealmDataManager.shared
+        default:
+            return nil
         }
     }
 }
@@ -45,6 +81,24 @@ enum Network: Int, SegmentEnum, CaseIterable {
             return PlaceholderStrings.moya.localized
         }
     }
+    
+    var imperativeNetworkProvider: NativeProvider? {
+        switch self {
+        case .urlSession:
+            return NativeProvider.shared
+        case .moya:
+            return nil
+        }
+    }
+    
+    var rxProvider: RxProvider {
+        switch self {
+        case .urlSession:
+            return NativeProvider.shared
+        case .moya:
+            return MoyaShowcaseProvider.shared
+        }
+    }
 }
 
 enum ViewBinding: Int, SegmentEnum, CaseIterable {
@@ -57,6 +111,29 @@ enum ViewBinding: Int, SegmentEnum, CaseIterable {
         case .rx:
             return PlaceholderStrings.rx.localized
         }
+    }
+    
+    func viewController(network: Network, persistence: Persistence) -> UIViewController? {
+        switch self {
+        case .imperative:
+            guard let network = network.imperativeNetworkProvider else { return nil }
+            let storageManager = persistence.imperativeDataManager
+            return imperativeViewController(provider: network, storageManager: storageManager)
+        case .rx:
+            guard let storageManager = persistence.rxManager else { return nil}
+            let network = network.rxProvider
+            return reactiveViewController(provider: network, storageManager: storageManager)
+        }
+    }
+    
+    private func imperativeViewController(provider: NativeProvider, storageManager: PersistentDataManager) -> PostsListViewController {
+        let viewModel = PostListViewModel(networkProvider: provider, storageManager: storageManager)
+        return PostsListViewController(viewModel: viewModel)
+    }
+    
+    private func reactiveViewController(provider: RxProvider, storageManager: RxDataManager) -> RxPostsListViewController {
+        let viewModel = RxPostListViewModel(networkProvider: provider, storageManager: storageManager)
+        return RxPostsListViewController(viewModel: viewModel)
     }
 }
 
