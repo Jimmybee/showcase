@@ -18,6 +18,7 @@ class RxPostListViewModel {
     
     var loading = Variable<Bool>(false)
     var tableTap = PublishSubject<PostListSectionItem>()
+    var error = PublishSubject<Error>()
     
     init(networkProvider: RxProvider, storageManager: RxDataManager) {
         self.networkProvider = networkProvider
@@ -30,8 +31,8 @@ class RxPostListViewModel {
         let posts: Single<[Post]> = networkProvider.observeCodableRequest(type: JsonPlaceholder.posts)
         posts.subscribe(onSuccess: { [weak self] (posts) in
             self?.storageManager.save(models: posts)
-        }) { (error) in
-            error.log()
+        }) { (err) in
+            self.error.onNext(err)
         }.disposed(by: bag)
     }
     
@@ -61,9 +62,9 @@ class RxPostListViewModel {
         tableTap.subscribe(onNext: { (item) in
             switch item {
             case .post(let post):
-                print(post.id)
+                logD("\(post.id)")
             case .user(let user):
-                print(user.id)
+                logD("\(user.id)")
             }
         })
         .disposed(by: bag)

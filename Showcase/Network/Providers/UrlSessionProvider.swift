@@ -1,5 +1,5 @@
 //
-//  NativeProvider.swift
+//  UrlSessionProvider.swift
 //  Showcase
 //
 //  Created by James Birtwell on 06/04/2019.
@@ -10,13 +10,21 @@ import Foundation
 import UIKit
 import RxSwift
 
-class NativeProvider: NSObject, RxProvider {
+protocol RxProvider {
+    func observeCodableRequest<T: Decodable>(type: DualRouter) -> Single<T>
+}
+
+protocol UrlSessionRouter {
+    var urlSessionUrl: URL { get }
+}
+
+class UrlSessionProvider: NSObject, RxProvider {
     
-    static let shared = NativeProvider()
+    static let shared = UrlSessionProvider()
     
     @discardableResult
     func codableRequest<T: Decodable>(type: DualRouter, handleSuccess: @escaping ((T) -> ()), handleError: @escaping ((Error) -> ())) -> URLSessionDataTask {
-        let task = URLSession.shared.dataTask(with: type.nativeRequestUrl) { (data, response, error) in
+        let task = URLSession.shared.dataTask(with: type.urlSessionUrl) { (data, response, error) in
             if let data = data {
 //                self.log(data: data)
                 do {
@@ -40,7 +48,7 @@ class NativeProvider: NSObject, RxProvider {
     }
     
     func dataRequest(type: DualRouter, handleSuccess: @escaping ((Data) -> ()), handleError: @escaping ((Error) -> ())) {
-        URLSession.shared.dataTask(with: type.nativeRequestUrl) { (data, response, error) in
+        URLSession.shared.dataTask(with: type.urlSessionUrl) { (data, response, error) in
             if let data = data {
 //                self.log(data: data)
                 handleSuccess(data)
@@ -54,7 +62,7 @@ class NativeProvider: NSObject, RxProvider {
     }
     
     func imageRequest(type: DualRouter, handleSuccess: @escaping((UIImage) -> ()), handleError: @escaping ((Error) -> ())) -> URLSessionDataTask {
-        let task = URLSession.shared.dataTask(with: type.nativeRequestUrl) { (data, response, error) in
+        let task = URLSession.shared.dataTask(with: type.urlSessionUrl) { (data, response, error) in
             if let data = data,
                 let image = UIImage(data: data) {
                 handleSuccess(image)
@@ -78,7 +86,7 @@ class NativeProvider: NSObject, RxProvider {
     }
 }
 
-extension NativeProvider {
+extension UrlSessionProvider {
     func observeCodableRequest<T: Decodable>(type: DualRouter) -> Single<T> {
         return Single<T>.create { (single) -> Disposable in
             func handleSuccess(decodedObject: T) {
@@ -93,10 +101,5 @@ extension NativeProvider {
             }
         }
     }
-}
-
-
-protocol RxProvider {
-     func observeCodableRequest<T: Decodable>(type: DualRouter) -> Single<T>
 }
 

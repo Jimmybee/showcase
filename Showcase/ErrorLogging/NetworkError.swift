@@ -32,12 +32,7 @@ struct NetworkError: Error, ShowcaseError {
     }
     
     var userAlertMessage: String? {
-        switch self.httpCode {
-        case .internetAppearsOffline, .requestTimeout:
-            return NetworkStrings.poor_connectivity.localized
-        default:
-            return NetworkStrings.unknown.localized
-        }
+        return httpCode.userAlertMessage
     }
     
     func appendKeys(to keys: inout [String : Any]) {

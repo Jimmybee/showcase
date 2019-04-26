@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import UIKit
 
-class PostSelectionViewModel {
+class PostsModelSelectionViewModel {
    
     let persistenceOptions = Persistence.allCases
     let viewBindingOptions = ViewBinding.allCases
@@ -20,24 +20,26 @@ class PostSelectionViewModel {
     let selectedViewBinding = Variable<ViewBinding>(.imperative)
     let selectedNetwork = Variable<Network>(.urlSession)
     
-    func disableCoreData() -> Observable<(Persistence, Bool)> {
-        return selectedViewBinding.asObservable().map{ (Persistence.coreData, $0 == .imperative) }
+    func enableCoreData() -> Observable<SegmententValid<Persistence>> {
+        return selectedViewBinding.asObservable()
+            .map{ SegmententValid(segment: .coreData, valid: $0 == .imperative) }
     }
     
-    func disableMoya() -> Observable<(Network, Bool)> {
-        return selectedViewBinding.asObservable().map{ (Network.moya, $0 == .rx) }
+    func enableMoya() -> Observable<SegmententValid<Network>> {
+        return selectedViewBinding.asObservable()
+            .map{ SegmententValid(segment: .moya, valid: $0 == .rx) }
     }
     
     func handleOpenPostsTap() -> UIViewController? {
         guard let vc = selectedViewBinding.value.viewController(network: selectedNetwork.value, persistence: selectedPersistence.value) else {
-            print(self.selectedPersistence.value)
-            print(self.selectedNetwork.value)
             return nil
         }
         return vc
     }
     
 }
+
+
 
 enum Persistence: Int, SegmentEnum, CaseIterable {
     case realm, coreData
@@ -82,10 +84,10 @@ enum Network: Int, SegmentEnum, CaseIterable {
         }
     }
     
-    var imperativeNetworkProvider: NativeProvider? {
+    var imperativeNetworkProvider: UrlSessionProvider? {
         switch self {
         case .urlSession:
-            return NativeProvider.shared
+            return UrlSessionProvider.shared
         case .moya:
             return nil
         }
@@ -94,7 +96,7 @@ enum Network: Int, SegmentEnum, CaseIterable {
     var rxProvider: RxProvider {
         switch self {
         case .urlSession:
-            return NativeProvider.shared
+            return UrlSessionProvider.shared
         case .moya:
             return MoyaShowcaseProvider.shared
         }
@@ -126,7 +128,7 @@ enum ViewBinding: Int, SegmentEnum, CaseIterable {
         }
     }
     
-    private func imperativeViewController(provider: NativeProvider, storageManager: PersistentDataManager) -> PostsListViewController {
+    private func imperativeViewController(provider: UrlSessionProvider, storageManager: PersistentDataManager) -> PostsListViewController {
         let viewModel = PostListViewModel(networkProvider: provider, storageManager: storageManager)
         return PostsListViewController(viewModel: viewModel)
     }

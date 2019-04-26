@@ -15,7 +15,7 @@ enum iTunesRouter {
     case genre(index: Int)
 }
 
-typealias DualRouter = NativeRouter & TargetType
+typealias DualRouter = UrlSessionRouter & TargetType
 extension iTunesRouter: TargetType {
     
     var headers: [String : String]? {
@@ -52,8 +52,8 @@ extension iTunesRouter: TargetType {
     }
 }
 
-extension iTunesRouter: NativeRouter {
-    var nativeRequestUrl: URL {
+extension iTunesRouter: UrlSessionRouter {
+    var urlSessionUrl: URL {
         var urlString = baseURLstr
         if let urlParameters = urlParameters {
             urlString.append( urlParameters )

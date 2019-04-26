@@ -11,6 +11,11 @@ import RxSwift
 import SnapKit
 import RxCocoa
 
+struct SegmententValid<T: SegmentEnum> {
+    let segment: T
+    let valid: Bool
+}
+
 class SegmentedControl<T: SegmentEnum>: UIView {
     
     private var segments: [T]
@@ -21,19 +26,6 @@ class SegmentedControl<T: SegmentEnum>: UIView {
     var isEnabled: Bool = true {
         didSet {
             activeBttns.forEach({ $0.isEnabled = self.isEnabled })
-        }
-    }
-    
-    func set(segment: T, as enabled: Bool) {
-        activeBttns[segment.rawValue].isEnabled = enabled
-        guard let selectedValue = selectionVar.value else { return }
-        if activeBttns[selectedValue.rawValue].isEnabled == false {
-            for button in activeBttns {
-                if button.isEnabled == true {
-                    selectionVar.value = T(rawValue: button.tag)
-                    return
-                }
-            }
         }
     }
     
@@ -51,15 +43,27 @@ class SegmentedControl<T: SegmentEnum>: UIView {
         setupBttnConstraints()
         observeSelectedSegment()
         horizontalBttnStackContainer.spacing = spacing
-
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("This class does not support NSCoding")
     }
     
+    func set(segmentValid: SegmententValid<T>) {
+        activeBttns.first(where: {$0.tag == segmentValid.segment.rawValue})?.isEnabled = segmentValid.valid
+        guard let selectedValue = selectionVar.value else { return }
+        if activeBttns[selectedValue.rawValue].isEnabled == false {
+            for button in activeBttns {
+                if button.isEnabled == true {
+                    selectionVar.value = T(rawValue: button.tag)
+                    return
+                }
+            }
+        }
+    }
+    
     private func setupView() {
-        let bttns = segments.map({ UIButton(title: $0.title) })
+        let bttns = segments.map({ UIButton(segment: $0) })
         bttns.forEach({ $0.setupAsControlBttn() })
         activeBttns = bttns
     }
@@ -67,9 +71,8 @@ class SegmentedControl<T: SegmentEnum>: UIView {
     private func setupBttnConstraints() {
         self.addSubview(horizontalBttnStackContainer)
         horizontalBttnStackContainer.snp.makeConstraints({ $0.edges.equalToSuperview() })
-        for (index ,bttn) in activeBttns.enumerated() {
+        for bttn in activeBttns {
             horizontalBttnStackContainer.addArrangedSubview(bttn)
-            bttn.tag = index
             bttn.isSelected = false
             bttn.addTarget(self, action: #selector(clueBttnTapped(sender:)), for: .touchUpInside)
         }
@@ -81,12 +84,13 @@ class SegmentedControl<T: SegmentEnum>: UIView {
     }
     
     private func observeSelectedSegment() {
-        selectionVar.asObservable().filterNil().subscribe(onNext: { (bttnSelected) in
-            if !self.isEnabled { return }
+        selectionVar.asObservable().filterNil().subscribe(onNext: { [weak self] (segmentSelected) in
+            guard let self = self,
+                self.isEnabled else { return }
             for bttn in self.activeBttns {
                 bttn.isSelected = false
             }
-            self.activeBttns[bttnSelected.rawValue].isSelected = true
+            self.activeBttns.first(where: {$0.tag == segmentSelected.rawValue})?.isSelected = true
         })
             .disposed(by: disposeBag)
     }

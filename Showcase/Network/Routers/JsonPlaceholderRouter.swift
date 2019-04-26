@@ -63,13 +63,8 @@ extension JsonPlaceholder: TargetType {
     }
 }
 
-protocol NativeRouter {
-    var nativeRequestUrl: URL { get }
-}
-
-
-extension JsonPlaceholder: NativeRouter {
-    var nativeRequestUrl: URL {
+extension JsonPlaceholder: UrlSessionRouter {
+    var urlSessionUrl: URL {
         var url = baseURL
         url.appendPathComponent(path)
         return url

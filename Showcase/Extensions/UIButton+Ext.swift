@@ -20,6 +20,12 @@ extension UIButton {
         self.init()
         setTitle(title, for: .normal)
     }
+    
+    convenience init<T:SegmentEnum>(segment: T) {
+        self.init()
+        setTitle(segment.title, for: .normal)
+        tag = segment.rawValue
+    }
 }
 
 extension UIButton {

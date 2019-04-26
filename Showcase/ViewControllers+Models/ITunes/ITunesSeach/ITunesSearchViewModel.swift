@@ -18,7 +18,7 @@ protocol ITunesSearchViewModelDelegate {
 class ITunesSearchViewModel {
     
     let categories = MusicCategory.allCases
-    let provider = NativeProvider.shared
+    let provider = UrlSessionProvider.shared
     var task: URLSessionDataTask?
     
     var searchResults = [MusicAlbum]() {
@@ -31,7 +31,7 @@ class ITunesSearchViewModel {
     func handleCollection(indexPath: IndexPath) {
         let category = categories[indexPath.row]
         let route = iTunesRouter.genre(index: category.rawValue)
-        NativeProvider.shared.codableRequest(type: route, handleSuccess: handleData, handleError: handleError)
+        UrlSessionProvider.shared.codableRequest(type: route, handleSuccess: handleData, handleError: handleError)
     }
     
     let searchDispatchGroup = DispatchGroup()

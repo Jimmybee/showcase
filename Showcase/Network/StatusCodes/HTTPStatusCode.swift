@@ -81,3 +81,14 @@ enum HTTPStatusCode: Int {
     case unknown = -1
     
 }
+
+extension HTTPStatusCode {
+    var userAlertMessage: String? {
+        switch self {
+        case .internetAppearsOffline, .requestTimeout:
+            return NetworkStrings.poor_connectivity.localized
+        default:
+            return NetworkStrings.unknown.localized
+        }
+    }
+}

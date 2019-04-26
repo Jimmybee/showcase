@@ -32,6 +32,25 @@ class RxPostsListViewController: UIViewController {
         super.viewDidLoad()
         setupView()
         observeTableTap()
+        observeViewModelErrors()
+    }
+    
+    private func observeViewModelErrors() {
+        viewModel.error.asObservable()
+            .subscribe(onNext: { [weak self ] (err) in
+                err.log()
+                guard let self = self,
+                    let message = err.userAlertMessage else { return }
+                
+                self.handleAlert(message: message)
+            })
+            .disposed(by: bag)
+    }
+    
+    private func handleAlert(message: String) {
+        UIAlertController
+            .present(in: self, title: "", message: message, style: .alert, actions: Alerts.ok.actions)
+            .subscribe().disposed(by: bag)
     }
     
     private func setupView() {
