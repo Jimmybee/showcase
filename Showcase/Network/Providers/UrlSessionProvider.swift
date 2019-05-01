@@ -11,22 +11,22 @@ import UIKit
 import RxSwift
 
 protocol RxProvider {
-    func observeCodableRequest<T: Decodable>(type: DualRouter) -> Single<T>
+    func observeCodableRequest<T: Decodable, R: DualRouter>(route: R) -> Single<T>
 }
 
 protocol UrlSessionRouter {
     var urlSessionUrl: URL { get }
 }
 
-class UrlSessionProvider: NSObject, RxProvider {
+class UrlSessionProvider: RxProvider {
     
     static let shared = UrlSessionProvider()
     
     @discardableResult
-    func codableRequest<T: Decodable>(type: DualRouter, handleSuccess: @escaping ((T) -> ()), handleError: @escaping ((Error) -> ())) -> URLSessionDataTask {
-        let task = URLSession.shared.dataTask(with: type.urlSessionUrl) { (data, response, error) in
+    func codableRequest<T: Decodable, R: UrlSessionRouter>(route: R, handleSuccess: @escaping ((T) -> ()), handleError: @escaping ((Error) -> ())) -> URLSessionDataTask {
+        let task = URLSession.shared.dataTask(with: route.urlSessionUrl) { (data, response, error) in
             if let data = data {
-//                self.log(data: data)
+                logD(data.prettyJson())
                 do {
                     let parsed = try JSONDecoder().decode(T.self, from: data)
                     handleSuccess(parsed)
@@ -47,10 +47,10 @@ class UrlSessionProvider: NSObject, RxProvider {
         return task
     }
     
-    func dataRequest(type: DualRouter, handleSuccess: @escaping ((Data) -> ()), handleError: @escaping ((Error) -> ())) {
-        URLSession.shared.dataTask(with: type.urlSessionUrl) { (data, response, error) in
+    func dataRequest<R: UrlSessionRouter>(route: R, handleSuccess: @escaping ((Data) -> ()), handleError: @escaping ((Error) -> ())) {
+        URLSession.shared.dataTask(with: route.urlSessionUrl) { (data, response, error) in
             if let data = data {
-//                self.log(data: data)
+//                logD(data.prettyJson())
                 handleSuccess(data)
             }
             if let error = error {
@@ -61,8 +61,8 @@ class UrlSessionProvider: NSObject, RxProvider {
             }.resume()
     }
     
-    func imageRequest(type: DualRouter, handleSuccess: @escaping((UIImage) -> ()), handleError: @escaping ((Error) -> ())) -> URLSessionDataTask {
-        let task = URLSession.shared.dataTask(with: type.urlSessionUrl) { (data, response, error) in
+    func imageRequest<R: UrlSessionRouter>(route: R, handleSuccess: @escaping((UIImage) -> ()), handleError: @escaping ((Error) -> ())) -> URLSessionDataTask {
+        let task = URLSession.shared.dataTask(with: route.urlSessionUrl) { (data, response, error) in
             if let data = data,
                 let image = UIImage(data: data) {
                 handleSuccess(image)
@@ -80,20 +80,16 @@ class UrlSessionProvider: NSObject, RxProvider {
         task.resume()
         return task
     }
-    
-    func log(data: Data) {
-        print(data.prettyJson())
-    }
 }
 
 extension UrlSessionProvider {
-    func observeCodableRequest<T: Decodable>(type: DualRouter) -> Single<T> {
+    func observeCodableRequest<T: Decodable, R: UrlSessionRouter>(route: R) -> Single<T> {
         return Single<T>.create { (single) -> Disposable in
             func handleSuccess(decodedObject: T) {
                 single(.success(decodedObject))
             }
             
-            let task = self.codableRequest(type: type, handleSuccess: handleSuccess, handleError: { single(.error($0))
+            let task = self.codableRequest(route: route, handleSuccess: handleSuccess, handleError: { single(.error($0))
             })
             
             return Disposables.create {

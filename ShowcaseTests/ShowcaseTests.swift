@@ -22,35 +22,22 @@ class ShowcaseTests: XCTestCase {
 
     }
 
-    func testCoreData() {
-        do {
-            let dictionary = try postJson.convertToDictionary()
-            let data = try JSONSerialization.data(withJSONObject: dictionary, options: .prettyPrinted)
-            let post = try JSONDecoder().decode(Post.self, from: data)
-            let context = cdm.context
-            PostCore.create(in: context, post: post)
-            cdm.saveContext()
-
-            let fetchedPosts: [Post] = cdm.load(predicate: nil) 
-            XCTAssert(fetchedPosts.count == 1)
-            
-            let loadedPost = fetchedPosts.first!
-            XCTAssert(loadedPost.id == 90)
-            XCTAssert(loadedPost.title == "Test Post")
-            XCTAssert(loadedPost.userId == 10)
-            XCTAssert(loadedPost.body == "Locally created test post")
-        } catch {
-            print(error)
-            XCTFail()
-        }
+    func testCoreData() throws {
+        let dictionary = try postJson.convertToDictionary()
+        let data = try JSONSerialization.data(withJSONObject: dictionary, options: .prettyPrinted)
+        let post = try JSONDecoder().decode(Post.self, from: data)
+        let context = cdm.context
+        PostCore.create(in: context, post: post)
+        cdm.saveContext()
         
-      
-
-    }
-
-    func testPerformanceExample() {
-        self.measure {
-        }
+        let fetchedPosts: [Post] = cdm.load(predicate: nil)
+        XCTAssert(fetchedPosts.count == 1)
+        
+        let loadedPost = fetchedPosts.first!
+        XCTAssert(loadedPost.id == 90)
+        XCTAssert(loadedPost.title == "Test Post")
+        XCTAssert(loadedPost.userId == 10)
+        XCTAssert(loadedPost.body == "Locally created test post")
     }
 
     let postJson: String = """

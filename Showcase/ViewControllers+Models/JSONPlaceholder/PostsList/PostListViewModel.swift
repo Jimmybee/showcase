@@ -24,7 +24,7 @@ class PostListViewModel {
     }
     
     func refreshRemoteData() {
-        networkProvider.codableRequest(type: JsonPlaceholder.posts, handleSuccess: handle, handleError: handleError)
+        networkProvider.codableRequest(route: JsonPlaceholder.posts, handleSuccess: handle, handleError: handleError)
     }
     
     func handle(posts: [Post]) {

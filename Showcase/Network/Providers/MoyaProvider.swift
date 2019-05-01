@@ -16,11 +16,10 @@ class MoyaShowcaseProvider: RxProvider {
     
     let provider = MoyaProvider<MultiTarget>() //(plugins: [NetworkLoggerPlugin(verbose: true)])
 
-    func observeCodableRequest<T>(type: DualRouter) -> PrimitiveSequence<SingleTrait, T> where T : Decodable {
-        let multi = MultiTarget(type)
+    func observeCodableRequest<T: Decodable, R: TargetType>(route: R) -> Single<T> {
+        let multi = MultiTarget(route)
         return performMainRequest(token: multi)
             .map(T.self)
-        //            .map(T.self, atKeyPath: nil, using: decoder, failsOnEmptyData: failsOnEmptyData)
     }
     
     private func performMainRequest(token: MultiTarget) -> Single<Response> {

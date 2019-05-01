@@ -28,7 +28,7 @@ class RxPostListViewModel {
     }
     
     func updatePosts() {
-        let posts: Single<[Post]> = networkProvider.observeCodableRequest(type: JsonPlaceholder.posts)
+        let posts: Single<[Post]> = networkProvider.observeCodableRequest(route: JsonPlaceholder.posts)
         posts.subscribe(onSuccess: { [weak self] (posts) in
             self?.storageManager.save(models: posts)
         }) { (err) in

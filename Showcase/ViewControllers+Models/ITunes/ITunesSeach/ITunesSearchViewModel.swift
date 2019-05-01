@@ -31,7 +31,7 @@ class ITunesSearchViewModel {
     func handleCollection(indexPath: IndexPath) {
         let category = categories[indexPath.row]
         let route = iTunesRouter.genre(index: category.rawValue)
-        UrlSessionProvider.shared.codableRequest(type: route, handleSuccess: handleData, handleError: handleError)
+        UrlSessionProvider.shared.codableRequest(route: route, handleSuccess: handleData, handleError: handleError)
     }
     
     let searchDispatchGroup = DispatchGroup()
@@ -54,7 +54,7 @@ class ITunesSearchViewModel {
     private func sendRequest() {
         task?.cancel()
         let route = iTunesRouter.search(query: query!)
-        task = provider.codableRequest(type: route, handleSuccess: handleWrapper, handleError: handleError)
+        task = provider.codableRequest(route: route, handleSuccess: handleWrapper, handleError: handleError)
         query = nil
     }
     

@@ -35,10 +35,12 @@ class PostsModelSelectionViewModelTests: XCTestCase {
             .map({ $0.valid })
             .bind(to: isMoyaValid)
             .disposed(by: bag)
+        
         scheduler.createColdObservable([.next(10, ViewBinding.rx),
                                         .next(20, ViewBinding.imperative)])
             .bind(to: viewModel.selectedViewBinding)
             .disposed(by: bag)
+        
         scheduler.start()
         XCTAssertEqual(isMoyaValid.events, [
             .next(0, false),

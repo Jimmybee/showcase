@@ -12,12 +12,6 @@ import RxSwift
 import RxRealm
 
 class RealmDataManager: PersistentDataManager, RxDataManager {
-    func observe<T>(predicate: NSPredicate?) -> Observable<[T]> where T : PersistCoreData, T : PersistRealm {
-        let results = realm.objects(T.RealmModel.self)
-        let filterd = predicate != nil ? results.filter(predicate!) : results
-        return Observable.collection(from: filterd, synchronousStart: false)
-            .map{ $0.compactMap({ T($0) }) } 
-    }
     
     var configuration : DataStoreConfiguration!
     
@@ -68,6 +62,12 @@ class RealmDataManager: PersistentDataManager, RxDataManager {
         return filterd.compactMap({ T($0) })
     }
     
+    func observe<T>(predicate: NSPredicate?) -> Observable<[T]> where T : PersistCoreData, T : PersistRealm {
+        let results = realm.objects(T.RealmModel.self)
+        let filterd = predicate != nil ? results.filter(predicate!) : results
+        return Observable.collection(from: filterd, synchronousStart: false)
+            .map{ $0.compactMap({ T($0) }) }
+    }
 }
 
 protocol PersistentDataManager {
@@ -76,7 +76,6 @@ protocol PersistentDataManager {
 }
 
 protocol RxDataManager {
-    func observe<T: CanPersist>(predicate: NSPredicate?) -> Observable<[T]>
     func save<T: StandardSave>(models: [T])
-
+    func observe<T: CanPersist>(predicate: NSPredicate?) -> Observable<[T]>
 }
