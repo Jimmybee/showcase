@@ -6,4 +6,8 @@
 //  Copyright © 2019 James Birtwell. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+class PostDetailViewController: UIViewController {
+    
+}

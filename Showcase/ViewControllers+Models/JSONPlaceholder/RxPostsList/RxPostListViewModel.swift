@@ -16,6 +16,8 @@ class RxPostListViewModel {
     private var networkProvider: RxProvider
     private var storageManager: RxDataManager
     
+    private var openedUsers = BehaviorSubject<Set<Int>>(value: [])
+    
     var loading = Variable<Bool>(false)
     var tableTap = PublishSubject<PostListSectionItem>()
     var error = PublishSubject<Error>()
@@ -24,6 +26,7 @@ class RxPostListViewModel {
         self.networkProvider = networkProvider
         self.storageManager = storageManager
         updatePosts()
+        updateUsers()
         handleTableTap()
     }
     
@@ -31,15 +34,35 @@ class RxPostListViewModel {
         let posts: Single<[Post]> = networkProvider.observeCodableRequest(route: JsonPlaceholder.posts)
         posts.subscribe(onSuccess: { [weak self] (posts) in
             self?.storageManager.save(models: posts)
-        }) { (err) in
-            self.error.onNext(err)
+        }) { [weak self] (error) in
+            self?.error.onNext(error)
         }.disposed(by: bag)
     }
     
+    func updateUsers() {
+        let posts: Single<[User]> = networkProvider.observeCodableRequest(route: JsonPlaceholder.users)
+        posts.subscribe(onSuccess: { [weak self] (posts) in
+            self?.storageManager.save(models: posts)
+        }) { [weak self] (error) in
+            self?.error.onNext(error)
+            }.disposed(by: bag)
+    }
+    
     var tablePosts: Observable<[PostListSection]> {
-        return storageManager.observe(predicate: nil)
-            .map{ $0.map{ PostListSectionItem.post($0) } }
-            .map{ [PostListSection.section(items: $0)] }
+        let users: Observable<[User]> = storageManager.observe(predicate: nil)
+        let posts: Observable<[Post]> = storageManager.observe(predicate: nil)
+        
+        let groupedPosts = posts.map({ Dictionary(grouping: $0, by: { $0.userId}) })
+        
+        return Observable.combineLatest(users, groupedPosts, openedUsers.asObservable()) { (users, groupedPosts, openedUsers) -> [PostListSection] in
+            let items = users.map { user -> [PostListSectionItem] in
+                let userItem = [PostListSectionItem.user(user)]
+                guard openedUsers.contains(user.id),
+                    let posts = groupedPosts[user.id] else { return userItem }
+                return userItem + posts.map{ PostListSectionItem.post($0)  }
+            }
+            return items.map{ PostListSection.section(items: $0) }
+        }
     }
     
     var dataSource: RxTableViewSectionedReloadDataSource<PostListSection> {
@@ -49,9 +72,9 @@ class RxPostListViewModel {
                     let cell = table.dequeueReusableCell(withIdentifier: UITableViewCell.identifier())!
                     cell.textLabel?.text = post.title
                     return cell
-                default:
+                case let .user(user):
                     let cell = table.dequeueReusableCell(withIdentifier: UITableViewCell.identifier())!
-                    cell.textLabel?.text = "user"
+                    cell.textLabel?.text = user.name
                     return cell
                 }
         })
@@ -59,50 +82,19 @@ class RxPostListViewModel {
     }
     
     func handleTableTap() {
-        tableTap.subscribe(onNext: { (item) in
+        tableTap.subscribe(onNext: { [weak self] (item) in
             switch item {
             case .post(let post):
                 logD("\(post.id)")
             case .user(let user):
-                logD("\(user.id)")
+                guard var usersOpen = try? self?.openedUsers.value() else { return }
+                if usersOpen.remove(user.id) == nil {
+                    usersOpen.insert(user.id)
+                }
+                self?.openedUsers.onNext(usersOpen)
             }
         })
         .disposed(by: bag)
     }
 }
 
-
-
-
-enum PostListSectionItem {
-    case user(User)
-    case post(Post)
-}
-
-enum PostListSection {
-    case section(items: [PostListSectionItem])
-    
-    public var identity: String {
-        return "onesection"
-    }
-}
-
-extension PostListSection: SectionModelType {
-    typealias Identity = String
-    
-    typealias Item = PostListSectionItem
-    
-    var items: [Item] {
-        switch self {
-        case let .section(items):
-            return items.map {$0}
-        }
-    }
-    
-    init(original: PostListSection, items: [Item]) {
-        switch original {
-        case let .section(items):
-            self = .section(items: items)
-        }
-    }
-}

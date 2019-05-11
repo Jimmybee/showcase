@@ -10,8 +10,7 @@
 
 import Foundation
 
-struct Post: Codable, CanPersist, StandardSave {
-    typealias CoreModel = PostCore
+struct Post: Codable, RealmLoadable, RealmSaveable {
     typealias RealmModel = PostRealm
     
     var userId: Int
@@ -25,13 +24,5 @@ struct Post: Codable, CanPersist, StandardSave {
         self.title = postRealm.title ?? ""
         self.body = postRealm.body ?? ""
     }
-    
-    init?(_ model: PostCore) {
-        id = Int(model.id)
-        body = model.body ?? ""
-        title = model.title ?? ""
-        userId = Int(model.userId)
-    }
-    
 }
 

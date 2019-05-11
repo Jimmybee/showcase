@@ -8,9 +8,14 @@
 
 import Foundation
 
-struct User: Codable {
+struct User: Codable, RealmLoadable, RealmSaveable {
+    typealias RealmModel = UserRealm
     
     var id: Int
     var name: String
     
+    init?(_ realmModel: RealmModel) {
+        self.id = realmModel.id
+        self.name = realmModel.name
+    }
 }

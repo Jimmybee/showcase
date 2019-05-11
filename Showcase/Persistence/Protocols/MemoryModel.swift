@@ -10,18 +10,18 @@ import Foundation
 import RealmSwift
 import CoreData
 
-
-typealias CanPersist = PersistRealm & PersistCoreData
-typealias StandardSave = RealmSave & CoreSave
-
-protocol PersistRealm {
+protocol RealmLoadable {
     associatedtype RealmModel: Object
     init?(_ object: RealmModel)
 }
 
-protocol PersistCoreData {
-    associatedtype CoreModel: NSManagedObject
-    init?(_ coreModel: CoreModel)
+protocol RealmSaveable {
+    associatedtype RealmModel: RealmObject
 }
 
+extension RealmSaveable {
+    func realmModel() -> RealmModel {
+        return RealmModel.init(self as! RealmModel.MemoryModel)
+    }
+}
 

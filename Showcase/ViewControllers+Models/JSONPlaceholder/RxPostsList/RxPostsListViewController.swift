@@ -16,17 +16,18 @@ class RxPostsListViewController: UIViewController {
     
     private let bag = DisposeBag()
     private let tableView = UITableView()
-    private let viewModel: RxPostListViewModel
+    private var viewModel: RxPostListViewModel = RxPostListViewModel(networkProvider: MoyaShowcaseProvider.shared, storageManager: RealmDataManager.shared)
     
-    init(viewModel: RxPostListViewModel) {
-        self.viewModel =  viewModel
-        super.init(nibName: nil, bundle: nil)
-        view.backgroundColor = .white
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+//    init(viewModel: RxPostListViewModel) {
+//        self.viewModel =  viewModel
+//        super.init(nibName: nil, bundle: nil)
+//        view.backgroundColor = .white
+//    }
+//
+//    required init?(coder aDecoder: NSCoder) {
+//        super.init(coder: aDecoder)
+//        view.backgroundColor = .white
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,7 +42,6 @@ class RxPostsListViewController: UIViewController {
                 err.log()
                 guard let self = self,
                     let message = err.userAlertMessage else { return }
-                
                 self.handleAlert(message: message)
             })
             .disposed(by: bag)

@@ -16,7 +16,6 @@ protocol Localizable {
 }
 
 enum StringTable: String {
-    case ITunes
     case Network
     case Placeholder
 }

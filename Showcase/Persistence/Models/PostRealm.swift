@@ -18,16 +18,12 @@ final class PostRealm: Object, RealmObject {
     @objc dynamic var title: String?
     @objc dynamic var body: String?
     
-    static func construct(model: Post) -> PostRealm {
-        return PostRealm(model)
-    }
-    
-    convenience init(_ post: Post) {
+    convenience init(_ model: MemoryModel) {
         self.init()
-        self.userId = post.userId
-        self.id = post.id
-        self.title = post.title
-        self.body = post.body
+        self.userId = model.userId
+        self.id = model.id
+        self.title = model.title
+        self.body = model.body
     }
     
     override static func primaryKey() -> String? {

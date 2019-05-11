@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import SnapKit
 import RxCocoa
+import RxOptional
 
 struct SegmententValid<T: SegmentEnum> {
     let segment: T

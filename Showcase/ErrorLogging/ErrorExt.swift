@@ -8,6 +8,11 @@
 
 import Foundation
 
+protocol ShowcaseError {
+    var userAlertMessage: String? { get }
+    func appendKeys(to: inout [String: Any])
+}
+
 let logQueue: DispatchQueue = {
     let queue = DispatchQueue(label: "com.showcase.logQueue", attributes: [])
     return queue
@@ -33,7 +38,6 @@ extension Error {
         default:
             keys["LocalizedDescription"] = localizedDescription
         }
-        
         log(dict: keys)
     }
     
@@ -54,11 +58,6 @@ extension Error {
             return "Unknown Error"
         }
     }
-}
-
-protocol ShowcaseError {
-    var userAlertMessage: String? { get }
-    func appendKeys(to: inout [String: Any])
 }
 
 func logD(_ message: String) {

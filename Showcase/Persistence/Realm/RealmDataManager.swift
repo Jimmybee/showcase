@@ -11,8 +11,13 @@ import RealmSwift
 import RxSwift
 import RxRealm
 
-class RealmDataManager: PersistentDataManager, RxDataManager {
-    
+protocol RxDataManager {
+    func save<T: RealmSaveable>(models: [T])
+    func load<T: RealmLoadable>(predicate: NSPredicate?) -> [T]
+    func observe<T: RealmLoadable>(predicate: NSPredicate?) -> Observable<[T]>
+}
+
+class RealmDataManager: RxDataManager {
     var configuration : DataStoreConfiguration!
     
     init(realmConfiguration: Realm.Configuration? = nil) {
@@ -45,7 +50,7 @@ class RealmDataManager: PersistentDataManager, RxDataManager {
         return true
     }
     
-    func save<T: RealmSave>(models: [T]) {
+    func save<T: RealmSaveable>(models: [T]) {
         let realmModels = models.map({ $0.realmModel()  })
         do {
             realm.beginWrite()
@@ -56,26 +61,16 @@ class RealmDataManager: PersistentDataManager, RxDataManager {
         }
     }
     
-    func load<T: PersistRealm>(predicate: NSPredicate?) -> [T] {
+    func load<T: RealmLoadable>(predicate: NSPredicate?) -> [T] {
         let results = realm.objects(T.RealmModel.self)
         let filterd = predicate != nil ? results.filter(predicate!) : results
         return filterd.compactMap({ T($0) })
     }
     
-    func observe<T>(predicate: NSPredicate?) -> Observable<[T]> where T : PersistCoreData, T : PersistRealm {
+    func observe<T: RealmLoadable>(predicate: NSPredicate? = nil) -> Observable<[T]> {
         let results = realm.objects(T.RealmModel.self)
         let filterd = predicate != nil ? results.filter(predicate!) : results
         return Observable.collection(from: filterd, synchronousStart: false)
             .map{ $0.compactMap({ T($0) }) }
     }
-}
-
-protocol PersistentDataManager {
-    func save<T: StandardSave>(models: [T])
-    func load<T: CanPersist>(predicate: NSPredicate?) -> [T]
-}
-
-protocol RxDataManager {
-    func save<T: StandardSave>(models: [T])
-    func observe<T: CanPersist>(predicate: NSPredicate?) -> Observable<[T]>
 }

@@ -11,6 +11,10 @@ import Moya
 import RxMoya
 import RxSwift
 
+protocol RxProvider {
+    func observeCodableRequest<T: Decodable, R: TargetType>(route: R) -> Single<T>
+}
+
 class MoyaShowcaseProvider: RxProvider {
     static let shared = MoyaShowcaseProvider()
     
