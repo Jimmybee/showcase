@@ -5,12 +5,12 @@
 github "realm/realm-cocoa"
 
 # RxSwift
-github "ReactiveX/RxSwift" 
+github "ReactiveX/RxSwift" ~> 5.0.1
 github "RxSwiftCommunity/RxSwiftExt"
 github "RxSwiftCommunity/RxRealm" 
-github "RxSwiftCommunity/RxGesture" 
+github "RxSwiftCommunity/RxGesture" ~> 2.2.0
 github "RxSwiftCommunity/RxDataSources" 
-github "RxSwiftCommunity/RxOptional" 
+github "RxSwiftCommunity/RxOptional" ~> 3.6.2
 
 # Networking
 github "Alamofire/Alamofire"
@@ -18,6 +18,5 @@ github "Moya/Moya"
 
 # UI
 github "SnapKit/SnapKit" 
-github "onevcat/Kingfisher"
 
 
