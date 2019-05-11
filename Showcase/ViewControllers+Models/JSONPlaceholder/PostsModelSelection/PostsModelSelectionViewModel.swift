@@ -84,7 +84,7 @@ enum Network: Int, SegmentEnum, CaseIterable {
         }
     }
     
-    var imperativeNetworkProvider: UrlSessionProvider? {
+    var imperativeNetworkProvider: NetworkProvider? {
         switch self {
         case .urlSession:
             return UrlSessionProvider.shared
@@ -128,7 +128,7 @@ enum ViewBinding: Int, SegmentEnum, CaseIterable {
         }
     }
     
-    private func imperativeViewController(provider: UrlSessionProvider, storageManager: PersistentDataManager) -> PostsListViewController {
+    private func imperativeViewController(provider: NetworkProvider, storageManager: PersistentDataManager) -> PostsListViewController {
         let viewModel = PostListViewModel(networkProvider: provider, storageManager: storageManager)
         return PostsListViewController(viewModel: viewModel)
     }

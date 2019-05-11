@@ -18,7 +18,7 @@ protocol ITunesSearchViewModelDelegate {
 class ITunesSearchViewModel {
     
     let categories = MusicCategory.allCases
-    let provider = UrlSessionProvider.shared
+    let provider: NetworkProvider = UrlSessionProvider.shared
     var task: URLSessionDataTask?
     
     var searchResults = [MusicAlbum]() {

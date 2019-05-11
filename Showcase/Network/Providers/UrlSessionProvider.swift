@@ -18,7 +18,11 @@ protocol UrlSessionRouter {
     var urlSessionUrl: URL { get }
 }
 
-class UrlSessionProvider: RxProvider {
+protocol NetworkProvider {
+    func codableRequest<T: Decodable, R: UrlSessionRouter>(route: R, handleSuccess: @escaping ((T) -> ()), handleError: @escaping ((Error) -> ())) -> URLSessionDataTask
+}
+
+class UrlSessionProvider: NetworkProvider, RxProvider {
     
     static let shared = UrlSessionProvider()
     

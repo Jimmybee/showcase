@@ -13,10 +13,10 @@ class PostListViewModel {
     var posts: [Post] = []
     var refreshView: VoidFunction?
 
-    private var networkProvider: UrlSessionProvider
+    private var networkProvider: NetworkProvider
     private var storageManager: PersistentDataManager
     
-    init(networkProvider: UrlSessionProvider, storageManager: PersistentDataManager) {
+    init(networkProvider: NetworkProvider, storageManager: PersistentDataManager) {
         self.networkProvider = networkProvider
         self.storageManager = storageManager
        
