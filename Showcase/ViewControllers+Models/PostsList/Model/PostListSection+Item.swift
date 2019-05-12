@@ -9,22 +9,39 @@
 import Foundation
 import RxDataSources
 
-enum PostListSectionItem {
+enum PostListSectionItem: IdentifiableType, Equatable {
+    typealias Identity = String
+    
     case user(User)
     case post(Post)
+    
+    static func == (lhs: PostListSectionItem, rhs: PostListSectionItem) -> Bool {
+        return lhs.identity == rhs.identity
+    }
+    
+    var identity: String {
+        switch self {
+        case let .post(post):
+            return "post-\(post.id)"
+        case let .user(user):
+            return "user-\(user.id)"
+        }
+    }
 }
 
 enum PostListSection {
     case section(items: [PostListSectionItem])
     
     public var identity: String {
-        return "onesection"
+        switch self {
+        case .section(items: let items):
+            return items.first?.identity ?? "no-user"
+        }
     }
 }
 
-extension PostListSection: SectionModelType {
+extension PostListSection: AnimatableSectionModelType {
     typealias Identity = String
-    
     typealias Item = PostListSectionItem
     
     var items: [Item] {
@@ -36,7 +53,7 @@ extension PostListSection: SectionModelType {
     
     init(original: PostListSection, items: [Item]) {
         switch original {
-        case let .section(items):
+        case .section(_):
             self = .section(items: items)
         }
     }

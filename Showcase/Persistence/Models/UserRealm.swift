@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-final class UserRealm: Object, RealmObject {
+final class UserRealm: Object, RealmObject, RealmObjectWithId{
     typealias MemoryModel = User
     typealias RealmModel = UserRealm
     

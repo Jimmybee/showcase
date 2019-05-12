@@ -10,9 +10,14 @@ import Foundation
 import RealmSwift
 
 protocol RealmObject where Self: Object {
-    associatedtype MemoryModel: RealmSaveable
+    associatedtype MemoryModel: RealmLoadable
     associatedtype RealmModel: Object
     
     init(_ model: MemoryModel)
 }
+
+protocol RealmObjectWithId where Self: RealmObject {    
+    var id: Int { get }
+}
+
 

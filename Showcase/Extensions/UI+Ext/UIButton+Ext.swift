@@ -43,14 +43,3 @@ extension UIButton {
     }
 }
 
-extension UIImage {
-    static func block(color: UIColor) -> UIImage? {
-        let rect =  CGRect(x: 0, y: 0, width: 1, height: 1)
-        UIGraphicsBeginImageContext(rect.size)
-        color.setFill()
-        UIRectFill(rect)
-        let image = UIGraphicsGetImageFromCurrentImageContext()!
-        UIGraphicsEndImageContext()
-        return image
-    }
-}

@@ -10,13 +10,13 @@
 
 import Foundation
 
-struct Post: Codable, RealmLoadable, RealmSaveable {
+struct Post: Codable, RealmLoadable, RealmLoadableById {
     typealias RealmModel = PostRealm
     
-    var userId: Int
-    var id: Int
-    var title: String
-    var body: String
+    let userId: Int
+    let id: Int
+    let title: String
+    let body: String
             
     init?(_ postRealm: PostRealm) {
         self.userId = postRealm.userId

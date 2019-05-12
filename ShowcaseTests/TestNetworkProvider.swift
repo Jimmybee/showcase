@@ -8,25 +8,22 @@
 
 import Foundation
 import RxSwift
+import RxTest
+import Moya
 @testable import Showcase
 
 class TestNetworkProvider: RxProvider {
 
-    let cloud = Variable<[String : Any]>([:])
-    var networkDelay: Double = 0.1
+    let cloud = [String : Any]()
+    var schedulerTime: Int = 10
+    var scheduler: TestScheduler!
 
-//    func codableRequest<T: Decodable, R: UrlSessionRouter>(route: R, handleSuccess: @escaping ((T) -> ()), handleError: @escaping ((Error) -> ())) -> URLSessionDataTask  {
-//        let key = String(describing: R.self)
-//
-//
-//    }
-
-    func observeCodableRequest<T: Decodable, R: DualRouter>(route: R) -> Single<T> {
+    func observeCodableRequest<T: Decodable, R: TargetType>(route: R) -> Single<T> {
         let key = String(describing: R.self)
-        return cloud.asObservable()
-            .map{ $0[key] as? T }
-            .filterNil()
+        let result = cloud[key] as? T
+        
+        return scheduler.createColdObservable([.next(schedulerTime, (result))])
+            .errorOnNil()
             .asSingle()
-            .delay(networkDelay, scheduler: MainScheduler.asyncInstance)
     }
 }

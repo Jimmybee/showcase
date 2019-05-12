@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-final class PostRealm: Object, RealmObject {
+final class PostRealm: Object, RealmObject, RealmObjectWithId {
     typealias MemoryModel = Post
     typealias RealmModel = PostRealm
     

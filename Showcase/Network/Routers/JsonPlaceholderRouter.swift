@@ -12,7 +12,7 @@ import Moya
 enum JsonPlaceholder {
     case posts
     case users
-    case comments
+    case comments(for: Post)
 }
 
 extension JsonPlaceholder: TargetType {
@@ -38,16 +38,19 @@ extension JsonPlaceholder: TargetType {
         return .get
     }
     
-    var parameters: [String: Any]? {
-        return nil
-    }
-    
     var sampleData: Data {
         return "{{\"Implemented\": \"Nope\"}}".data(using: .utf8)!
     }
     
     var task: Task {
-        return .requestPlain
+        switch self {
+        case .comments(for: let post):
+            let parameters = ["postId": post.id]
+            return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
+
+        default:
+            return .requestPlain
+        }
     }
     
     var parameterEncoding: ParameterEncoding {

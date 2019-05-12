@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class LoadingBarView: UIView {
     
@@ -38,25 +39,25 @@ class LoadingBarView: UIView {
         backgroundView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
-        indicator.backgroundColor = .blue
+        indicator.backgroundColor = .red
         addSubview(indicator)
     }
     
     func startAnimating() {
         animating = true
-        let newFrame = CGRect(x: frame.minX, y: frame.minY, width: frame.width, height: 5)
-        UIView.animate(withDuration: 0.5, animations: {
-            self.frame = newFrame
-        }) { (_) in
-            self.animatePartA()
+        snp.updateConstraints({ $0.height.equalTo(5) })
+        UIView.animate(withDuration: 0.5, animations: { [weak self] in
+            self?.layoutIfNeeded()
+        }) { [weak self] (_) in
+            self?.animatePartA()
         }
     }
     
     func stopAnimating() {
         animating = false
-        let newFrame = CGRect(x: frame.minX, y: frame.minY, width: frame.width, height: 0)
-        UIView.animate(withDuration: 0.5, animations: {
-            self.frame = newFrame
+        snp.updateConstraints({ $0.height.equalTo(0) })
+        UIView.animate(withDuration: 0.5, animations: { [weak self] in
+            self?.layoutIfNeeded()
         }) { (_) in
             self.indicator.frame = .zero
         }

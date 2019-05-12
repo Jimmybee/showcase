@@ -11,17 +11,19 @@ import RealmSwift
 import CoreData
 
 protocol RealmLoadable {
-    associatedtype RealmModel: Object
+    associatedtype RealmModel: RealmObject
     init?(_ object: RealmModel)
 }
 
-protocol RealmSaveable {
-    associatedtype RealmModel: RealmObject
-}
-
-extension RealmSaveable {
+extension RealmLoadable {
     func realmModel() -> RealmModel {
         return RealmModel.init(self as! RealmModel.MemoryModel)
     }
 }
 
+protocol RealmLoadableById {
+    associatedtype RealmModel: RealmObjectWithId
+    init?(_ object: RealmModel)
+    
+    var id: Int { get }
+}

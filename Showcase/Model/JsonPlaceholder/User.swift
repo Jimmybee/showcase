@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct User: Codable, RealmLoadable, RealmSaveable {
+struct User: Codable, RealmLoadable, RealmLoadableById {
     typealias RealmModel = UserRealm
     
     var id: Int

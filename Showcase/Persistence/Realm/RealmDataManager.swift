@@ -12,8 +12,9 @@ import RxSwift
 import RxRealm
 
 protocol RxDataManager {
-    func save<T: RealmSaveable>(models: [T])
+    func save<T: RealmLoadable>(models: [T])
     func load<T: RealmLoadable>(predicate: NSPredicate?) -> [T]
+    func load<T: RealmLoadableById>(byId id: Int) -> T? 
     func observe<T: RealmLoadable>(predicate: NSPredicate?) -> Observable<[T]>
 }
 
@@ -50,8 +51,8 @@ class RealmDataManager: RxDataManager {
         return true
     }
     
-    func save<T: RealmSaveable>(models: [T]) {
-        let realmModels = models.map({ $0.realmModel()  })
+    func save<T: RealmLoadable>(models: [T]) {
+        let realmModels = models.map({ $0.realmModel() })
         do {
             realm.beginWrite()
             realm.add(realmModels, update: true)
@@ -72,5 +73,10 @@ class RealmDataManager: RxDataManager {
         let filterd = predicate != nil ? results.filter(predicate!) : results
         return Observable.collection(from: filterd, synchronousStart: false)
             .map{ $0.compactMap({ T($0) }) }
+    }
+
+    func load<T: RealmLoadableById>(byId id: Int) -> T? {
+        let result = realm.object(ofType: T.RealmModel.self, forPrimaryKey: id)
+        return result.flatMap{ T($0) }
     }
 }
