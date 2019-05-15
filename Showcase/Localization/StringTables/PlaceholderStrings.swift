@@ -14,16 +14,9 @@ enum PlaceholderStrings: String, Localizable {
     }
     
     case posts_list
-    case rx_posts_list
-    case persistence
-    case realm
-    case core_data
-    case network
-    case url_session
-    case moya
-    case view_binding
-    case rx
-    case imperative
-    case open_posts_list
+    case no_comments
+    case comment_count
+    case loading_comments
+    case failed_loading
     
 }

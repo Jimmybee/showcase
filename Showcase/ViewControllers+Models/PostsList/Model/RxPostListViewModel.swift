@@ -15,8 +15,8 @@ import RxCocoa
 class RxPostListViewModel {
     
     private let bag = DisposeBag()
-    private var networkProvider: RxProvider
-    private var storageManager: RxDataManager
+    private var networkProvider: RxNetworkProvider
+    private var storageManager: DataManager
     
     private var openedUsers = BehaviorSubject<Set<Int>>(value: [])
     
@@ -25,7 +25,7 @@ class RxPostListViewModel {
     
     var userTappedObserver = PublishSubject<User>()
 
-    init(networkProvider: RxProvider, storageManager: RxDataManager) {
+    init(networkProvider: RxNetworkProvider, storageManager: DataManager) {
         self.networkProvider = networkProvider
         self.storageManager = storageManager
         observeUserTapped()
@@ -58,7 +58,7 @@ class RxPostListViewModel {
         }).asObservable()
     }
     
-    var tablePosts: Observable<[PostListSection]> {
+    var tablePosts: Driver<[PostListSection]> {
         let users: Observable<[User]> = storageManager.observe(predicate: nil)
         let posts: Observable<[Post]> = storageManager.observe(predicate: nil)
         
@@ -72,7 +72,8 @@ class RxPostListViewModel {
                 return userItem + posts.map{ PostListSectionItem.post($0)  }
             }
             return items.map{ PostListSection.section(items: $0) }
-        }
+            }
+            .asDriver(onErrorJustReturn: [])
     }
     
     func observeUserTapped() {

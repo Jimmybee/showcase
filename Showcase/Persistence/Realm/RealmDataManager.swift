@@ -11,44 +11,24 @@ import RealmSwift
 import RxSwift
 import RxRealm
 
-protocol RxDataManager {
+protocol DataManager {
     func save<T: RealmLoadable>(models: [T])
     func load<T: RealmLoadable>(predicate: NSPredicate?) -> [T]
     func load<T: RealmLoadableById>(byId id: Int) -> T? 
     func observe<T: RealmLoadable>(predicate: NSPredicate?) -> Observable<[T]>
 }
 
-class RealmDataManager: RxDataManager {
-    var configuration : DataStoreConfiguration!
+class RealmDataManager: DataManager {
     
+    static let shared = RealmDataManager()
+    private var configuration : DataStoreConfiguration!
+
     init(realmConfiguration: Realm.Configuration? = nil) {
         self.configuration = DataStoreConfiguration(realmConfiguration: realmConfiguration)
     }
     
-    static let shared = RealmDataManager()
-   
-    var realm: Realm {
+    private var realm: Realm {
         return try! Realm(configuration: configuration.realmConfiguration)
-    }
-    
-    var logRealm : Realm? {
-        guard configuration.hasCheckedConfiguration else { return nil }
-        if _logRealm == nil { _logRealm = realm }
-        return _logRealm
-    }
-    private var _logRealm : Realm?
-    
-    // MARK: Clear data (used on Unit Tests)
-    func clearAllData() -> Bool {
-        do {
-            realm.beginWrite()
-            realm.deleteAll()
-            logD("commitWrite() \(Thread.current)")
-            try realm.commitWrite()
-        } catch {
-            return false
-        }
-        return true
     }
     
     func save<T: RealmLoadable>(models: [T]) {
@@ -73,6 +53,7 @@ class RealmDataManager: RxDataManager {
         let filterd = predicate != nil ? results.filter(predicate!) : results
         return Observable.collection(from: filterd, synchronousStart: false)
             .map{ $0.compactMap({ T($0) }) }
+            .observeOn(ConcurrentDispatchQueueScheduler(qos: .default))
     }
 
     func load<T: RealmLoadableById>(byId id: Int) -> T? {

@@ -10,6 +10,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PostDetailHeaderView">
             <connections>
+                <outlet property="commentCountLabel" destination="Hfr-Ru-E43" id="dJM-hx-Cde"/>
+                <outlet property="postBodyLabel" destination="8oq-90-OGL" id="fCm-cQ-EP8"/>
                 <outlet property="postTitleLabel" destination="f23-9y-f4r" id="sCN-DB-xxP"/>
                 <outlet property="userNameLabel" destination="mYM-ck-t6c" id="VLc-Wh-uQM"/>
             </connections>
@@ -22,14 +24,26 @@
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="98Y-2r-JRy">
                     <rect key="frame" x="20" y="20" width="265" height="159"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="John" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mYM-ck-t6c" customClass="LargePrimaryLabel" customModule="Showcase" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="0.0" width="265" height="20.5"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lorem epsem daskjdsa" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f23-9y-f4r" customClass="LargePrimaryLabel" customModule="Showcase" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="265" height="67.5"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lorem epsem daskjdsa" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f23-9y-f4r" customClass="MediumSecondaryLabel" customModule="Showcase" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="30.5" width="265" height="128.5"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="John" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mYM-ck-t6c" customClass="MediumSecondaryLabel" customModule="Showcase" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="77.5" width="265" height="20.5"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8oq-90-OGL" customClass="MediumSecondaryLabel" customModule="Showcase" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="108" width="265" height="20.5"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hfr-Ru-E43" customClass="MediumSecondaryLabel" customModule="Showcase" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="138.5" width="265" height="20.5"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>

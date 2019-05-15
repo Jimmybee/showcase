@@ -11,12 +11,12 @@ import Moya
 import RxMoya
 import RxSwift
 
-protocol RxProvider {
+protocol RxNetworkProvider {
     func observeCodableRequest<T: Decodable, R: TargetType>(route: R) -> Single<T>
 }
 
-class MoyaShowcaseProvider: RxProvider {
-    static let shared = MoyaShowcaseProvider()
+class RxMoyaProvider: RxNetworkProvider {
+    static let shared = RxMoyaProvider()
     
     let provider = MoyaProvider<MultiTarget>() //(plugins: [NetworkLoggerPlugin(verbose: true)])
 
@@ -27,6 +27,7 @@ class MoyaShowcaseProvider: RxProvider {
     }
     
     private func performMainRequest(token: MultiTarget) -> Single<Response> {
+        
         return provider.rx.request(token).filterSuccessfulStatusCodes()
     }
 }

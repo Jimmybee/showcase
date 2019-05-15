@@ -14,11 +14,11 @@ class PostDetailViewController: UIViewController {
     
     let bag = DisposeBag()
     let header = PostDetailHeaderView()
-    let commentTable = UITableView()
+//    let commentTable = UITableView()
     let viewModel: PostDetailViewModel
     
     init(post: Post) {
-        self.viewModel = PostDetailViewModel(post: post, dataManager: RealmDataManager.shared, networkProvider: MoyaShowcaseProvider.shared)
+        self.viewModel = PostDetailViewModel(post: post, dataManager: RealmDataManager.shared, networkProvider: RxMoyaProvider.shared)
         super.init(nibName: nil, bundle: nil)
         view.backgroundColor = .white
     }
@@ -31,12 +31,12 @@ class PostDetailViewController: UIViewController {
         addViews()
         constrainHeader()
         setupHeader()
-        setupTable()
+//        setupTable()
     }
     
     private func addViews() {
         view.addSubview(header)
-        view.addSubview(commentTable)
+//        view.addSubview(commentTable)
     }
     
     private func constrainHeader() {
@@ -45,26 +45,26 @@ class PostDetailViewController: UIViewController {
             make.top.left.right.equalTo(guides)
         }
         
-        commentTable.snp.makeConstraints { (make) in
-            make.top.equalTo(header.snp.bottom)
-            make.left.right.bottom.equalTo(guides)
-        }
+//        commentTable.snp.makeConstraints { (make) in
+//            make.top.equalTo(header.snp.bottom)
+//            make.left.right.bottom.equalTo(guides)
+//        }
     }
     
     private func setupHeader() {
         header.setup(model: viewModel.headerData())
     }
   
-    private func setupTable() {
-        commentTable.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-        viewModel.getComments()
-            .bind(to: commentTable
-                .rx
-                .items(cellIdentifier: "Cell",
-                       cellType: UITableViewCell.self)) {
-                        row, comment, cell in
-                        cell.textLabel?.text = comment.body
-            }
-            .disposed(by: bag)
-    }
+//    private func setupTable() {
+//        commentTable.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+//        viewModel.getComments()
+//            .bind(to: commentTable
+//                .rx
+//                .items(cellIdentifier: "Cell",
+//                       cellType: UITableViewCell.self)) {
+//                        row, comment, cell in
+//                        cell.textLabel?.text = comment.body
+//            }
+//            .disposed(by: bag)
+//    }
 }

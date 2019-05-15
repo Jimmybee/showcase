@@ -12,7 +12,6 @@ import RealmSwift
 final class DataStoreConfiguration {
     
     private let schemaVersion : UInt64 = 1
-    
     private (set) var realmConfiguration: Realm.Configuration!
     
     var hasCheckedConfiguration = false
@@ -28,7 +27,6 @@ final class DataStoreConfiguration {
     }
     
     func checkConfiguration() {
-        
         do {
             _ = try Realm(configuration: realmConfiguration)
             logD("Realm initialized. Configuration schemaVersion \(realmConfiguration.schemaVersion). Actual schemaVersion: \(realmConfiguration.schemaVersion)")

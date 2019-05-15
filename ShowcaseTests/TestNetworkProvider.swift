@@ -8,11 +8,12 @@
 
 import Foundation
 import RxSwift
+import RxOptional
 import RxTest
 import Moya
 @testable import Showcase
 
-class TestNetworkProvider: RxProvider {
+class TestNetworkProvider: RxNetworkProvider {
 
     let cloud = [String : Any]()
     var schedulerTime: Int = 10
@@ -25,5 +26,6 @@ class TestNetworkProvider: RxProvider {
         return scheduler.createColdObservable([.next(schedulerTime, (result))])
             .errorOnNil()
             .asSingle()
+            .debug("MockNetwork: \(key)")
     }
 }

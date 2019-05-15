@@ -13,7 +13,6 @@ enum CustomFont: String {
     case roboto = "Roboto-Regular"
 }
 
-
 struct Style {
     enum Size: CGFloat {
         case small = 12

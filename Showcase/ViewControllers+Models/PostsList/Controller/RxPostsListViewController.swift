@@ -11,14 +11,17 @@ import UIKit
 import SnapKit
 import RxDataSources
 import RxSwift
+import RxCocoa
+import RxOptional
 
 class RxPostsListViewController: UIViewController {
     
     private let bag = DisposeBag()
     private let tableView = UITableView()
-    private var viewModel: RxPostListViewModel = RxPostListViewModel(networkProvider: MoyaShowcaseProvider.shared, storageManager: RealmDataManager.shared)
+    private var viewModel: RxPostListViewModel = RxPostListViewModel(networkProvider: RxMoyaProvider.shared, storageManager: RealmDataManager.shared)
     private let loadingBar = LoadingBarView()
     private let refreshControl = UIRefreshControl()
+    private let noContentView = NoContentView()
     
 //    init(viewModel: RxPostListViewModel) {
 //        self.viewModel =  viewModel
@@ -34,6 +37,7 @@ class RxPostsListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        setupNoContentView()
         constrainTable()
         setupTable()
         observeTableTap()
@@ -60,13 +64,14 @@ class RxPostsListViewController: UIViewController {
     private func handleAlert(message: String) {
         UIAlertController
             .present(in: self, title: "", message: message, style: .alert, actions: Alerts.ok.actions)
-            .subscribe().disposed(by: bag)
+            .subscribe()
+            .disposed(by: bag)
     }
     
     private func setupView() {
         view.addSubview(tableView)
         view.addSubview(loadingBar)
-        navigationItem.title = PlaceholderStrings.rx_posts_list.localized
+        navigationItem.title = PlaceholderStrings.posts_list.localized
         
         let guide = view.safeAreaLayoutGuide
         loadingBar.snp.makeConstraints({ $0.top.left.right.equalTo(guide) })
@@ -83,9 +88,37 @@ class RxPostsListViewController: UIViewController {
         tableView.register(UserTableViewCell.self, forCellReuseIdentifier: UserTableViewCell.identifier())
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 50
+      
+        
         viewModel.tablePosts
-            .bind(to: tableView.rx.items(dataSource: dataSource))
+            .debug("tablePosts", trimOutput: true)
+            .drive(tableView.rx.items(dataSource: dataSource))
             .disposed(by: bag)
+        
+        viewModel.tablePosts
+            .map({[weak self] in self?.tableFooterViewFor(sectionCount: $0.count)})
+            .filterNil()
+            .drive(onNext: { [weak self] (view) in
+                guard let self = self else { return }
+                self.tableView.tableFooterView = view
+            }).disposed(by: bag)
+    }
+    
+    private func tableFooterViewFor(sectionCount: Int) -> UIView {
+        if sectionCount > 0 {
+            return UIView(frame: .zero)
+        } else {
+            noContentView.frame = tableView.frame
+            return noContentView
+        }
+    }
+    
+    private func setupNoContentView() {
+        noContentView.noConentLabel.text = "We have no post data to display to you. Please check your internet connectino and try again"
+        noContentView.noContentBttn.setTitle("Refresh", for: .normal)
+        noContentView.action.drive(onNext: { [weak self] (_) in
+            self?.viewModel.refreshData()
+        }).disposed(by: bag)
     }
     
     var dataSource: RxTableViewSectionedAnimatedDataSource<PostListSection> {
@@ -121,16 +154,10 @@ class RxPostsListViewController: UIViewController {
     }
     
     private func observeLoading() {
-        viewModel.loadingObserver.asObservable()
+        viewModel.loadingObserver
             .throttle(.milliseconds(1200), latest: true, scheduler: MainScheduler.instance)
-            .debug("loadingObserver")
-            .subscribe(onNext: { (loading) in
-                if loading {
-                    self.loadingBar.startAnimating()
-                } else {
-                    self.loadingBar.stopAnimating()
-                }
-            })
+            .asDriver(onErrorJustReturn: false)
+            .drive(loadingBar.rx.animating)
             .disposed(by: bag)
     }
     

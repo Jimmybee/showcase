@@ -11,11 +11,11 @@ import RxSwift
 
 struct PostDetailViewModel {
     
-    let dataManager: RxDataManager
-    let networkProvider: RxProvider
+    let dataManager: DataManager
+    let networkProvider: RxNetworkProvider
     let post: Post
     
-    init(post: Post, dataManager: RxDataManager, networkProvider: RxProvider) {
+    init(post: Post, dataManager: DataManager, networkProvider: RxNetworkProvider) {
         self.post = post
         self.dataManager = dataManager
         self.networkProvider = networkProvider
@@ -23,11 +23,14 @@ struct PostDetailViewModel {
     
     func headerData() -> PostDetailHeaderView.Model {
         let user: User? = dataManager.load(byId: post.userId)
-        return (userName: user?.name ?? "Unknown", postTitle: post.title)
+        return (userName: user?.name ?? "Unknown",
+                postTitle: post.title,
+                postBody: post.body,
+                commentCount: getComments())
     }
     
-    func getComments() -> Observable<[Comment]> {
+    func getComments() -> Observable<Int> {
         let comments: Single<[Comment]> = networkProvider.observeCodableRequest(route: JsonPlaceholder.comments(for: post))
-        return comments.asObservable()
+        return comments.asObservable().map{ $0.count }
     }
 }
