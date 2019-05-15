@@ -21,8 +21,20 @@ extension Reactive where Base: LoadingBarView {
 
 class LoadingBarView: UIControl {
     
-    let bag = DisposeBag()
+    private let indicator = UIView()
+    private let bag = DisposeBag()
     
+    var animating = false  {
+        didSet {
+            sendActions(for: .valueChanged)
+        }
+    }
+    var widthForLinearBar: CGFloat {
+        return superview?.frame.width ?? UIScreen.main.bounds.width
+    }
+    var heightForLinearBar: CGFloat = 5
+    var widthMultiplerLargeBar: CGFloat = 0.7
+    var widthMultiplierSmallBar: CGFloat = 0.05
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
@@ -31,21 +43,6 @@ class LoadingBarView: UIControl {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setup()
-    }
-    
-    private let indicator = UIView()
-    var animating = false  {
-        didSet {
-            sendActions(for: .valueChanged)
-        }
-    }
-    
-    var widthForLinearBar: CGFloat {
-        return superview?.frame.width ?? UIScreen.main.bounds.width
-    }
-    
-    var heightForLinearBar: CGFloat {
-        return 5
     }
     
     private func setup() {
@@ -87,35 +84,44 @@ class LoadingBarView: UIControl {
         }
     }
     
+    // Bar grows as it crosses
     private func animatePartA() {
         guard let superview = self.superview,
             animating else { return }
-        self.indicator.frame = CGRect(x: 0, y: 0, width: 0, height: self.heightForLinearBar)
+        indicator.frame = CGRect(x: 0, y: 0, width: 0, height: heightForLinearBar)
+        let fullIndicatorFrameLeft = CGRect(x: 0, y: 0, width: widthForLinearBar*widthMultiplerLargeBar, height: heightForLinearBar)
+        let fullInidcatorFrameOffRight = CGRect(x: superview.frame.width, y: 0, width: widthForLinearBar*widthMultiplerLargeBar, height: heightForLinearBar)
         UIView.animateKeyframes(withDuration: 1.0, delay: 0, options: [.calculationModeCubicPaced], animations: {
-            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.5, animations: {
-                self.indicator.frame = CGRect(x: 0, y: 0, width: self.widthForLinearBar*0.7, height: self.heightForLinearBar)
+            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.5, animations: { [weak self] in
+                guard let self = self else { return }
+                self.indicator.frame = fullIndicatorFrameLeft
             })
-            UIView.addKeyframe(withRelativeStartTime: 0.5, relativeDuration: 0.5, animations: {
-                self.indicator.frame = CGRect(x: superview.frame.width, y: 0, width: self.widthForLinearBar*0.7, height: self.heightForLinearBar)
+            UIView.addKeyframe(withRelativeStartTime: 0.5, relativeDuration: 0.5, animations: { [weak self] in
+                guard let self = self else { return }
+                self.indicator.frame = fullInidcatorFrameOffRight
             })
-            
         }) { [weak self](completed) in
             self?.animatePartB()
         }
     }
     
+    
+    // Bar shrinks as it crosses
     private func animatePartB() {
         guard let superview = self.superview,
             animating else { return }
-        self.indicator.frame = CGRect(x: -self.widthForLinearBar*0.7, y: 0, width: self.widthForLinearBar*0.7, height: self.heightForLinearBar)
+        let fullIndicatorFrameOffLeft = CGRect(x: -widthForLinearBar*widthMultiplerLargeBar, y: 0, width: widthForLinearBar*widthMultiplerLargeBar, height: heightForLinearBar)
+        indicator.frame = fullIndicatorFrameOffLeft
+        let fullIndicatorFrameLeft = CGRect(x: 0, y: 0, width: self.widthForLinearBar*self.widthMultiplerLargeBar, height: self.heightForLinearBar)
+        let smallInidcatorFrameOffRight = CGRect(x: superview.frame.width, y: 0, width: self.widthForLinearBar*self.widthMultiplierSmallBar, height: self.heightForLinearBar)
         UIView.animateKeyframes(withDuration: 1.0, delay: 0, options: [], animations: {
-            
-            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.5, animations: {
-                self.indicator.frame = CGRect(x: 0, y: 0, width: self.widthForLinearBar*0.7, height: self.heightForLinearBar)
+            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.5, animations: { [weak self] in
+                guard let self = self else { return }
+                self.indicator.frame = fullIndicatorFrameLeft
             })
-            
-            UIView.addKeyframe(withRelativeStartTime: 0.5, relativeDuration: 0.5, animations: {
-                self.indicator.frame = CGRect(x: superview.frame.width, y: 0, width: self.widthForLinearBar*0.05, height: self.heightForLinearBar)
+            UIView.addKeyframe(withRelativeStartTime: 0.5, relativeDuration: 0.5, animations: { [weak self] in
+                guard let self = self else { return }
+                self.indicator.frame = smallInidcatorFrameOffRight
             })
             
         }) { [weak self] (completed) in

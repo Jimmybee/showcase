@@ -10,8 +10,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NoContentView" customModule="Showcase" customModuleProvider="target">
             <connections>
-                <outlet property="noConentLabel" destination="p7I-Z7-Bmb" id="mNB-4M-S9I"/>
                 <outlet property="noContentBttn" destination="zYR-FX-D8l" id="7Af-uw-6ub"/>
+                <outlet property="noContentLabel" destination="p7I-Z7-Bmb" id="mNB-4M-S9I"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -28,7 +28,7 @@
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zYR-FX-D8l">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zYR-FX-D8l" customClass="LargeActionButton" customModule="Showcase" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="30.5" width="46" height="30"/>
                             <state key="normal" title="Button"/>
                         </button>

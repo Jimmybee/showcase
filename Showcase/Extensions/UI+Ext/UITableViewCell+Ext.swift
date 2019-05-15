@@ -9,15 +9,6 @@
 import Foundation
 import UIKit
 
-public extension UICollectionViewCell {
-    
-    class func identifier() -> String {
-        return String(describing: self)
-    }
-    
-}
-
-
 public extension UITableViewCell {
     class func identifier() -> String {
         return String(describing: self)

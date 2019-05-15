@@ -1,22 +1,25 @@
 //
-//  LabelStyles.swift
+//  ButtonStyles.swift
 //  Showcase
 //
-//  Created by James Birtwell on 10/04/2019.
+//  Created by James Birtwell on 15/05/2019.
 //  Copyright © 2019 James Birtwell. All rights reserved.
 //
 
 import Foundation
 import UIKit
 
-extension UILabel: StyledTextObject  {
+extension UIButton : StyledTextObject {
     func set(style: StyleSize) {
-        font = style.font
-        textColor = style.color
+        if let font = style.font {
+            self.titleLabel?.font = font
+        }
+        self.setTitleColor(style.color, for: UIControl.State.normal)
+        self.setTitleColor(style.color, for: UIControl.State.selected)
     }
 }
 
-class StyleLabel: UILabel {
+class StyleButton: UIButton {
     var styleSize: StyleSize = StyleSize(size: .large, style: .primaryText) {
         didSet {
             set(style: styleSize)
@@ -40,20 +43,9 @@ class StyleLabel: UILabel {
     }
 }
 
-class LargePrimaryLabel: StyleLabel {
-    override var defaultStyle: StyleSize {
-        return  StyleSize(size: .large, style: .primaryText)
-    }
-}
 
-class LargeActionLabel: StyleLabel {
+class LargeActionButton: StyleButton {
     override var defaultStyle: StyleSize {
         return  StyleSize(size: .large, style: .actionText)
-    }
-}
-
-class MediumSecondaryLabel: StyleLabel {
-    override var defaultStyle: StyleSize {
-        return  StyleSize(size: .medium, style: .secondaryText)
     }
 }

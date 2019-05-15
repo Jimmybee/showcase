@@ -12,25 +12,26 @@ import RxDataSources
 import RxSwiftExt
 import RxCocoa
 
-class RxPostListViewModel {
-    
+class PostListViewModel {
     private let bag = DisposeBag()
-    private var networkProvider: RxNetworkProvider
+    private var networkProvider: NetworkProvider
     private var storageManager: DataManager
     
     private var openedUsers = BehaviorSubject<Set<Int>>(value: [])
     
     var loadingObserver = BehaviorRelay<Bool>(value: true)
     var errorObserver = PublishSubject<Error>()
-    
     var userTappedObserver = PublishSubject<User>()
 
-    init(networkProvider: RxNetworkProvider, storageManager: DataManager) {
+    init(networkProvider: NetworkProvider, storageManager: DataManager) {
         self.networkProvider = networkProvider
         self.storageManager = storageManager
         observeUserTapped()
     }
-    
+}
+
+// MARK: - API
+extension PostListViewModel {
     func refreshData() {
         loadingObserver.accept(true)
         Observable.zip(updatePosts(), updateUsers())
@@ -39,29 +40,10 @@ class RxPostListViewModel {
             .bind(to: loadingObserver)
             .disposed(by: bag)
     }
-    
-    private func updatePosts() -> Observable<[Post]> {
-        let posts: Single<[Post]> = networkProvider.observeCodableRequest(route: JsonPlaceholder.posts)
-        return posts.do(onSuccess: { [weak self] (posts) in
-            self?.storageManager.save(models: posts)
-            }, onError: { [weak self] (error) in
-                self?.errorObserver.onNext(error)
-            }).asObservable()
-    }
-    
-    private func updateUsers() -> Observable<[User]> {
-        let users: Single<[User]> = networkProvider.observeCodableRequest(route: JsonPlaceholder.users)
-        return users.do(onSuccess: { [weak self] (users) in
-            self?.storageManager.save(models: users)
-        }, onError: { [weak self] (error) in
-            self?.errorObserver.onNext(error)
-        }).asObservable()
-    }
-    
+
     var tablePosts: Driver<[PostListSection]> {
         let users: Observable<[User]> = storageManager.observe(predicate: nil)
         let posts: Observable<[Post]> = storageManager.observe(predicate: nil)
-        
         let groupedPosts = posts.map({ Dictionary(grouping: $0, by: { $0.userId}) })
         
         return Observable.combineLatest(users, groupedPosts, openedUsers.asObservable()) { (users, groupedPosts, openedUsers) -> [PostListSection] in
@@ -84,7 +66,28 @@ class RxPostListViewModel {
             }
             self?.openedUsers.onNext(usersOpen)
         })
-        .disposed(by: bag)
+            .disposed(by: bag)
+    }
+}
+
+// MARK: - Private
+extension PostListViewModel {
+    private func updatePosts() -> Observable<[Post]> {
+        let posts: Single<[Post]> = networkProvider.observeCodableRequest(route: JsonPlaceholder.posts)
+        return posts.do(onSuccess: { [weak self] (posts) in
+            self?.storageManager.save(models: posts)
+            }, onError: { [weak self] (error) in
+                self?.errorObserver.onNext(error)
+        }).asObservable()
+    }
+    
+    private func updateUsers() -> Observable<[User]> {
+        let users: Single<[User]> = networkProvider.observeCodableRequest(route: JsonPlaceholder.users)
+        return users.do(onSuccess: { [weak self] (users) in
+            self?.storageManager.save(models: users)
+            }, onError: { [weak self] (error) in
+                self?.errorObserver.onNext(error)
+        }).asObservable()
     }
 }
 

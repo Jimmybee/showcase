@@ -19,21 +19,23 @@ class PostListViewModelTests: XCTestCase {
     
     var dataManager: TestDataManager!
     var networkProvider: TestNetworkProvider!
-    var sut: RxPostListViewModel!
+    var sut: PostListViewModel!
     
     override func setUp() {
         dataManager = TestDataManager()
         bag = DisposeBag()
         scheduler = TestScheduler(initialClock: 0)
-        networkProvider = TestNetworkProvider()
-        networkProvider.scheduler = scheduler
-        sut = RxPostListViewModel(networkProvider: networkProvider, storageManager: dataManager)
-
+        networkProvider = TestNetworkProvider(scheduler: scheduler)
+        sut = PostListViewModel(networkProvider: networkProvider, storageManager: dataManager)
     }
     
-    func testLoadingObserver() {
-        let networkResultEnd = 10
-        networkProvider.schedulerTime = networkResultEnd
+    func testLoadingObserver() throws {
+        let post = try Post.Fixture.getSingle()
+        let user = try User.Fixture.getSingle()
+
+        networkProvider.add(result: [user], time: 5)
+        networkProvider.add(result: [post], time: 10)
+        
         let sutLoading = sut.loadingObserver
         let sutObserver = scheduler.createObserver(Bool.self)
         sutLoading.bind(to: sutObserver).disposed(by: bag)
@@ -44,7 +46,7 @@ class PostListViewModelTests: XCTestCase {
         XCTAssertEqual(sutObserver.events, [
             .next(0, true),
             .next(0, true),
-            .next(networkResultEnd, false)
+            .next(10, false)
             ])
     }
     
@@ -61,15 +63,15 @@ class PostListViewModelTests: XCTestCase {
         dataManager.schedulerObservables[postKey] = postSchedule
         dataManager.schedulerObservables[userKey] = userSchedule
         
-        sut = RxPostListViewModel(networkProvider: networkProvider, storageManager: dataManager)
+        sut = PostListViewModel(networkProvider: networkProvider, storageManager: dataManager)
         let sutTableSectionCount = sut.tablePosts.map({ $0.count })
         let sutTableFirstSectionItemCount = sut.tablePosts.map{ $0.first?.items.count }.filterNil()
         
         let sectionCountObserver = scheduler.createObserver(Int.self)
         let sectionItemCountObserver = scheduler.createObserver(Int.self)
 
-        sutTableSectionCount.bind(to: sectionCountObserver).disposed(by: bag)
-        sutTableFirstSectionItemCount.bind(to: sectionItemCountObserver).disposed(by: bag)
+        sutTableSectionCount.drive(sectionCountObserver).disposed(by: bag)
+        sutTableFirstSectionItemCount.drive(sectionItemCountObserver).disposed(by: bag)
         
         scheduler.start()
         XCTAssertEqual(sectionCountObserver.events, [
@@ -83,9 +85,8 @@ class PostListViewModelTests: XCTestCase {
             ])
     }
     
-    func testGroupingByUser() {
-        
-    }
+    //TODO: func testGroupingByUser()
+    //TOOO: func testErrorPublished
     
     
 }

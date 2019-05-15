@@ -14,25 +14,14 @@ import RxSwift
 import RxCocoa
 import RxOptional
 
-class RxPostsListViewController: UIViewController {
+class PostsListViewController: UIViewController {
     
     private let bag = DisposeBag()
     private let tableView = UITableView()
-    private var viewModel: RxPostListViewModel = RxPostListViewModel(networkProvider: RxMoyaProvider.shared, storageManager: RealmDataManager.shared)
+    private var viewModel: PostListViewModel = PostListViewModel(networkProvider: ShowcaseMoyaProvider.shared, storageManager: RealmDataManager.shared)
     private let loadingBar = LoadingBarView()
     private let refreshControl = UIRefreshControl()
     private let noContentView = NoContentView()
-    
-//    init(viewModel: RxPostListViewModel) {
-//        self.viewModel =  viewModel
-//        super.init(nibName: nil, bundle: nil)
-//        view.backgroundColor = .white
-//    }
-//
-//    required init?(coder aDecoder: NSCoder) {
-//        super.init(coder: aDecoder)
-//        view.backgroundColor = .white
-//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,32 +39,18 @@ class RxPostsListViewController: UIViewController {
         viewModel.refreshData()
     }
     
-    private func observeViewModelErrors() {
-        viewModel.errorObserver.asObservable()
-            .subscribe(onNext: { [weak self ] (err) in
-                err.log()
-                guard let self = self,
-                    let message = err.userAlertMessage else { return }
-                self.handleAlert(message: message)
-            })
-            .disposed(by: bag)
-    }
     
-    private func handleAlert(message: String) {
-        UIAlertController
-            .present(in: self, title: "", message: message, style: .alert, actions: Alerts.ok.actions)
-            .subscribe()
-            .disposed(by: bag)
-    }
-    
+}
+
+// MARK: Private - Setup
+extension PostsListViewController {
     private func setupView() {
         view.addSubview(tableView)
         view.addSubview(loadingBar)
         navigationItem.title = PlaceholderStrings.posts_list.localized
-        
+        view.backgroundColor = .white
         let guide = view.safeAreaLayoutGuide
         loadingBar.snp.makeConstraints({ $0.top.left.right.equalTo(guide) })
-        loadingBar.snp.makeConstraints({ $0.height.equalTo(5) })
     }
     
     private func constrainTable() {
@@ -88,10 +63,8 @@ class RxPostsListViewController: UIViewController {
         tableView.register(UserTableViewCell.self, forCellReuseIdentifier: UserTableViewCell.identifier())
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 50
-      
         
         viewModel.tablePosts
-            .debug("tablePosts", trimOutput: true)
             .drive(tableView.rx.items(dataSource: dataSource))
             .disposed(by: bag)
         
@@ -114,14 +87,17 @@ class RxPostsListViewController: UIViewController {
     }
     
     private func setupNoContentView() {
-        noContentView.noConentLabel.text = "We have no post data to display to you. Please check your internet connectino and try again"
-        noContentView.noContentBttn.setTitle("Refresh", for: .normal)
+        noContentView.noContentLabel.text = PlaceholderStrings.no_posts.localized
+        noContentView.noContentBttn.setTitle(PlaceholderStrings.try_again.localized, for: .normal)
         noContentView.action.drive(onNext: { [weak self] (_) in
             self?.viewModel.refreshData()
         }).disposed(by: bag)
     }
-    
-    var dataSource: RxTableViewSectionedAnimatedDataSource<PostListSection> {
+}
+
+//MARK: Datasource
+extension PostsListViewController {
+    private var dataSource: RxTableViewSectionedAnimatedDataSource<PostListSection> {
         let dataSource =  RxTableViewSectionedAnimatedDataSource<PostListSection>(configureCell: { (dataSource, table, idxPath, model) in
             switch model{
             case let .post(post):
@@ -134,8 +110,29 @@ class RxPostsListViewController: UIViewController {
                 return cell
             }
         })
-         dataSource.animationConfiguration = AnimationConfiguration(insertAnimation: .fade, reloadAnimation: .fade, deleteAnimation: .fade)
+        dataSource.animationConfiguration = AnimationConfiguration(insertAnimation: .fade, reloadAnimation: .fade, deleteAnimation: .fade)
         return dataSource
+    }
+}
+
+// MARK: Private handlers
+extension PostsListViewController {
+    private func observeViewModelErrors() {
+        viewModel.errorObserver.asObservable()
+            .subscribe(onNext: { [weak self ] (err) in
+                err.log()
+                guard let self = self,
+                    let message = err.userAlertMessage else { return }
+                self.handleAlert(message: message)
+            })
+            .disposed(by: bag)
+    }
+    
+    private func handleAlert(message: String) {
+        UIAlertController
+            .present(in: self, title: "", message: message, style: .alert, actions: Alerts.ok.actions)
+            .subscribe()
+            .disposed(by: bag)
     }
     
     private func observeTableTap() {
@@ -154,11 +151,16 @@ class RxPostsListViewController: UIViewController {
     }
     
     private func observeLoading() {
-        viewModel.loadingObserver
+        let isLoading = viewModel.loadingObserver
             .throttle(.milliseconds(1200), latest: true, scheduler: MainScheduler.instance)
             .asDriver(onErrorJustReturn: false)
+        
+        isLoading
             .drive(loadingBar.rx.animating)
             .disposed(by: bag)
+        
+        isLoading
+            .drive(noContentView.noContentBttn.rx.isHidden)
+            .disposed(by: bag)
     }
-    
 }

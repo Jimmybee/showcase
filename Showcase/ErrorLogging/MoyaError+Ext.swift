@@ -11,8 +11,10 @@ import Moya
 
 extension MoyaError: ShowcaseError {
     func appendKeys(to keys: inout [String : Any]) {
+        keys["ErrorDomain"] = "MoyaError"
         keys["Type"] = httpCode
         keys["Code"] = httpCode.rawValue
+        keys["RawCode"] = rawErrorCode
     }
     
     var httpCode: HTTPStatusCode {

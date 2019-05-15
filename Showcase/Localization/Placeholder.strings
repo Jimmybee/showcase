@@ -11,6 +11,8 @@
 "comment_count" = "%d comments";
 "loading_comments" = "loading comments";
 "failed_loading" = "Unable to load comments";
+"no_posts" = "There are no posts to display for you. Please check you connection and try again";
+"try_again" = "Try again";
 
 
 

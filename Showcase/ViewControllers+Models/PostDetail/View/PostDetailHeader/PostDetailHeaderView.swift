@@ -20,7 +20,6 @@ class PostDetailHeaderView: ReusableViewFromXib {
     @IBOutlet weak var postBodyLabel: UILabel!
     @IBOutlet weak var commentCountLabel: UILabel!
     
-    
     func setup(model: Model) {
         userNameLabel.text = model.userName
         postTitleLabel.text = model.postTitle
@@ -32,7 +31,6 @@ class PostDetailHeaderView: ReusableViewFromXib {
             }
             .startWith(PlaceholderStrings.loading_comments.localized)
             .catchErrorJustReturn(PlaceholderStrings.failed_loading.localized)
-            .debug("commentCount")
             .bind(to: commentCountLabel.rx.text)
             .disposed(by: bag)
     }

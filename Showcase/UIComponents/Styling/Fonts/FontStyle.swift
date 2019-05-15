@@ -13,17 +13,31 @@ enum CustomFont: String {
     case roboto = "Roboto-Regular"
 }
 
-struct Style {
+protocol StyledTextObject : class {
+    func set(style: StyleSize)
+}
+
+struct StyleSize {
+    var size: Size
+    var style: Style
+    
+    var font: UIFont? {
+        return UIFont(name: style.fontString, size: size.rawValue)
+    }
+    var color: UIColor {
+        return style.color
+    }
+    
     enum Size: CGFloat {
         case small = 12
         case medium = 14
         case large = 20
     }
     
-    enum Font {
+    enum Style {
         case primaryText, secondaryText, actionText
         
-        var asString: String {
+        var fontString: String {
             switch self {
             case .primaryText, .secondaryText, .actionText:
                 return CustomFont.roboto.rawValue
@@ -35,7 +49,7 @@ struct Style {
             case .primaryText:
                 return .black
             case .secondaryText:
-                return .lightGray
+                return .darkGray
             case .actionText:
                 return UIColor.from(hexString: "#0075EB")
             }

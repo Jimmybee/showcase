@@ -10,15 +10,17 @@ import Foundation
 import Moya
 import RxMoya
 import RxSwift
+import Alamofire
 
-protocol RxNetworkProvider {
+protocol NetworkProvider {
     func observeCodableRequest<T: Decodable, R: TargetType>(route: R) -> Single<T>
 }
 
-class RxMoyaProvider: RxNetworkProvider {
-    static let shared = RxMoyaProvider()
+class ShowcaseMoyaProvider: NetworkProvider {
+    static let shared = ShowcaseMoyaProvider()
+    private init() {}
     
-    let provider = MoyaProvider<MultiTarget>() //(plugins: [NetworkLoggerPlugin(verbose: true)])
+    let provider = MoyaProvider<MultiTarget>(manager: DefaultAlamofireManager.sharedManager) //(plugins: [NetworkLoggerPlugin(verbose: true)])
 
     func observeCodableRequest<T: Decodable, R: TargetType>(route: R) -> Single<T> {
         let multi = MultiTarget(route)
@@ -27,8 +29,6 @@ class RxMoyaProvider: RxNetworkProvider {
     }
     
     private func performMainRequest(token: MultiTarget) -> Single<Response> {
-        
         return provider.rx.request(token).filterSuccessfulStatusCodes()
     }
 }
-

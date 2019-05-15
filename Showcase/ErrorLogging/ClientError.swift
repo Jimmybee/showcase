@@ -47,6 +47,7 @@ enum ClientError: Error, ShowcaseError {
     }
     
     func appendKeys(to keys: inout [String : Any]) {
+        keys["ErrorDomain"] = "ClientError"
         keys["Type"] = title
         keys["Code"] = code
         keys["Detail"] = detail

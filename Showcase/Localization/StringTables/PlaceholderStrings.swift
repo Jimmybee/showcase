@@ -18,5 +18,7 @@ enum PlaceholderStrings: String, Localizable {
     case comment_count
     case loading_comments
     case failed_loading
+    case no_posts
+    case try_again
     
 }

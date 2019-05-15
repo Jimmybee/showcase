@@ -12,10 +12,10 @@ import RxSwift
 struct PostDetailViewModel {
     
     let dataManager: DataManager
-    let networkProvider: RxNetworkProvider
+    let networkProvider: NetworkProvider
     let post: Post
     
-    init(post: Post, dataManager: DataManager, networkProvider: RxNetworkProvider) {
+    init(post: Post, dataManager: DataManager, networkProvider: NetworkProvider) {
         self.post = post
         self.dataManager = dataManager
         self.networkProvider = networkProvider
@@ -26,10 +26,10 @@ struct PostDetailViewModel {
         return (userName: user?.name ?? "Unknown",
                 postTitle: post.title,
                 postBody: post.body,
-                commentCount: getComments())
+                commentCount: getCommentCount())
     }
     
-    func getComments() -> Observable<Int> {
+    private func getCommentCount() -> Observable<Int> {
         let comments: Single<[Comment]> = networkProvider.observeCodableRequest(route: JsonPlaceholder.comments(for: post))
         return comments.asObservable().map{ $0.count }
     }

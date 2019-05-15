@@ -12,7 +12,7 @@ import RxCocoa
 
 class NoContentView: ReusableViewFromXib {
 
-    @IBOutlet weak var noConentLabel: UILabel!
+    @IBOutlet weak var noContentLabel: UILabel!
     @IBOutlet weak var noContentBttn: UIButton!
     
     var action: Driver<Void> {

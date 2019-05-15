@@ -31,7 +31,7 @@ extension JsonPlaceholder: TargetType {
     }
     
     var headers: [String : String]? {
-        return [:]
+        return DefaultAlamofireManager.defaultHTTPHeaders
     }
     
     var method: Moya.Method {
@@ -47,7 +47,6 @@ extension JsonPlaceholder: TargetType {
         case .comments(for: let post):
             let parameters = ["postId": post.id]
             return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
-
         default:
             return .requestPlain
         }

@@ -32,10 +32,12 @@ extension Error {
         case let showcaseError as ShowcaseError:
             showcaseError.appendKeys(to: &keys)           
         case let nsError as NSError:
+            keys["ErrorDomain"] = "NSError"
             nsError.userInfo.forEach { (key, value) in
                 keys[key] = value
             }
         default:
+            keys["ErrorDomain"] = "Default"
             keys["LocalizedDescription"] = localizedDescription
         }
         log(dict: keys)

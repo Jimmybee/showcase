@@ -10,6 +10,7 @@ import Foundation
 
 enum HTTPStatusCode: Int {
     
+    case underlyingRequestTimedOut = -1001
     case internetAppearsOffline = -1009
     // 100 Informational
     case `continue` = 100
@@ -85,7 +86,7 @@ enum HTTPStatusCode: Int {
 extension HTTPStatusCode {
     var userAlertMessage: String? {
         switch self {
-        case .internetAppearsOffline, .requestTimeout:
+        case .internetAppearsOffline, .requestTimeout, .underlyingRequestTimedOut:
             return NetworkStrings.poor_connectivity.localized
         default:
             return NetworkStrings.unknown.localized

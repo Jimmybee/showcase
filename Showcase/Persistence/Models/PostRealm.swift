@@ -17,6 +17,8 @@ final class PostRealm: Object, RealmObject, RealmObjectWithId {
     @objc dynamic var id:Int = 0
     @objc dynamic var title: String?
     @objc dynamic var body: String?
+    @objc dynamic var edit: String?
+
     
     convenience init(_ model: MemoryModel) {
         self.init()
