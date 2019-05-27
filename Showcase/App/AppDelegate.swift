@@ -13,9 +13,12 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    private var appCoordinator: AppCoordinator!
 
-    func applicationWillTerminate(_ application: UIApplication) {
-
+    func applicationDidFinishLaunching(_ application: UIApplication) {
+        window = UIWindow()
+        appCoordinator = AppCoordinator(window: window)
+        appCoordinator.start()
     }
 
 }

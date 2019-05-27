@@ -20,10 +20,7 @@ protocol DataManager {
 
 class RealmDataManager: DataManager {
     
-    static let shared = RealmDataManager()
     private var configuration = DataStoreConfiguration()
-
-    private init() { }
     
     func getRealm() throws -> Realm {
         return try Realm(configuration: configuration.realmConfiguration)

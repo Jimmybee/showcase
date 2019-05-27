@@ -17,9 +17,6 @@ protocol NetworkProvider {
 }
 
 class ShowcaseMoyaProvider: NetworkProvider {
-    static let shared = ShowcaseMoyaProvider()
-    private init() {}
-    
     let provider = MoyaProvider<MultiTarget>(manager: DefaultAlamofireManager.sharedManager) //(plugins: [NetworkLoggerPlugin(verbose: true)])
 
     func observeCodableRequest<T: Decodable, R: TargetType>(route: R) -> Single<T> {

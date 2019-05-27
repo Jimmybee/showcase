@@ -12,16 +12,28 @@ import RxDataSources
 import RxSwiftExt
 import RxCocoa
 
+protocol PostListViewModelViewApi {
+    var loadingObservable: Observable<Bool> { get }
+    var errorObservable: Observable<Error> { get }
+    var tablePosts: Driver<[PostListSection]> { get }
+
+    func refreshData()
+    func handleTableTapOn(item: PostListSectionItem)
+}
+
+protocol PostListViewModelCoordinatorApi {
+    var observePostTapped: Observable<Post> { get }
+}
+
 class PostListViewModel {
     private let bag = DisposeBag()
     private var networkProvider: NetworkProvider
     private var storageManager: DataManager
-    
     private var openedUsers = BehaviorSubject<Set<Int>>(value: [])
-    
-    var loadingObserver = BehaviorRelay<Bool>(value: true)
-    var errorObserver = PublishSubject<Error>()
-    var userTappedObserver = PublishSubject<User>()
+    private let loadingRelay = BehaviorRelay<Bool>(value: true)
+    private let errorSubject = PublishSubject<Error>()
+    private let userTappedObserver = PublishSubject<User>()
+    private let postTapped = PublishSubject<Post>()
 
     init(networkProvider: NetworkProvider, storageManager: DataManager) {
         self.networkProvider = networkProvider
@@ -30,17 +42,24 @@ class PostListViewModel {
     }
 }
 
-// MARK: - API
-extension PostListViewModel {
-    func refreshData() {
-        loadingObserver.accept(true)
-        Observable.zip(updatePosts(), updateUsers())
-            .mapTo(false)
-            .catchErrorJustReturn(false)
-            .bind(to: loadingObserver)
-            .disposed(by: bag)
+// MARK: - Coordinator API
+extension PostListViewModel: PostListViewModelCoordinatorApi {
+    var observePostTapped: Observable<Post> {
+        return postTapped.asObservable()
     }
+}
 
+// MARK: - View API
+extension PostListViewModel: PostListViewModelViewApi {
+    // Datasource
+    var loadingObservable: Observable<Bool> {
+        return loadingRelay.asObservable()
+    }
+    
+    var errorObservable: Observable<Error> {
+        return errorSubject.asObservable()
+    }
+    
     var tablePosts: Driver<[PostListSection]> {
         let users: Observable<[User]> = storageManager.observe(predicate: nil)
         let posts: Observable<[Post]> = storageManager.observe(predicate: nil)
@@ -58,7 +77,29 @@ extension PostListViewModel {
             .asDriver(onErrorJustReturn: [])
     }
     
-    func observeUserTapped() {
+    // Events
+    func refreshData() {
+        loadingRelay.accept(true)
+        Observable.zip(updatePosts(), updateUsers())
+            .mapTo(false)
+            .catchErrorJustReturn(false)
+            .bind(to: loadingRelay)
+            .disposed(by: bag)
+    }
+
+    func handleTableTapOn(item: PostListSectionItem) {
+        switch item {
+        case .post(let post):
+            postTapped.onNext(post)
+        case .user(let user):
+            userTappedObserver.onNext(user)
+        }
+    }
+}
+
+// MARK: - Private
+extension PostListViewModel {
+    private func observeUserTapped() {
         userTappedObserver.subscribe(onNext: { [weak self] (user) in
             guard var usersOpen = try? self?.openedUsers.value() else { return }
             if usersOpen.remove(user.id) == nil {
@@ -68,16 +109,13 @@ extension PostListViewModel {
         })
             .disposed(by: bag)
     }
-}
-
-// MARK: - Private
-extension PostListViewModel {
+    
     private func updatePosts() -> Observable<[Post]> {
         let posts: Single<[Post]> = networkProvider.observeCodableRequest(route: JsonPlaceholder.posts)
         return posts.do(onSuccess: { [weak self] (posts) in
             self?.storageManager.save(models: posts)
             }, onError: { [weak self] (error) in
-                self?.errorObserver.onNext(error)
+                self?.errorSubject.onNext(error)
         }).asObservable()
     }
     
@@ -86,7 +124,7 @@ extension PostListViewModel {
         return users.do(onSuccess: { [weak self] (users) in
             self?.storageManager.save(models: users)
             }, onError: { [weak self] (error) in
-                self?.errorObserver.onNext(error)
+                self?.errorSubject.onNext(error)
         }).asObservable()
     }
 }

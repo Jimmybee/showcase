@@ -14,10 +14,10 @@ class PostDetailViewController: UIViewController {
     
     let bag = DisposeBag()
     let header = PostDetailHeaderView()
-    let viewModel: PostDetailViewModel
+    let viewModel: PostDetailViewModeViewApi
     
-    init(post: Post) {
-        self.viewModel = PostDetailViewModel(post: post, dataManager: RealmDataManager.shared, networkProvider: ShowcaseMoyaProvider.shared)
+    init(viewModel: PostDetailViewModeViewApi) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         view.backgroundColor = .white
     }

@@ -18,10 +18,20 @@ class PostsListViewController: UIViewController {
     
     private let bag = DisposeBag()
     private let tableView = UITableView()
-    private var viewModel: PostListViewModel = PostListViewModel(networkProvider: ShowcaseMoyaProvider.shared, storageManager: RealmDataManager.shared)
+    private var viewModel: PostListViewModelViewApi
     private let loadingBar = LoadingBarView()
     private let refreshControl = UIRefreshControl()
     private let noContentView = NoContentView()
+    
+    init(viewModel: PostListViewModelViewApi) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+        view.backgroundColor = .white
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,8 +48,6 @@ class PostsListViewController: UIViewController {
         super.viewDidAppear(animated)
         viewModel.refreshData()
     }
-    
-    
 }
 
 // MARK: Private - Setup
@@ -118,7 +126,7 @@ extension PostsListViewController {
 // MARK: Private handlers
 extension PostsListViewController {
     private func observeViewModelErrors() {
-        viewModel.errorObserver.asObservable()
+        viewModel.errorObservable
             .subscribe(onNext: { [weak self ] (err) in
                 err.log()
                 guard let self = self,
@@ -139,19 +147,13 @@ extension PostsListViewController {
         tableView.rx.modelSelected(PostListSectionItem.self)
             .subscribe(onNext: { [weak self] (item) in
                 guard let self = self else { return }
-                switch item {
-                case .post(let post):
-                    let vc = PostDetailViewController(post: post)
-                    self.navigationController?.pushViewController(vc, animated: true)
-                case .user(let user):
-                    self.viewModel.userTappedObserver.onNext(user)
-                }
+                self.viewModel.handleTableTapOn(item: item)
             })
             .disposed(by: bag)
     }
     
     private func observeLoading() {
-        let isLoading = viewModel.loadingObserver
+        let isLoading = viewModel.loadingObservable
             .throttle(.milliseconds(1200), latest: true, scheduler: MainScheduler.instance)
             .asDriver(onErrorJustReturn: false)
         

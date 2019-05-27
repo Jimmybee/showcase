@@ -9,11 +9,14 @@
 import Foundation
 import RxSwift
 
+protocol PostDetailViewModeViewApi {
+    func headerData() -> PostDetailHeaderView.Model
+}
+
 struct PostDetailViewModel {
-    
-    let dataManager: DataManager
-    let networkProvider: NetworkProvider
-    let post: Post
+    private let dataManager: DataManager
+    private let networkProvider: NetworkProvider
+    private let post: Post
     
     init(post: Post, dataManager: DataManager, networkProvider: NetworkProvider) {
         self.post = post
@@ -21,16 +24,18 @@ struct PostDetailViewModel {
         self.networkProvider = networkProvider
     }
     
+    private func getCommentCount() -> Observable<Int> {
+        let comments: Single<[Comment]> = networkProvider.observeCodableRequest(route: JsonPlaceholder.comments(for: post))
+        return comments.asObservable().map{ $0.count }
+    }
+}
+
+extension PostDetailViewModel: PostDetailViewModeViewApi {
     func headerData() -> PostDetailHeaderView.Model {
         let user: User? = dataManager.load(byId: post.userId)
         return (userName: user?.name ?? "Unknown",
                 postTitle: post.title,
                 postBody: post.body,
                 commentCount: getCommentCount())
-    }
-    
-    private func getCommentCount() -> Observable<Int> {
-        let comments: Single<[Comment]> = networkProvider.observeCodableRequest(route: JsonPlaceholder.comments(for: post))
-        return comments.asObservable().map{ $0.count }
     }
 }
